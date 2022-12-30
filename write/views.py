@@ -97,3 +97,17 @@ def gallery_free_write(request):
             return render(request, 'write/gallery_free_write.html',context)
 
     return render(request, 'write/gallery_free_write.html', context)
+
+def product_create(request):
+    if request.method == 'POST':
+        form = BoardWriteForm(request.POST, request.FILES) # 꼭 !!!! files는 따로 request의 FILES로 속성을 지정해줘야 함
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.author = request.user
+            product.detailfunc = product.detailfunc.replace("'", "").replace("[", "").replace("]", "")
+            product.save()
+            return redirect('sales:index')
+    else:
+        form = BoardWriteForm() # request.method 가 'GET'인 경우
+    context = {'form':form}
+    return render(request, 'sales/product_form.html', context)

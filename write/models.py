@@ -15,10 +15,11 @@ class Free(models.Model):
     comment = models.CharField(max_length=200)    
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     group = models.ForeignKey(models2.Group, on_delete=models.CASCADE,db_column='group_id', null=True)
-    title = models.CharField(max_length=64, verbose_name='글 제목')
+    title = models.CharField(max_length=64, verbose_name='글 제목', default='')
     write_dttm = models.DateTimeField(auto_now_add=True)
     update_dttm = models.DateTimeField(auto_now=True)
     hits=models.PositiveIntegerField(default=0)
+    imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
 
 class Gallery(models.Model):
     gallery_id = models.AutoField(primary_key=True)
@@ -26,6 +27,7 @@ class Gallery(models.Model):
     picture = models.CharField(max_length=200)
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     group = models.ForeignKey(models2.Group, on_delete=models.CASCADE,db_column='group_id', null=True)
+    imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
 
 
 class Good(models.Model):

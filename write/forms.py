@@ -41,6 +41,7 @@ class BoardWriteForm(forms.ModelForm):
         fields = [
             'title',
             'text',
+            'imgfile',
             # 'info'
         ]
         widgets = {
