@@ -1,7 +1,7 @@
 from django.db import models
 
 class Info(models.Model):
-    id = models.CharField(max_length = 20)
+    info_id = models.CharField(max_length = 20)
     pw = models.CharField(max_length = 20)
     name = models.CharField(max_length = 20)
     region = models.CharField(max_length = 20)
@@ -9,7 +9,7 @@ class Info(models.Model):
     preference = models.CharField(max_length = 20)
     age = models.IntegerField(default=0)
 
-class region(models.Model):
+class Region(models.Model):
     region_id = models.IntegerField(default=0)
     region = models.CharField(max_length = 20)
 
