@@ -4,12 +4,10 @@ from all_info.models import Info
 def update(request):
     # GET
     if request.method == 'GET':
-        id = request.GET.get('id')
-        s = Info.objects.get(pk=id)
+       
         return render(
             request,
             'common/id_pw.html',
-            { 'shop': s }
         )
     # POST
     info_id = request.POST.get('info_id')
@@ -20,7 +18,7 @@ def update(request):
     preference = request.POST.get('preference')
     age = request.POST.get('age')
 
-    s = Info.objects.get(pk=id)
+    s = Info()
     s.info_id = info_id
     s.pw = pw
     s.name = name
@@ -29,4 +27,4 @@ def update(request):
     s.preference = preference
     s.age = age
     s.save()
-    return redirect('/common/loginfo/')
+    return redirect('loginfo/')
