@@ -1,21 +1,24 @@
 <body>
     <h1>게시판</h1>
     <hr>
-    <a href="{%url 'write:free'%}"><button>자유게시판</button></a>
-    <a href="{%url 'write:free'%}"><button>가입인사</button></a>
-    <a href="{%url 'write:free'%}"><button>갤러리</button></a>
+
+    <a href="/"><button>홈으로</button></a>
+    <a href="{% url 'write:free' %}"><button>자유게시판</button></a>
+    <a href="{% url 'write:join' %}"><button>가입인사</button></a>
+    <a href="{% url 'write:gallery' %}"><button>갤러리</button></a>
     {% if login_session %}
     <a href=""></a><button>로그아웃</button></a>
     {% else %}
     <a href=""></a><button>로그인</button></a>
     <a href=""></a><button>회원가입</button></a>
     {% endif %}
-    {% extends 'home/index.html' %}
+    
+    {% comment %} {% extends 'home/index.html' %} {% endcomment %}
 
-    {{% block contents  %}
+    {% comment %} {{% block contents  %} {% endcomment %}
     <div>게시판</div>
-    <div><a href="{% url 'board:board_write %}"><button>글쓰기</button></a></div>
-    {% endblock contents  %}
+    <div><a href="{% url 'write:free_write' %}"><button>글쓰기</button></a></div>
+    {% comment %} {% endblock contents  %} {% endcomment %}
 
 }
 </body>

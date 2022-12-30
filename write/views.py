@@ -7,7 +7,7 @@ from all_info.models import Info
 def board_list(request):
     login_session = request.session.get('login_session','')
     context = {'login_session' : login_session}
-    return render(request, 'wirte/board_list.html', context)
+    return render(request, 'write/board_list.html', context)
 
 def board_free_write(request):
     login_session = request.session.get('login_session','')
@@ -38,14 +38,14 @@ def board_free_write(request):
                     context['error'] = value
             return render(request, 'write/board_free_write.html',context)
 
-    return render(request, 'wirte/board_free_write.html', context)
+    return render(request, 'write/board_free_write.html', context)
 
 def free(request):
     free_id = free.objects.all()
     
     return render(
         request,
-        'wirte/free.html',
+        'write/free.html',
         {'free': free_id}
     )
 
@@ -54,7 +54,7 @@ def join(request):
     
     return render(
         request,
-        'wirte/join.html',
+        'write/join.html',
         {'join': join_id}
     )
 
@@ -63,7 +63,7 @@ def gallery(request):
     
     return render(
         request,
-        'wirte/gallery.html',
+        'write/gallery.html',
         {'gallery': gallery_id}
     )
 

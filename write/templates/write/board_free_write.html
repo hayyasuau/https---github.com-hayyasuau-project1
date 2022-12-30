@@ -1,5 +1,5 @@
-{% extends 'home/index.html'%}
-{% block contents %}
+{% comment %} {% extends 'home/index.html'%} {% endcomment %}
+{% comment %} {% block contents %} {% endcomment %}
 <div>게시판 글쓰기</div>
 <form action="" method="POST">
     <!-- {% csrf_token %} -->
@@ -16,4 +16,4 @@
     {% endif %}
     <button>작성</button>
 </form>
-{% endblock contents %}
+{% comment %} {% endblock contents %} {% endcomment %}
