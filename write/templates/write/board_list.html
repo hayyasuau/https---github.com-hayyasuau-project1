@@ -10,4 +10,12 @@
     <a href=""></a><button>로그인</button></a>
     <a href=""></a><button>회원가입</button></a>
     {% endif %}
+    {% extends 'home/index.html' %}
+
+    {{% block contents  %}
+    <div>게시판</div>
+    <div><a href="{% url 'board:board_write %}"><button>글쓰기</button></a></div>
+    {% endblock contents  %}
+
+}
 </body>
