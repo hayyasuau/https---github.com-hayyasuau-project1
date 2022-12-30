@@ -11,7 +11,7 @@ class Info(models.Model):
 
 class Region(models.Model):
     region_id = models.IntegerField(default=0)
-    region__ = models.CharField(max_length = 20)
+    region = models.CharField(max_length = 20)
 
 class Group(models.Model):
     group_id = models.CharField(max_length = 20)
