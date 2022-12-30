@@ -33,7 +33,7 @@ class BoardWriteForm(forms.ModelForm):
     field_order  = [
         'title',
         'text',
-        'info'
+        # 'info'
     ]
 
     class Meta:
@@ -41,7 +41,7 @@ class BoardWriteForm(forms.ModelForm):
         fields = [
             'title',
             'text',
-            'info'
+            # 'info'
         ]
         widgets = {
             'contents' : SummernoteWidget()
@@ -51,7 +51,7 @@ class BoardWriteForm(forms.ModelForm):
 
         title = cleaned_data.get('title','')
         text = cleaned_data.get('text','')
-        info = cleaned_data.get('info','Free')
+        # info = cleaned_data.get('info','Free')
 
         if title == '':
             self.add_error('title','글 제목을 입력하세요.')
@@ -60,4 +60,4 @@ class BoardWriteForm(forms.ModelForm):
         else:
             self.title = title
             self.text = text
-            self.info = info
+            # self.info = info
