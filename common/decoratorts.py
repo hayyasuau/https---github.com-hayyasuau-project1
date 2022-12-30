@@ -2,7 +2,6 @@
 
 # def login_required(func):
 #     def wrapper(reuest, *args, **kwargs):
-#         login_session = request.session.get('login_session','')
 #         if login_session == '':
 #             return redirect('login/')
         
