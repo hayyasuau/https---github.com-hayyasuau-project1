@@ -11,10 +11,14 @@ class Join(models.Model):
 
 class Free(models.Model):
     free_id = models.AutoField(primary_key=True)
-    text = models.TextField()
+    text = models.TextField(verbose_name='글 내용')
     comment = models.CharField(max_length=200)    
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     group = models.ForeignKey(models2.Group, on_delete=models.CASCADE,db_column='group_id', null=True)
+    title = models.CharField(max_length=64, verbose_name='글 제목')
+    write_dttm = models.DateTimeField(auto_now_add=True)
+    update_dttm = models.DateTimeField(auto_now=True)
+    hits=models.PositiveIntegerField(default=0)
 
 class Gallery(models.Model):
     gallery_id = models.AutoField(primary_key=True)
