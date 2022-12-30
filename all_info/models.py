@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Info(models.Model):
     info_id = models.CharField(max_length = 20)
     pw = models.CharField(max_length = 20)
