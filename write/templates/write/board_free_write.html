@@ -2,7 +2,7 @@
 {% comment %} {% block contents %} {% endcomment %}
 <div>게시판 글쓰기!</div>
 <form action="" method="POST">
-    <!-- {% csrf_token %} -->
+    {% csrf_token %}
 
     {% for form in forms %}
     <div>

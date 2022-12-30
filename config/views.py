@@ -27,4 +27,5 @@ def update(request):
     s.preference = preference
     s.age = age
     s.save()
+    #회원가입 코드
     return redirect('loginfo/')
