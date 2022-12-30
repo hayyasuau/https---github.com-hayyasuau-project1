@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-cw1e5czpz67u&wrm%8t9f%l6d_fp+9cko__bor83_m*m5i!pgy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django_summernote'
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 # Password validation
