@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import BoardWriteForm
+from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good
 from all_info.models import Info
 
@@ -119,10 +119,10 @@ def comments_create(request, pk):
         comment_form = GoodForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
-            comment.article = free_text
-            comment.user = request.user
+            comment.free = free_text
+            comment.free_id = request.free_id
             comment.save()
-        return redirect('write:detail', article.pk)
+        return redirect('write:detail', free.pk)
     return redirect('accounts:login')
 
 
