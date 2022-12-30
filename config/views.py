@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from all_info.models import Info
+from . import urls
 
 def update(request):
     # GET
@@ -27,4 +28,4 @@ def update(request):
     s.preference = preference
     s.age = age
     s.save()
-    return redirect('loginfo/')
+    return redirect('')
