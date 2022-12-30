@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import BoardWriteForm
-from .models import Free, Gallery, Join
+from .models import Free, Gallery, Join ,Good
 from all_info.models import Info
 
 # Create your views here.
@@ -111,3 +111,37 @@ def product_create(request):
         form = BoardWriteForm() # request.method 가 'GET'인 경우
     context = {'form':form}
     return render(request, 'sales/product_form.html', context)
+
+# @require_POST
+def comments_create(request, pk):
+    if request.user.is_authenticated:
+        free_text = get_object_or_404(Free, pk=pk)
+        comment_form = GoodForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.article = free_text
+            comment.user = request.user
+            comment.save()
+        return redirect('write:detail', article.pk)
+    return redirect('accounts:login')
+
+
+# @require_POST
+def comments_delete(request, article_pk, comment_pk):
+    if request.free_id.is_authenticated:
+        comment = get_object_or_404(Good, pk=comment_pk)
+        if request.free_id == comment.free_id:
+            comment.delete()
+    return redirect('write:detail', article_pk)
+
+# @require_POST
+def likes(request, article_pk):
+    if request.free_id.is_authenticated:
+        article = get_object_or_404(Free, pk=article_pk)
+
+        if article.like_users.filter(pk=request.free_id.pk).exists():
+            article.like_users.remove(request.free_id)
+        else:
+            article.like_users.add(request.free_id)
+        return redirect('articles:index')
+    return redirect('accouts:login')

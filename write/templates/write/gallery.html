@@ -1,6 +1,12 @@
+{% extends 'file/upload_f.html %'}
+<form action="file/upload_f.html" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
 <body>
 
     <div>갤러리</div>
-    <div><a href="{% url 'write:gallery_write' %}"><button>글쓰기</button></a></div>
+    <input type="file" name="file">
+    <input type="submit" value="전송">
+    <div><a href=""><button>글쓰기</button></a></div>
         
 </body>
+</form>
