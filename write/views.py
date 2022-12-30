@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import BoardWriteForm
 from .models import Free
 from all_info.models import Info
@@ -25,7 +25,7 @@ def board_free_write(request):
             board = Free(
                 title=write_form.title,
                 texts=write_form.text,
-                writer=writer
+                writer=writer,
                 board_name=write_form.info
             )
             board.save()
