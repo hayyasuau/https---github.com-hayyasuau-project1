@@ -29,3 +29,6 @@ def update(request):
     s.save()
     #회원가입 코드
     return redirect('loginfo/')
+
+def home(request):
+    return render(request, 'home.html')

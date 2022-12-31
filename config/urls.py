@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
+from . import views
 
 urlpatterns = [
     path('admin', admin.site.urls), #admin, admin@admin.com, 1234
@@ -26,6 +27,8 @@ urlpatterns = [
     path('login/',
         auth_views.LoginView.as_view(template_name='member/login.html'),
         name='login'
+    ),
+    path('', views.home, name='home'
     ),
     # path('loginfo/', include('loginfo.urls')),
 ]
