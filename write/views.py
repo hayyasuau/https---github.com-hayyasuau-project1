@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponseRedirect,render, redirect
 from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good
 from all_info.models import Info

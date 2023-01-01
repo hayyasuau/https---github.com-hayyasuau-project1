@@ -57,8 +57,9 @@
                         <a class="nav-link text-white-50 disabled">Disabled</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" style="width: 150%;"
+                <form class="d-flex" method='POST' action={% url 'search' %} role="search">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" name='search' style="width: 150%;"
                     placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>

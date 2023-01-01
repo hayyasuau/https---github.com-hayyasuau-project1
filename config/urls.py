@@ -30,6 +30,8 @@ urlpatterns = [
     ),
     path('', views.home, name='home'
     ),
+    path('search/', views.search, name='search'
+    ),
     # path('loginfo/', include('loginfo.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

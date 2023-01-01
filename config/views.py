@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from all_info.models import Info
+from file.models import Search
 
 def update(request):
     # GET
@@ -32,3 +33,11 @@ def update(request):
 
 def home(request):
     return render(request, 'home.html')
+
+def search(request):
+    if request.method == 'POST':
+        search = request.POST['search']
+        searchs = Search.objects.filter(name__contains=search)
+        return render(request, 'search.html', {'search':search,'searchs':searchs})
+    else:
+        return render(request,'search.html',{})

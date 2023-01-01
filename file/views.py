@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse
 
+from .forms import UploadFileForm
+
 # Create your views here.
 def upload(request):
     if request.method == 'POST':
@@ -15,7 +17,7 @@ def upload(request):
         return HttpResponse(result)
     return render(request, 'file/upload.html')
 
-from .forms import UploadFileForm
+
 
 def upload_f(request): #form활용 불러오려면 이걸로
     if request.method == 'POST':
@@ -30,3 +32,7 @@ def upload_f(request): #form활용 불러오려면 이걸로
         form = UploadFileForm()
     return render(
         request, 'file/upload_f.html', {'form': form})
+
+
+
+

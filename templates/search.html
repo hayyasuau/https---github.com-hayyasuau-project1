@@ -1,0 +1,15 @@
+{% extends 'home.html' %}
+{% block main_content %}
+    {% if search %}
+    <h1> {{search}} 검색 결과</h1>
+    <br>
+    <hr>
+    {% for s in searchs %}
+        {{s.name}}<br>
+        {{s.ingredient}}<br>
+    {% endfor %}
+    {% else %}
+    <h1>검색 결과가 없습니다. 새로 검색해주세요</h1>
+    {% endif %}
+{% endblock %}
+{% comment %} search 함수가 마이그레이션 안되있어서 실행 안됨! - 가서 오류 해결하기 {% endcomment %}
