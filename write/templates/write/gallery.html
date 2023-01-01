@@ -1,12 +1,9 @@
-{% extends 'file/upload_f.html %'}
-<form action="file/upload_f.html" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-<body>
+{% extends 'home.html' %} 
+{% block left_menu %}
+{% include 'write/board_menu.html' %}
+{% endblock left_menu %}
+{% block main_content %}
 
-    <div>갤러리</div>
-    <input type="file" name="file">
-    <input type="submit" value="전송">
-    <div><a href=""><button>글쓰기</button></a></div>
-        
-</body>
-</form>
+    <div><a href="/write/gallery/gallery_make"><button>글쓰기</button></a></div>
+
+{% endblock  %}

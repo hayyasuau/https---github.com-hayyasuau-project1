@@ -9,6 +9,9 @@ def board_list(request):
     context = {'login_session' : login_session}
     return render(request, 'write/board_list.html', context)
 
+# def board_left(request):
+#     return render(request, 'write/board_left.html')
+
 def board_free_write(request):
     login_session = request.session.get('login_session','')
     context = {'login_session' : login_session}
@@ -58,6 +61,14 @@ def join(request):
         {'join': join_id}
     )
 
+def new_face(request):
+    new_face_id = Join.objects.all()
+    
+    return render(
+        request,
+        'write/new_face.html',
+        {'new_face': new_face_id}
+    )
 def gallery(request):
     gallery_id = Gallery.objects.all()
     
@@ -65,6 +76,14 @@ def gallery(request):
         request,
         'write/gallery.html',
         {'gallery': gallery_id}
+    )
+def gallery_make(request):
+    gallery_id2 = Gallery.objects.all()
+    
+    return render(
+        request,
+        'write/gallery_make.html',
+        {'gallery_make': gallery_id2}
     )
 
 def gallery_free_write(request):

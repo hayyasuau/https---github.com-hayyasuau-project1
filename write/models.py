@@ -7,6 +7,7 @@ class Join(models.Model):
     comment = models.CharField(max_length=200)
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     group = models.ForeignKey(models2.Group, on_delete=models.CASCADE,db_column='group_id', null=True)
+    new_face = models.TextField(verbose_name='가입인사')
 
     
 
