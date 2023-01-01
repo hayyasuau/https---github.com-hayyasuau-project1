@@ -81,19 +81,23 @@ def gallery(request):
 def gallery_make(request):
     gallery = Gallery.objects.all()
     
-    # if request.method == 'POST':
-    files = request.POST.get('files')
-    text = request.POST.get('text')
-    new_gallery = Gallery()
-    new_gallery.comment =text
-    new_gallery.imgfile = files
-    new_gallery.save()
-    return render(
-        request,
-        # 이거 아래꺼 list로 하면 list로 보내지나?
-        'write/gallery_list.html',
-        {'gallery_list': new_gallery}
-    )
+    if request.method == 'POST':
+        files = request.POST.get('files')
+        text = request.POST.get('text')
+        new_gallery = Gallery()
+        new_gallery.comment =text
+        new_gallery.imgfile = files
+        new_gallery.save()
+        return HttpResponseRedirect(reverse('write:gallery'))
+    else :
+        new_gallery_list=new_gallery.objects.all()
+        return render(
+            request,
+            # 이거 아래꺼 list로 하면 list로 보내지나?
+            'write/gallery_list.html',
+            {'gallery_list': new_gallery_list}
+        )
+        
 
 def gallery_free_write(request):
     login_session = request.session.get('login_session','')
