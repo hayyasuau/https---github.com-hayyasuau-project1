@@ -10,6 +10,7 @@ urlpatterns = [
     path('join/', views.join, name='join'),
     path('join/join_write/', views.join, name='join_write'),
     path('gallery/', views.gallery, name='gallery'),
+    path('gallery/<int:pk>', views.gallery_single, name='gallery_single'),
     path('new_face/', views.new_face, name='new_face'),
     path('gallery/gallery_make/', views.gallery_make, name='gallery_make'),
     path('', views.board_list, name='board_list'),

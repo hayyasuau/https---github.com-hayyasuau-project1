@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.shortcuts import HttpResponseRedirect,render, redirect
+from django.shortcuts import HttpResponseRedirect, get_object_or_404,render, redirect
 from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good
 from all_info.models import Info
@@ -45,7 +45,7 @@ def board_free_write(request):
     return render(request, 'write/board_free_write.html', context)
 
 def free(request):
-    free_id = Free.objects.all()
+    free_id = Free.objects.all().order_by('-pk')
     
     return render(
         request,
@@ -54,7 +54,7 @@ def free(request):
     )
 
 def join(request):
-    join_id = Join.objects.all()
+    join_id = Join.objects.all().order_by('-pk')
     
     return render(
         request,
@@ -63,7 +63,7 @@ def join(request):
     )
 
 def new_face(request):
-    new_face_id = Join.objects.all()
+    new_face_id = Join.objects.all().order_by('-pk')
     
     return render(
         request,
@@ -71,15 +71,21 @@ def new_face(request):
         {'new_face': new_face_id}
     )
 def gallery(request):
-    gallery_list = Gallery.objects.all()
+    gallery_list = Gallery.objects.all().order_by('-pk')
     
     return render(
         request,
         'write/gallery.html',
         {'gallery_list': gallery_list}
     )
+def gallery_single(request, pk): #FBV로 싱글갤러리 만들기
+    gallery_singles = Gallery.objects.get(pk=pk)
+
+    return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles})
+
+
 def gallery_make(request):
-    gallery = Gallery.objects.all()
+    gallery = Gallery.objects.all().order_by('-pk')
     
     if request.method == 'POST':
         files = request.POST.get('files')

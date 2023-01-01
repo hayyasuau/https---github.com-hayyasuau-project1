@@ -4,14 +4,19 @@ from django.conf import settings #좋아요-import setting
 # Create your models here. 
 class Join(models.Model):
     join_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
     comment = models.CharField(max_length=200)
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     group = models.ForeignKey(models2.Group, on_delete=models.CASCADE,db_column='group_id', null=True)
+    write_dttm = models.DateTimeField(auto_now_add=True)
+    update_dttm = models.DateTimeField(auto_now=True)
     new_face = models.TextField(verbose_name='가입인사')
+    def __str__(self):
+        return f'[{self.pk}][{self.title}]'
 
     
 
-class Free(models.Model):
+class Free(models.Model): #
     free_id = models.AutoField(primary_key=True)
     text = models.TextField(verbose_name='글 내용')
     comment = models.CharField(max_length=200)
@@ -24,15 +29,19 @@ class Free(models.Model):
     hits=models.PositiveIntegerField(default=0)
     imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
     def __str__(self):
-        return self.title
-class Gallery(models.Model):
+        return f'[{self.pk}][{self.title}]'
+class Gallery(models.Model): #FBV로 만듬
     gallery_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=64, verbose_name='글 제목', default='')
     comment = models.CharField(max_length=200)
     picture = models.CharField(max_length=200)
+    write_dttm = models.DateTimeField(auto_now_add=True)
+    update_dttm = models.DateTimeField(auto_now=True)
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     group = models.ForeignKey(models2.Group, on_delete=models.CASCADE,db_column='group_id', null=True)
     imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
-
+    def __str__(self):
+        return f'[{self.pk}][{self.title}]'
 
 class Good(models.Model):#댓글 연결
     good_id = models.AutoField(primary_key=True)
