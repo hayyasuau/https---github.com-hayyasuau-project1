@@ -16,6 +16,7 @@ urlpatterns = [
     # path('borad_left/', views.borad_left, name='borad_left'),
     path('free/free_write/', views.board_free_write, name='free_write'),
     path('<int:pk>/comments/', views.comments_create, name='comments_create'),
+    # path('gallery/<int:pk>/', views.gallery_detail, name='gallery_detail'),
     path('<int:free_pk>/comments/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
     path('<int:free_pk>/likes/', views.likes, name='likes'),
 ]

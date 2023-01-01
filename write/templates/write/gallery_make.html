@@ -1,10 +1,10 @@
-<form action="file/upload_f.html" method="post" enctype="multipart/form-data">
+<form action="/write/gallery" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 <body>
 <form action="">
     <div>갤러리</div>
-    <input type="file" name="file">
-    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <input type="file" name="files">
+    <textarea name="" id="" cols="30" rows="10" name='text'></textarea>
     <input type="submit" value="글쓰기">
 </form>
 </body>

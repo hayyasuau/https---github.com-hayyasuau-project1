@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good
@@ -70,20 +71,28 @@ def new_face(request):
         {'new_face': new_face_id}
     )
 def gallery(request):
-    gallery_id = Gallery.objects.all()
+    gallery_list = Gallery.objects.all()
     
     return render(
         request,
         'write/gallery.html',
-        {'gallery': gallery_id}
+        {'gallery_list': gallery_list}
     )
 def gallery_make(request):
-    gallery_id2 = Gallery.objects.all()
+    gallery = Gallery.objects.all()
     
+    # if request.method == 'POST':
+    files = request.POST.get('files')
+    text = request.POST.get('text')
+    new_gallery = Gallery()
+    new_gallery.comment =text
+    new_gallery.imgfile = files
+    new_gallery.save()
     return render(
         request,
-        'write/gallery_make.html',
-        {'gallery_make': gallery_id2}
+        # 이거 아래꺼 list로 하면 list로 보내지나?
+        'write/gallery_list.html',
+        {'gallery_list': new_gallery}
     )
 
 def gallery_free_write(request):
@@ -164,3 +173,7 @@ def likes(request, article_pk):
             article.like_users.add(request.free_id)
         return redirect('articles:index')
     return redirect('accouts:login')
+
+
+# def get_absolute_url(self):        
+#     return reverse('write:garellry_detail', kwargs={'pk':self.id} )
