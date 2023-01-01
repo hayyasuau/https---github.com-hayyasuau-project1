@@ -1,9 +1,13 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from common.forms import UserForm
 from django.contrib.auth import authenticate, login
 
 
 def signup(request):
+    if not request.user.username:
+        return redirect('login')
+
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():

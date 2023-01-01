@@ -1,6 +1,12 @@
+{% extends 'home.html' %} 
+{% block left_menu %}
+{% include 'write/board_menu.html' %}
+{% endblock left_menu %}
+{% block main_content %}
 <body>
 
 <div>게시판</div>
 <div><a href="{% url 'write:free_write' %}"><button>글쓰기</button></a></div>
     
 </body>
+{% endblock  %}

@@ -1,6 +1,21 @@
-<body>
-
-    <div>갤러리</div>
-    <div><a href="{% url 'write:gallery_write' %}"><button>글쓰기</button></a></div>
-        
-</body>
+{% extends 'home.html' %} 
+{% block left_menu %}
+{% include 'write/board_menu.html' %}
+{% endblock left_menu %}
+{% block main_content %}
+    <h1>갤러리입니다.</h1>
+    <div><a href="/write/gallery/gallery_make"><button>글쓰기</button></a></div>
+    <div>
+        <table>
+            <tr>
+                <td>이미지</td>
+                <td>내용</td>
+                <td>자세히보기</td>
+                <td>작성자</td>
+                <td>작성시간</td>
+            </tr>
+            {{gallery_text}}
+            {% include 'write/gallery_list.html' %}</td>
+        </table>
+    </div>
+{% endblock  %}

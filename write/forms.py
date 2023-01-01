@@ -1,10 +1,10 @@
 from django import forms
-from .models import Free
+from .models import Free, Good
 from all_info.models import Info
 from django_summernote.fields import SummernoteTextField
 from django_summernote.widgets import SummernoteWidget
 
-class BoardWriteForm(forms.ModelForm):
+class BoardWriteForm(forms.ModelForm): #자유게시판용 게시판 만들기
     title = forms.CharField(
         label='글 제목',
         widget=forms.TextInput(
@@ -41,6 +41,7 @@ class BoardWriteForm(forms.ModelForm):
         fields = [
             'title',
             'text',
+            'imgfile',
             # 'info'
         ]
         widgets = {
@@ -61,3 +62,10 @@ class BoardWriteForm(forms.ModelForm):
             self.title = title
             self.text = text
             # self.info = info
+            
+class GoodForm(forms.ModelForm): #댓글 작성시 필드 보이지 않게
+    class Meta :
+        model = Good
+        # fields = '__all__'
+        exclude = ('free', 'info', 'gallary', 'join')
+        
