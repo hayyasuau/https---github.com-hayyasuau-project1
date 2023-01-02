@@ -19,7 +19,7 @@ def select_moim(request):
 
 # class Select_DetailView(DetailView):
 
-def update(request, id):
+def make_update(request, id):
     make_moim=Make_Moim.objects.get(id=id)
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -45,7 +45,7 @@ def delete(request, id):
         make_moim.delete()
         return render(request,'make_moim/detail.html')
     except:
-            return redirect('/select_moim')
+        return redirect('/select_moim')
 
         
 def make_detail(request, id):
