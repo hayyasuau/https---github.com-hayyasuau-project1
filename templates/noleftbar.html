@@ -44,10 +44,10 @@
                         <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" href="/select_moim/">모임 참석하기</a>
+                        <a class="nav-link text-white-50" href="/write/">모임 만들기</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" href="#">모임 만들기</a>
+                        <a class="nav-link text-white-50" href="#">모임 참석하기</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white-50" href="#">모임 찾기</a>
@@ -68,10 +68,6 @@
     </nav>
 
 <div style="display: flex; flex-direction: row;text-align: center;  padding-top: 60px;">
-    <div style="width:10%; background-color: brown;">
-        {% block left_menu %}
-        {% endblock left_menu %}
-    </div>
     <div style="width:80%; height: 2000px; background-color:yellow; margin-left: 10px; margin-right: 10px;">
         {% block main_content %}
         {% endblock %}
