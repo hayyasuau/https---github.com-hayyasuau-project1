@@ -1,0 +1,11 @@
+{% extends 'home.html' %}
+{% block main_content %}
+    <h1>모임만들기</h1>
+    <hr>
+    <form action='.' method="post" enctype="multipart/form-data">{% csrf_token %}
+        <table>
+            {{form}}
+        </table>
+        <input type="button" value="만들기">
+    </form>
+{% endblock %}

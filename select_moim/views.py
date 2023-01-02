@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.views.generic import DetailView
 from select_moim.models import Select_Moim
 
 # Create your views here.
@@ -13,3 +13,5 @@ def select_moim(request):
         )
     else :
         return render(request, 'select_moim/select_moim.html',{})
+
+# class Select_DetailView(DetailView):

@@ -25,6 +25,7 @@ urlpatterns = [
     # path('common/', include('common.urls')),
     path('write/', include('write.urls')),
     path('select_moim/', include('select_moim.urls')),
+    path('make_moim/', include('make_moim.urls')),
     path('login/',
         auth_views.LoginView.as_view(template_name='member/login.html'),
         name='login'

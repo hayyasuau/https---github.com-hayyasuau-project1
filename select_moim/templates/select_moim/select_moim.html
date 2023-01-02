@@ -3,7 +3,7 @@
     {% if select_moim %}
         {% for s in select_moims %}
             {{s.name}}<br>
-            {{s.commend}}<br>
+            {{s.make_moim.commend}}<br>
         {% endfor %}
     {% else %}
         <h1>가입한 모임이 없습니다.</h1>
