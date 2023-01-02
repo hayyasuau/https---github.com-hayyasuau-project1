@@ -1,6 +1,7 @@
 from django.db import models
 from all_info import models as models2
 from django.conf import settings
+from make_moim.models import Make_Moim
 
 from select_moim.models import Select_Moim #좋아요-import setting
 # Create your models here. 
@@ -58,6 +59,7 @@ class Good(models.Model):#댓글 연결
     content = models.CharField(max_length=200, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE)
     def __str__(self):
         return self.content
 

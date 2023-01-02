@@ -4,6 +4,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from all_info.models import Info
 from make_moim.models import Make_Moim
+from write.models import Good
 
 
 # Create your views here.
@@ -27,9 +28,3 @@ def make_moim(request):
         return redirect('/signup/')
     return render(request, 'make_moim/make_moim_form.html',{'name': name,'commend': commend,'location': location,'imgfile': imgfile,'max_people': max_people,'make_moims':make_moims, 'make_pk':make_pk})
 
-def make_detail(request, pk):
-    try :
-        make_moim= Make_Moim.objects.get(pk=pk)
-    except Make_Moim.DoesNotExist:
-        raise Http404('해당 게시물을 찾을 수 없습니다.')
-    return render(request, 'make_moim/make_detail.html', {'make_moim' : make_moim})
