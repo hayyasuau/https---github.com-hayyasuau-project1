@@ -7,6 +7,10 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.http import HttpResponseRedirect
 # from django.view.decorators.http import require_http_methods
 
+def freeboard_index(request): #자유게인덱스
+    all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
+    return render(request, 'write/freeindex.html', {'title':'Board List', 'board_list':all_boards})
+
 def board_list(request):
     login_session = request.session.get('login_session','')
     context = {'login_session' : login_session}
@@ -102,6 +106,7 @@ def gallery_make(request):
         except:
             return render(request, 'login_fail.html')
     return render(request, 'gallery_makeit.html')
+
 def gallery_single(request, pk): #FBV로 싱글갤러리 만들기
     gallery_singles = Gallery.objects.get(pk=pk)
 
