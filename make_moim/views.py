@@ -11,20 +11,24 @@ from write.models import Good
 def make_moim(request):
     if request.method == 'GET':
         return render(request, 'make_moim/make_moim_form.html')
-    pk=Make_Moim.objects('make_id')
     name = request.POST.get('name')
+    print(name)
     commend = request.POST.get('commend')
     location = request.POST.get('location')
     imgfile = request.POST.get('imgfile')
     max_people = request.POST.get('max_people')
+    print(max_people)
     make_moims = Make_Moim.objects.all()
-    make_pk= Make_Moim.objects.get(pk=pk)
     try:
+        print('aaaa')
         info_id = request.session['info_id']
         info_id = Info.objects.get(info_id=info_id)
         make_moim = Make_Moim(name=name,commend=commend,location=location,imgfile=imgfile,max_people=max_people)
         make_moim.save()
     except:
+        print('bbbb')
         return redirect('/signup/')
-    return render(request, 'make_moim/make_moim_form.html',{'name': name,'commend': commend,'location': location,'imgfile': imgfile,'max_people': max_people,'make_moims':make_moims, 'make_pk':make_pk})
+    print('cccc')
+    # 얘는 다 실행하고 보내는 주소
+    return render(request, 'make_moim/make_moim_form.html',{'name': name,'commend': commend,'location': location,'imgfile': imgfile,'max_people': max_people,'make_moims':make_moims,'id':make_moim.make_id})
 

@@ -57,6 +57,6 @@ class Good(models.Model):#댓글 연결
     content = models.CharField(max_length=200, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE)
+    make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.content

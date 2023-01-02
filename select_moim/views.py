@@ -6,6 +6,15 @@ from select_moim.models import Select_Moim
 from write.models import Good
 
 # Create your views here.
+def make_good(request):
+    if request.method == 'POST':
+        comment = request.POST.get('comment') #댓글
+        
+        make_moim = Make_Moim.objects.get(pk=id)
+        g = Good(content=comment, make_moim=make_moim)
+        g.save()
+        return redirect('/select_moim/detail/%s/' % g.good_id)
+
 def select_moim(request):
     if request.method == 'POST':
         selects = Select_Moim.objects.all()
@@ -51,11 +60,11 @@ def delete(request, id):
 def make_detail(request, id):
     try :
         make_moim= Make_Moim.objects.get(id=id)
-        good=Good.objects.filter(make_moim=make_moim)
+        goods=Good.objects.filter(make_moim=make_moim)
 
         context = {
             'make_moim' : make_moim,
-            'good' : good
+            'goods' : goods
             
         }
     except Make_Moim.DoesNotExist:

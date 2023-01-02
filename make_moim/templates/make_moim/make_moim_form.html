@@ -2,7 +2,8 @@
 {% block main_content %}
     <h1>모임만들기</h1>
     <hr>
-    <form action='/select_moim/detail/{{make_pk}}/' method="post" enctype="multipart/form-data">{% csrf_token %}
+    {% comment %} 얘는 보내주는 주소->얘를 view한테 보내줘야함 {% endcomment %}
+    <form action='/make_moim/' method="post" enctype="multipart/form-data">{% csrf_token %}
         <table>
             <tr>
             <input type="file" name="imgfile">이미지파일

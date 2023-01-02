@@ -26,13 +26,14 @@
     <a href="" id="delete">삭제</a>
     <hr>
     <form action="" method="post">가입 신청
-        <input type="text" name=""> <br>
-        <input type="text" name="" id="" value=""> !가입희망자
+        <input type="text" name="comment"> <br>
+        <input type="text" name="id" id="id" value=""> !가입희망자
         <button>입력</button>
+        {% csrf_token %}
     </form>
-<div>
+    {% for good in goods %}
+        <h4> {{good.good}} </h3>
     {% endfor %}
 
-</div>
 
 {% endblock  %}

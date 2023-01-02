@@ -34,7 +34,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'
     ),
     # path('loginfo/', include('loginfo.urls')),
-      # path('login/',
+    # path('login/',
     #     auth_views.LoginView.as_view(template_name='member/login.html'),
     #     name='login'
     # ),
