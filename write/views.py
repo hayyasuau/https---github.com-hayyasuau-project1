@@ -1,8 +1,11 @@
 from django.urls import reverse
-from django.shortcuts import HttpResponseRedirect, get_object_or_404,render, redirect
+from django.shortcuts import  get_object_or_404,render, redirect
 from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good
 from all_info.models import Info
+from django.views.generic import ListView, DetailView, CreateView
+from django.http import HttpResponseRedirect
+# from django.view.decorators.http import require_http_methods
 
 # Create your views here.
 def board_list(request):
@@ -78,32 +81,39 @@ def gallery(request):
         'write/gallery.html',
         {'gallery_list': gallery_list}
     )
+
+def gallery_makeit(request):
+    return render(request, 'write/gallery_makeit.html')
+
+def gallery_make(request):
+    gallery = Gallery.objects.all().order_by('-pk')
+
+    if request.method == 'POST':
+        #회원정보 조회
+        files = request.POST.get('files')
+        text = request.POST.get('text')
+        title = request.POST.get('title')
+        
+        try:
+            info = request.session['info']
+            info_id=Info.objects.get(info_id=info)
+            new_gallery = Gallery()
+            new_gallery.comment =text
+            new_gallery.title = title
+            new_gallery.imgfile = files
+            new_gallery.save()
+            return HttpResponseRedirect('write:gallery')
+        except:
+            return render(request, 'login_fail.html')
+    return render(request, 'gallery_makeit.html')
 def gallery_single(request, pk): #FBV로 싱글갤러리 만들기
     gallery_singles = Gallery.objects.get(pk=pk)
 
     return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles})
 
-
-def gallery_make(request):
-    gallery = Gallery.objects.all().order_by('-pk')
-    
-    if request.method == 'POST':
-        files = request.POST.get('files')
-        text = request.POST.get('text')
-        new_gallery = Gallery()
-        new_gallery.comment =text
-        new_gallery.imgfile = files
-        new_gallery.save()
-        return HttpResponseRedirect(reverse('write:gallery'))
-    else :
-        new_gallery_list=new_gallery.objects.all()
-        return render(
-            request,
-            # 이거 아래꺼 list로 하면 list로 보내지나?
-            'write/gallery_list.html',
-            {'gallery_list': new_gallery_list}
-        )
-        
+# def GalleryCreate(CreateView):
+#     model = Gallery
+#     field = ['title', 'comment','imgfile','info']
 
 def gallery_free_write(request):
     login_session = request.session.get('login_session','')
@@ -185,5 +195,5 @@ def likes(request, article_pk):
     return redirect('accouts:login')
 
 
-# def get_absolute_url(self):        
-#     return reverse('write:garellry_detail', kwargs={'pk':self.id} )
+def get_absolute_url(self):        
+    return f'/write/gallery/{self.pk}/'
