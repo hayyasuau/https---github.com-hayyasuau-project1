@@ -22,24 +22,23 @@ from . import views
 
 urlpatterns = [
     path('admin', admin.site.urls), #admin, admin@admin.com, 1234
-    # path('common/', include('common.urls')),
     path('write/', include('write.urls')),
     path('select_moim/', include('select_moim.urls')),
     path('make_moim/', include('make_moim.urls')),
-    path('login/',
-        views.login,
-        name='login'
+    path('login/', views.login,name='login'
     ),
-    # path('login/',
-    #     auth_views.LoginView.as_view(template_name='member/login.html'),
-    #     name='login'
-    # ),
     path('', views.home, name='home'
     ),
     path('search/', views.search, name='search'
     ),
     path('signup/', views.signup, name='signup'
     ),
+    
+    # path('common/', include('common.urls')),
     # path('loginfo/', include('loginfo.urls')),
+      # path('login/',
+    #     auth_views.LoginView.as_view(template_name='member/login.html'),
+    #     name='login'
+    # ),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

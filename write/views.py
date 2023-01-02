@@ -13,11 +13,8 @@ def board_list(request):
     context = {'login_session' : login_session}
     return render(request, 'write/board_list.html', context)
 
-# def board_left(request):
-#     return render(request, 'write/board_left.html')
-
 def board_free_write(request):
-    login_session = request.session.get('login_session','')
+    login_session = request.session.get('info_id','')
     context = {'login_session' : login_session}
     if request.method == 'GET' :
         write_form = BoardWriteForm
@@ -31,9 +28,9 @@ def board_free_write(request):
             writer = Info.objects.get(info_id=login_session)
             board = Free(
                 title=write_form.title,
-                texts=write_form.text,
-                writer=writer,
-                board_name=write_form.info
+                text=write_form.text,
+                info=writer,
+                # comment=write_form.info
             )
             board.save()
             return redirect('/free_write')
