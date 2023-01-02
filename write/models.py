@@ -1,6 +1,8 @@
 from django.db import models
 from all_info import models as models2
-from django.conf import settings #좋아요-import setting
+from django.conf import settings
+
+from select_moim.models import Select_Moim #좋아요-import setting
 # Create your models here. 
 class Join(models.Model):
     join_id = models.AutoField(primary_key=True)
@@ -11,6 +13,7 @@ class Join(models.Model):
     write_dttm = models.DateTimeField(auto_now_add=True, null=True)
     update_dttm = models.DateTimeField(auto_now=True, null=True)
     new_face = models.TextField(verbose_name='가입인사', null=True)
+    select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     def __str__(self):
         return f'[{self.pk}][{self.title}]'
 
@@ -28,6 +31,7 @@ class Free(models.Model): #
     update_dttm = models.DateTimeField(auto_now=True, null=True)
     hits=models.PositiveIntegerField(default=0)
     imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
+    select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     def __str__(self):
         return f'[{self.pk}][{self.title}]'
 class Gallery(models.Model): #FBV로 만듬
@@ -40,6 +44,7 @@ class Gallery(models.Model): #FBV로 만듬
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     group = models.ForeignKey(models2.Group, on_delete=models.CASCADE,db_column='group_id', null=True)
     imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
+    select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     def __str__(self):
         return f'[{self.pk}][{self.title}]'
 
@@ -49,6 +54,7 @@ class Good(models.Model):#댓글 연결
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     join = models.ForeignKey(Join, on_delete=models.CASCADE,db_column='join_id', null=True)
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE,db_column='gallery_id', null=True)
+    select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     content = models.CharField(max_length=200, null=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)

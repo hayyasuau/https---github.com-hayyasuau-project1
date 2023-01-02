@@ -1,12 +1,11 @@
 {% if gallery_list %}
 {% for g in gallery_list %}
-    <tr>
+    <tr onclick='location="/write/detail/{{g.id}}/"'>
+    <td><h2><a href="{{g.get_absolute_url}}">{{g.title}}</a></h2></td>
     <td><img src="{{g.imgfile}}" alt=""></td>
     <td>{{g.comment}}</td>
-    <td><a href="">자세히보기</a></td>
     <td> {{g.info}}</td>
     <td>작성시간</td>
     </tr>
 {% endfor %}
 {% endif %}
-{% comment %} 장고 마이그레이션 오류나옴! {% endcomment %}
