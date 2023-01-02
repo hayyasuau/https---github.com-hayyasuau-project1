@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 def board_list(request):
     login_session = request.session.get('login_session','')
     context = {'login_session' : login_session}
-    return render(request, 'write/board_list.html', context)
+    return render(request, 'base.html', context)
 
 def board_free_write(request):
     login_session = request.session.get('info_id','')
