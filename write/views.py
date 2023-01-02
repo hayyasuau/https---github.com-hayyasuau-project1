@@ -7,7 +7,6 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.http import HttpResponseRedirect
 # from django.view.decorators.http import require_http_methods
 
-# Create your views here.
 def board_list(request):
     login_session = request.session.get('login_session','')
     context = {'login_session' : login_session}

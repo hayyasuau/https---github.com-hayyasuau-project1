@@ -1,7 +1,7 @@
 {% comment %} {% extends 'home/index.html'%} {% endcomment %}
 {% comment %} {% block contents %} {% endcomment %}
 <div>게시판 글쓰기!</div>
-<form action="" method="POST">
+<form action="{% url 'write:free' %}" method="POST">
     {% csrf_token %}
 
     {% for form in forms %}
@@ -14,6 +14,6 @@
     {% if error %}
     {{ error}}
     {% endif %}
-    <a ><button>작성</button></a>
+    <button>작성</button>
 </form>
 {% comment %} {% endblock contents %} {% endcomment %}
