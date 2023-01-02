@@ -4,9 +4,9 @@
     <div><a href="{% url 'write:join_write' %}"><button>글쓰기</button></a></div>
     {% comment %} 좋아요추가!! {% endcomment %}
     <div>
-        <form action="{% url 'articles:likes' article.pk %}" method='POST'>
+        <form action="{% url 'join:likes' pk=join.pk %}" method='POST'>
           {% csrf_token %}
-          {% if user in article.like_users.all %}
+          {% if user in join.like_users.all %}
             <input type="submit" value='좋아요 취소'>
           {% else %}
             <input type="submit" value='좋아요'>
