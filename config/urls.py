@@ -26,9 +26,13 @@ urlpatterns = [
     path('write/', include('write.urls')),
     path('select_moim/', include('select_moim.urls')),
     path('login/',
-        auth_views.LoginView.as_view(template_name='member/login.html'),
+        views.login,
         name='login'
     ),
+    # path('login/',
+    #     auth_views.LoginView.as_view(template_name='member/login.html'),
+    #     name='login'
+    # ),
     path('', views.home, name='home'
     ),
     path('search/', views.search, name='search'
