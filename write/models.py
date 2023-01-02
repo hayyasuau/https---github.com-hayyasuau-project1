@@ -2,7 +2,6 @@ from django.db import models
 from all_info import models as models2
 from django.conf import settings
 from make_moim.models import Make_Moim
-
 from select_moim.models import Select_Moim #좋아요-import setting
 # Create your models here. 
 class Join(models.Model):
@@ -17,8 +16,6 @@ class Join(models.Model):
     select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     def __str__(self):
         return f'[{self.pk}][{self.title}]'
-
-    
 
 class Free(models.Model): #
     free_id = models.AutoField(primary_key=True)
@@ -35,6 +32,7 @@ class Free(models.Model): #
     select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     def __str__(self):
         return f'[{self.pk}][{self.title}]'
+
 class Gallery(models.Model): #FBV로 만듬
     gallery_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=64, verbose_name='글 제목', default='')
@@ -62,4 +60,3 @@ class Good(models.Model):#댓글 연결
     make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.content
-

@@ -11,5 +11,5 @@ urlpatterns = [
     
     path('good/', views.make_good, name='make_good'),
     path('detail/<int:id>', views.make_detail, name='make_detail'),
-    path('update/<int:id>', views.make_update, name='make_update'),
+    # path('update/<int:id>', views.make_update, name='make_update'),
 ]

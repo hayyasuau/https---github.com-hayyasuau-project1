@@ -20,4 +20,5 @@ urlpatterns = [
     # path('gallery/<int:pk>/', views.gallery_detail, name='gallery_detail'),
     path('<int:free_pk>/comments/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
     path('<int:free_pk>/likes/', views.likes, name='likes'),
+    path('free/freeboard_index', views.freeboard_index, name='freeindex'),#자유게인덱스
 ]
