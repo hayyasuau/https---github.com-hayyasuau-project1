@@ -15,3 +15,4 @@ def select_moim(request):
         return render(request, 'select_moim/select_moim.html',{})
 
 # class Select_DetailView(DetailView):
+
