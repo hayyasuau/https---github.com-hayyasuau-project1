@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'all_info',
     'write',
     'common',
-    'board',
     #
     "django.contrib.admin",
     "django.contrib.auth",
