@@ -33,8 +33,7 @@ urlpatterns = [
     ),
     path('signup/', views.signup, name='signup'
     ),
-    
-    # path('common/', include('common.urls')),
+    path('board/', include('board.urls')), #게시판
     # path('loginfo/', include('loginfo.urls')),
       # path('login/',
     #     auth_views.LoginView.as_view(template_name='member/login.html'),
