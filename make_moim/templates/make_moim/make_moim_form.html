@@ -2,14 +2,14 @@
 {% block main_content %}
     <h1>모임만들기</h1>
     <hr>
-    <form action='/make_moim' method="post" enctype="multipart/form-data">{% csrf_token %}
+    <form action='/detail/{{make_pk}}/' method="post" enctype="multipart/form-data">{% csrf_token %}
         <table>
             <tr>
             <input type="file" name="imgfile">이미지파일
             <br>
             <input type="text" name="name">이름
             <br>
-            <textarea name="location" id="location" cols="50" rows="20" aria-valuetext="설명"></textarea>
+            <textarea name="commend" id="commend" cols="50" rows="20" aria-valuetext="설명"></textarea>
             <br>
             <input type="text" name="location">지역
             <td>
@@ -22,6 +22,6 @@
             </td>
             </tr>
         </table>
-        <input type="button" value="만들기">
+        <input type="submit" value="만들기">
     </form>
 {% endblock %}

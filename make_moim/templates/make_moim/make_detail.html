@@ -1,0 +1,29 @@
+{% extends 'homecopy.html' %} 
+{% block left_menu %}
+{% include 'write/board_menu.html' %}
+{% endblock left_menu %}
+{% block main_content %}
+<div style="width: 500px; height: 500px; background-color: azure;">
+    <h1>테스트용</h1> 
+    {% for m in make_moim%}
+</div>
+
+    <label for="title">제목</label>
+    <input type="text" id='title' value="{{m.title}}" readonly>
+
+    <label for="imgfile">이미지</label>
+    <input type="file" id='imgfile' value="{{m.imgfile}}" readonly>
+
+    <label for="location">지역/최대인원</label>
+    <input type="text" id='location' value="{{m.location}}/{{m.max_people}}" readonly>
+
+    <label for="commend">소개</label>
+    <textarea class="form-control" readonly>{{m.commend}}</textarea>
+
+
+<div>
+    {% endfor %}
+
+</div>
+
+{% endblock  %}
