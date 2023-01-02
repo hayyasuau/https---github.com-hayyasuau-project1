@@ -172,23 +172,23 @@ def comments_create(request, pk):
 
 
 # @require_POST
-def comments_delete(request, article_pk, comment_pk):
+def comments_delete(request, join_pk, comment_pk):
     if request.free_id.is_authenticated:
         comment = get_object_or_404(Good, pk=comment_pk)
         if request.free_id == comment.free_id:
             comment.delete()
-    return redirect('write:detail', article_pk)
+    return redirect('write:detail', join_pk)
 
 # @require_POST
-def likes(request, article_pk):
+def likes(request, join_pk):
     if request.free_id.is_authenticated:
-        article = get_object_or_404(Free, pk=article_pk)
+        join = get_object_or_404(Free, pk=join_pk)
 
-        if article.like_users.filter(pk=request.free_id.pk).exists():
-            article.like_users.remove(request.free_id)
+        if join.like_users.filter(pk=request.free_id.pk).exists():
+            join.like_users.remove(request.free_id)
         else:
-            article.like_users.add(request.free_id)
-        return redirect('articles:index')
+            join.like_users.add(request.free_id)
+        return redirect('join:index')
     return redirect('accouts:login')
 
 
