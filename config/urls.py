@@ -25,9 +25,7 @@ urlpatterns = [
     path('write/', include('write.urls')),
     path('select_moim/', include('select_moim.urls')),
     path('make_moim/', include('make_moim.urls')),
-    path('login/',
-        views.login,
-        name='login'
+    path('login/', views.login,name='login'
     ),
     path('', views.home, name='home'
     ),
