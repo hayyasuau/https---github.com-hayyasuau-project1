@@ -1,0 +1,37 @@
+{% extends 'homecopy.html' %} 
+{% block left_menu %}
+{% include 'write/board_menu.html' %}
+{% endblock left_menu %}
+{% block main_content %}
+<div style="width: 500px; height: 500px; background-color: azure;">
+</div>
+
+    <label for="title">제목</label>
+    <input type="text" id='title' value="{{m.title}}" readonly>
+
+    <label for="imgfile">이미지</label>
+    <input type="file" id='imgfile' value="{{m.imgfile}}" readonly>
+
+    <label for="location">지역/최대인원</label>
+    <input type="text" id='location' value="{{m.location}}/{{m.max_people}}" readonly>
+
+    <label for="commend">소개</label>
+    <textarea class="form-control" readonly>{{m.commend}}</textarea>
+
+    <hr>
+    <a href="" id="list">목록</a>
+    <a href="" id="update">수정</a>
+    <a href="" id="delete">삭제</a>
+    <hr>
+    <form action="" method="post">가입 신청
+        <input type="text" name="comment"> <br>
+        <input type="text" name="id" id="id" value=""> !가입희망자
+        <button>입력</button>
+        {% csrf_token %}
+    </form>
+    {% for good in goods %}
+        <h4> {{good.good}} </h3>
+    {% endfor %}
+
+
+{% endblock  %}
