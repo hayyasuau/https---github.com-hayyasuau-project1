@@ -66,7 +66,7 @@ def login(request): #로그인
        
         return render(
             request,
-            'common/login.html',
+            'common/login.html', 
         )
     # POST
     info_id = request.POST.get('info_id')
@@ -80,6 +80,10 @@ def login(request): #로그인
     request.session['info_id'] = s.info_id
     
     return redirect('home')# 다른사이트로 보낼거임
+
+def logout(request):
+    del request.session['info_id']
+    return redirect('home')
 
 def home(request):
     return render(request, 'home.html')

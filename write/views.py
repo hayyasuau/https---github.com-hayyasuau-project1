@@ -5,7 +5,13 @@ from .models import Free, Gallery, Join ,Good
 from all_info.models import Info
 from django.views.generic import ListView, DetailView, CreateView
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 # from django.view.decorators.http import require_http_methods
+
+
+def view_text(request,pk): #게시물 보기
+    free=Free.objects.get(free_id=pk)
+    return render(request, 'write/vt_free.html',{'free':free})
 
 def freeboard_index(request): #자유게인덱스
     all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
