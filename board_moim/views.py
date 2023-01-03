@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from make_moim.models import Make_Moim
+from django.contrib import messages
 
 # Create your views here.
 def board_moim(request):
@@ -43,3 +44,18 @@ def list_moim(request):
         # 'posts' : posts
     }
     return render(request,'board_moim/board_list.html', context)
+
+def board_detail(request):
+    return render(request, 'board_moim/detial.html')
+
+# def search(request, search):
+#     search_keyword = request.GET.get('q','')
+#     search_type = request.GET.get('type','')
+#     moim_lists = Make_Moim.objects.all().order_by('-make_id')
+#     if search_keyword:
+#         if len(search_keyword) > 1 :
+#             if search_type == 'all':
+#                 pass
+#         else :
+#             messages.error(self.request, '검색어는 2글자 이상 입력하세요')
+            

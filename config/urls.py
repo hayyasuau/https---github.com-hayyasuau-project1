@@ -26,6 +26,7 @@ urlpatterns = [
     path('select_moim/', include('select_moim.urls')),
     path('make_moim/', include('make_moim.urls')),
     path('board_moim/', include('board_moim.urls')),
+    path('profile/', include('all_info.urls')),
     path('login/', views.login,name='login'
     ),
      path('logout/', views.logout,name='logout'
