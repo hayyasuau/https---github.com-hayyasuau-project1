@@ -10,7 +10,7 @@ urlpatterns = [
     path('join/', views.join, name='join'),
     path('join/join_write/', views.join, name='join_write'),
     path('gallery/', views.gallery, name='gallery'),
-    path('gallery/<int:pk>', views.gallery_single, name='gallery_single'),
+    path('gallery/<int:pk>/', views.gallery_single, name='gallery_single'),
     path('new_face/', views.new_face, name='new_face'),
     path('gallery/gallery_makeit/', views.gallery_makeit, name='gallery_makeit'),
     path('', views.board_list, name='board_list'),
@@ -20,5 +20,6 @@ urlpatterns = [
     # path('gallery/<int:pk>/', views.gallery_detail, name='gallery_detail'),
     path('<int:free_pk>/comments/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
     path('<int:free_pk>/likes/', views.likes, name='likes'),
-    path('freeboard_index', views.freeboard_index, name='freeindex'),#자유게인덱스
+    path('freeboard_index/', views.freeboard_index, name='freeindex'),#자유게인덱스
+    path('viewtext/<int:pk>/', views.view_text, name='free01' )#view text, vt 게시물보기
 ]
