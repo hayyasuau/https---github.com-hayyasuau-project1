@@ -41,3 +41,11 @@ def update(request, id):
     #받아올 것 먼저 만들기
     return render(request,'all_info/update.html',{'user':user})
 
+def delete(request, id):
+    user = Info.objects.get(info_id=id)
+    if user.info_id == request.session['info_id']:
+        user.delete()
+        return redirect('login')
+    return redirect('profile_view')
+
+
