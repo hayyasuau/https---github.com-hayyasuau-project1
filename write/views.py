@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 
 def freeboard_index(request): #자유게인덱스
     all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
+    print(all_boards)
     return render(request, 'write/freeindex.html', {'title':'Board List', 'board_list':all_boards})
 
 def board_list(request):
@@ -49,11 +50,11 @@ def board_free_write(request):
 
 def free(request):
     free_id = Free.objects.all().order_by('-pk')
-    
+    all_boards = Free.objects.all().order_by("-write_dttm") 
     return render(
         request,
         'write/free.html',
-        {'free': free_id}
+        {'free': free_id, 'board_list':all_boards }
     )
 
 def join(request):
