@@ -12,6 +12,12 @@
 {% if request.session.info_id %}
 <form action="/profile/update/{{user.info_id}}/">
     <input type="submit" value='수정하기'></input>
+
+    {% csrf_token %}
+</form>
+<form action="/profile/delete/{{user.info_id}}/">
+    <input type="submit" value='삭제하기'></input>
+
     {% csrf_token %}
 </form>
 
