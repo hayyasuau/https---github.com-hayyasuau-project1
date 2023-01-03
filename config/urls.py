@@ -32,10 +32,8 @@ urlpatterns = [
     ),
     path('', views.home, name='home'
     ),
-    path('search/', views.search, name='search'
-    ),
-    path('signup/', views.signup, name='signup'
-    ),
+    path('search/', views.search, name='search'),#검색
+    path('signup/', views.signup, name='signup'),#회원가입
 
     # path('loginfo/', include('loginfo.urls')),
     # path('login/',
