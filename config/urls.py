@@ -28,12 +28,15 @@ urlpatterns = [
     path('board_moim/', include('board_moim.urls')),
     path('login/', views.login,name='login'
     ),
+     path('logout/', views.logout,name='logout'
+    ),
     path('', views.home, name='home'
     ),
     path('search/', views.search, name='search'
     ),
     path('signup/', views.signup, name='signup'
     ),
+
     # path('loginfo/', include('loginfo.urls')),
     # path('login/',
     #     auth_views.LoginView.as_view(template_name='member/login.html'),

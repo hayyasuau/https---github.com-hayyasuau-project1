@@ -59,8 +59,12 @@
             </form>
     
             <div class="text-end">
-              <button type="button" class="btn btn-outline-light me-2">Login</button>
-              <button type="button" class="btn btn-warning">Sign-up</button>
+              {% if request.session.info_id %}
+                <a href="/logout"><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
+              {% else %}
+              <a href="/login"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+              {% endif %}
+              <a href="/signup"><button type="button" class="btn btn-warning">Sign-up</button></a>
             </div>
           </div>
         </div>
