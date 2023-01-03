@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
-from django.core.paginator import Paginator
+# from django.core.paginator import Paginator
 from make_moim.models import Make_Moim
-from django.contrib import messages
+from write.models import Good
+# from django.contrib import messages
 
 # Create your views here.
 def board_moim(request):
@@ -47,7 +48,8 @@ def list_moim(request):
 
 def board_detail(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
-    return render(request, 'board_moim/detail.html',{'make_moim':make_moim})
+    comment = Good.objects.filter(make_moim=make_moim)
+    return render(request, 'board_moim/detail.html',{'make_moim':make_moim, 'comment':comment})
 
 def board_update(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
@@ -79,6 +81,15 @@ def board_delete(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
     make_moim.delete()
     return redirect('/board_moim/list/')
+
+def comment(request):
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        id = request.POST.get('id')
+        make_moim = Make_Moim.objects.get(make_id=id)
+        c = Good(content=comment, make_moim=make_moim)
+        c.save
+        return redirect('/board_moim/%s/' %  id)
 
 
     # return render(request, 'board_moim/detail.html',{'make_moim':make_moim})
