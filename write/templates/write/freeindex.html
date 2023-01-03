@@ -10,14 +10,22 @@
 <body>
 
 <div class="container mt-3">
-  <h2>자유게시판 목록</h2>
+  <h2>목록</h2>
+  <p>Use the .list-group-flush class to remove some borders and rounded corners:</p>
 </div>
   
 <div class="container mt-3">
   <ul class="list-group list-group-flush">
+
     {% for b in board_list %}
-    {{ b.title }}
+    <table><tr><td>
+      <li class="list-group-item" name="free_id" value=""> {{b.free_id}}</li></td>
+      <td><li class="list-group-item" name="title"> {{b.title}}</li></td>
+      </tr><td><li class="list-group-item" name="text"> {{b.text}}</li></td>
+      <td><li class="list-group-item" name="write_dttm"> {{b.write_dttm}}</li></td>
+    </table>
     {% endfor %}
+    <hr>
   </ul>
 </div>
 
