@@ -39,44 +39,37 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-dark" style="position: fixed; width: 100%; ">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
-                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- <a class="navbar-brand text-light" href="#"><img src="/statics/logo2.png" style="width: 60px; " alt=""></a> -->
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                    <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white-50" href="/write/">모임 보기</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white-50" href="#">모임 참석하기</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white-50" href="#">모임 찾기</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-white-50 disabled">Disabled</a>
-                    </li>
-                </ul>
-                <form class="d-flex" method='POST' action={% url 'search' %} role="search">
-                    {% csrf_token %}
-                    <input class="form-control me-2" type="search" name='search' style="width: 150%;"
-                    placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" >
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+            </a>
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+              <li><a href="/write/" class="nav-link px-2 text-white">모임 보기</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">모임 참석하기</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">모임 찾기</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">기타등등</a></li>
+            </ul>
+    
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+              <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+            </form>
+    
+            <div class="text-end">
+              <button type="button" class="btn btn-outline-light me-2">Login</button>
+              <button type="button" class="btn btn-warning">Sign-up</button>
             </div>
+          </div>
         </div>
-    </nav>
+    </header>
+
 
     <div style="display: flex; flex-direction: row;text-align: center;  padding-top: 60px;">
         <div style="width:80%; height: 2000px; background-color:yellow; margin-left: 10px; margin-right: 10px;">
+            <p></p>
             {% block main_content %}
             {% endblock %}
         </div>
