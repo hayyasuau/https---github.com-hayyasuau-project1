@@ -28,7 +28,3 @@ def make_moim(request):
     # 얘는 다 실행하고 보내는 주소
     return redirect('/board_moim/list')
     # return render(request, 'board_moim/board_list.html',{'name': name,'commend': commend,'location': location,'imgfile': imgfile,'max_people': max_people,'id':make_moim.make_id})
-
-def make_moim2(request):
-    id = request.GET.get('id')
-    

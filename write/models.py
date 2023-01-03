@@ -1,8 +1,11 @@
-from django.db import models
-from all_info import models as models2
 from django.conf import settings
+from django.db import models
+
+from all_info import models as models2
 from make_moim.models import Make_Moim
-from select_moim.models import Select_Moim #좋아요-import setting
+from select_moim.models import Select_Moim  # 좋아요-import setting
+
+
 # Create your models here. 
 class Join(models.Model):
     join_id = models.AutoField(primary_key=True)
@@ -54,7 +57,7 @@ class Good(models.Model):#댓글 연결
     join = models.ForeignKey(Join, on_delete=models.CASCADE,db_column='join_id', null=True)
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE,db_column='gallery_id', null=True)
     select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
-    content = models.CharField(max_length=200, null=True)
+    content = models.CharField(max_length=200, null=True) #댓글
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE, null=True)

@@ -1,7 +1,8 @@
-from django.shortcuts import render
-from django.core.paginator import Paginator
+from django.shortcuts import redirect, render
+# from django.core.paginator import Paginator
 from make_moim.models import Make_Moim
-from django.contrib import messages
+from write.models import Good
+# from django.contrib import messages
 
 # Create your views here.
 def board_moim(request):
@@ -45,8 +46,53 @@ def list_moim(request):
     }
     return render(request,'board_moim/board_list.html', context)
 
-def board_detail(request):
-    return render(request, 'board_moim/detial.html')
+def board_detail(request, pk):
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    comment = Good.objects.filter(make_moim=make_moim)
+    return render(request, 'board_moim/detail.html',{'make_moim':make_moim, 'comment':comment})
+
+def board_update(request, pk):
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    if request.method == 'POST':
+        make_id = request.POST.get('make_id')
+        name = request.POST.get('name')
+        commend = request.POST.get('commend')
+        imgfile = request.POST.get('imgfile')
+        location = request.POST.get('location')
+        max_people = request.POST.get('max_people')
+        # tags = request.POST.get('tags')
+        try :
+            make_moim.make_id = make_id
+            make_moim.name = name
+            make_moim.commend = commend
+            make_moim.imgfile = imgfile
+            make_moim.location = location
+            make_moim.max_people = max_people
+            # make_moim.tags = tags
+            make_moim.save()
+            # return render(request, 'board_moim/detail.html')
+            return redirect('/board_moim/list/')
+        except :
+            return render(request, 'board_moim/update_fail.html',{'make_moim':make_moim})
+
+    return render(request, 'board_moim/update.html',{'make_moim':make_moim})
+
+def board_delete(request, pk):
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    make_moim.delete()
+    return redirect('/board_moim/list/')
+
+def comment(request):
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        id = request.POST.get('id')
+        make_moim = Make_Moim.objects.get(make_id=id)
+        c = Good(content=comment, make_moim=make_moim)
+        c.save
+        return redirect('/board_moim/%s/' %  id)
+
+
+    # return render(request, 'board_moim/detail.html',{'make_moim':make_moim})
 
 # def search(request, search):
 #     search_keyword = request.GET.get('q','')
