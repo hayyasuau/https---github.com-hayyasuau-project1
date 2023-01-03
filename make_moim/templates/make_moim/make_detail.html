@@ -7,16 +7,16 @@
 </div>
 
     <label for="title">제목</label>
-    <input type="text" id='title' value="{{m.title}}" readonly>
+    <input type="text" id='title' value="{{make_moim.title}}" readonly>
 
     <label for="imgfile">이미지</label>
-    <input type="file" id='imgfile' value="{{m.imgfile}}" readonly>
+    <input type="file" id='imgfile' value="{{make_moim.imgfile}}" readonly>
 
     <label for="location">지역/최대인원</label>
-    <input type="text" id='location' value="{{m.location}}/{{m.max_people}}" readonly>
+    <input type="text" id='location' value="{{make_moim.location}}/{{make_moim.max_people}}" readonly>
 
     <label for="commend">소개</label>
-    <textarea class="form-control" readonly>{{m.commend}}</textarea>
+    <textarea class="form-control" readonly>{{make_moim.commend}}</textarea>
 
     <hr>
     <a href="" id="list">목록</a>

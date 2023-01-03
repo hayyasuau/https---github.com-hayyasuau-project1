@@ -3,25 +3,36 @@
 {% include 'write/board_menu.html' %}
 {% endblock left_menu %}
 {% block main_content %}
-<div style="width: 500px; height: 500px; background-color: azure;">
+<div>
 </div>
 
-    <label for="title">제목</label>
-    <input type="text" id='title' value="{{m.title}}" readonly>
+    <h1>{{make_moim.name}}</h1>
+    
+    <hr>
 
-    <label for="imgfile">이미지</label>
-    <input type="file" id='imgfile' value="{{m.imgfile}}" readonly>
-
-    <label for="location">지역/최대인원</label>
-    <input type="text" id='location' value="{{m.location}}/{{m.max_people}}" readonly>
-
-    <label for="commend">소개</label>
-    <textarea class="form-control" readonly>{{m.commend}}</textarea>
+    <label for="imgfile"></label>
+    {% if imgfile %}
+    <img style="height: 500px;" src="/media/{{make_moim.imgfile}}/" alt="토끼" readonly>
+    {% else %}
+    <img style="height: 500px;" src="/media/default.jpg" alt="토끼기본" readonly>    
+    {% endif %}
 
     <hr>
-    <a href="" id="list">목록</a>
-    <a href="" id="update">수정</a>
-    <a href="" id="delete">삭제</a>
+
+    <h4>지역 : {{make_moim.location}}</h4>
+    <hr>
+    <h5>최대인원 : {{make_moim.max_people}}</h5>
+    <br>
+    <h5>현재인원 : {{make_moim.now_people}}</h5>
+
+    <hr>
+    <h5>모임 : "{{make_moim.name}}" 의 소개입니다.</h5>
+    <textarea class="form-control" readonly>{{make_moim.commend}}</textarea>
+
+    <hr>
+    <button type="button"><a href="/board_moim/list/"> 목록</a></button>
+    <form action="/board_moim/update/{{make_moim.make_id}}/"><button value="수정" name="update">수정</button></form>
+    <form action="/board_moim/delete/{{make_moim.make_id}}/"><button value="삭제" name="delete">삭제</button></form>
     <hr>
     <form action="" method="post">가입 신청
         <input type="text" name="comment"> <br>

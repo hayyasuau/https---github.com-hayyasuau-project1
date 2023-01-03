@@ -35,7 +35,7 @@ def update(request, id):
                 user.save()
                 return render(request, 'all_info/detail.html', {'user':user}) #유저친화적
             except :
-                return render(request, 'update_fail.html')
+                return render(request, 'all_info/update_fail.html',{'user':user})
     else :
         return redirect('login')
     #받아올 것 먼저 만들기
