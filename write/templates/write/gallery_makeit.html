@@ -6,14 +6,22 @@
 
 <form action="/write/gallery/?<pk>" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <table class="table table-striped">
 <body>
-<form action="">
-    <div>갤러리</div>
-    <input type="text" name="title">title</input>
-    <input type="file" name="files">
-    <textarea name="" id="" cols="30" rows="10" name='text'></textarea>
-    <input type="submit" value="글쓰기">
+    <tr>
+        <th>제목</th>
+        <td>
+            <input name="title" id="title" type="text" style="width:700px" maxlength="200">
+        </td>
+    </tr>
+    <tr>
+        <th>내용 입력</th>
+        <th>
+            <textarea name="contents" id="contents" rows="15" cols="100"></textarea>
+        </th>
+    </tr>
 </form>
 </body>
+</table>
 </form>
 {% endblock  %}
