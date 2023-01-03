@@ -14,17 +14,21 @@ def make_moim(request):
     name = request.POST.get('name')
     commend = request.POST.get('commend')
     location = request.POST.get('location')
-    imgfile = request.POST.get('imgfile')
+    # imgfile = request.POST.get('imgfile')
+    imgfile = request.FILES.get('imgfile')
     max_people = request.POST.get('max_people')
-    print(max_people)
-    make_moims = Make_Moim.objects.all()
+    # make_moims = Make_Moim.objects.all()
     try:
         info_id = request.session['info_id']
         info_id = Info.objects.get(info_id=info_id)
         make_moim = Make_Moim(name=name,commend=commend,location=location,imgfile=imgfile,max_people=max_people)
         make_moim.save()
     except:
-        return redirect('/signup/')
+        return redirect('/login/')
     # 얘는 다 실행하고 보내는 주소
-    return render(request, 'board_moim/board_list.html',{'name': name,'commend': commend,'location': location,'imgfile': imgfile,'max_people': max_people,'make_moims':make_moims,'id':make_moim.make_id})
+    return redirect('/board_moim/list')
+    # return render(request, 'board_moim/board_list.html',{'name': name,'commend': commend,'location': location,'imgfile': imgfile,'max_people': max_people,'id':make_moim.make_id})
 
+def make_moim2(request):
+    id = request.GET.get('id')
+    
