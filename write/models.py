@@ -1,8 +1,11 @@
-from django.db import models
-from all_info import models as models2
 from django.conf import settings
+from django.db import models
+
+from all_info import models as models2
 from make_moim.models import Make_Moim
-from select_moim.models import Select_Moim #좋아요-import setting
+from select_moim.models import Select_Moim  # 좋아요-import setting
+
+
 # Create your models here. 
 class Join(models.Model):
     join_id = models.AutoField(primary_key=True)
