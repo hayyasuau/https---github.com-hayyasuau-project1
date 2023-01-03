@@ -58,8 +58,7 @@
                         <a class="nav-link text-white-50" href="/write/gallery/">갤러리</a>
                     </li>
                 </ul>
-                <form class="d-flex" method='POST' action={% url 'search' %} role="search">
-                    {% csrf_token %}
+                <form class="d-flex" action={% url 'search' %} role="search">
                     <input class="form-control me-2" type="search" name='search' style="width: 150%;"
                     placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
