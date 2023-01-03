@@ -88,10 +88,8 @@ def logout(request):
 def home(request):
     return render(request, 'home.html')
 
+from write.models import Free
 def search(request):
-    if request.method == 'POST':
-        search = request.POST['search']
-        searchs = Search.objects.filter(name__contains=search)
-        return render(request, 'search.html', {'search':search,'searchs':searchs})
-    else:
-        return render(request,'search.html',{})
+    search = request.GET.get('search')
+    searchs = Free.objects.filter(title__contains=search)
+    return render(request, 'search.html', {'search':search,'searchs':searchs})
