@@ -9,6 +9,38 @@ from django.core.paginator import Paginator
 # from django.view.decorators.http import require_http_methods
 
 
+def text_delete(request,pk):#글삭
+    login_session = request.session.get('info_id','')
+    
+    board = get_object_or_404(Free, free_id=pk)
+
+    if board.info.info_id == login_session:
+        board.delete()
+        return redirect('/write/free/')
+    else:
+        return redirect('/write/free/')
+
+def text_modify(request,pk):#수정
+    login_session = request.session.get('info_id','')
+    context = {'login_session' : login_session}
+
+    board = get_object_or_404(Free, free_id=pk)
+    context['board'] = board
+
+    if request.method == 'GET' :
+        return render(request, 'write/modify.html', context)
+    
+    elif request.method =='POST':
+        title = request.POST.get('title')
+        text = request.POST.get('text')
+
+        board.title=title
+        board.text=text
+
+        board.save()
+        return redirect('/write/free/')
+
+
 def view_text(request,pk): #게시물 보기
     free=Free.objects.get(free_id=pk)
     return render(request, 'write/vt_free.html',{'free':free})
@@ -23,7 +55,7 @@ def board_list(request):
     context = {'login_session' : login_session}
     return render(request, 'base.html', context)
 
-def board_free_write(request):
+def board_free_write(request):#작성 
     login_session = request.session.get('info_id','')
     context = {'login_session' : login_session}
     if request.method == 'GET' :
