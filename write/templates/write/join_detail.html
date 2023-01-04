@@ -13,7 +13,7 @@
     <br>
     작성자 : <input type="text" name="writer" value='{{request.session.info_id}}' readonly>
     <textarea class="form-control" name="comment">내용</textarea>
-    <input type="hidden" name='join_id' value="{{join_id}}">
+    <input type="hidden" name='make_moim' value="{{make_moim.make_id}}">
     {% comment %} join_id->모임아이디 {% endcomment %}
     <button>등록</button>
     </form>
@@ -22,19 +22,20 @@
 </div>
 <div>
     <!-- 댓글 되나 가서 확인할 것 -->
-    {% for comment in comments %}
+    {% for join in joins %}
         △<br>
-        <h1> {{comment.text}} </h1>
-        <p> {{comment.content}} </p>
+        <h1> {{title}} </h1>
+        <p> {{comment}} </p>
         <h6> {{writer}} </h6>
-        <h6> {{comment.write_dttm}} </h6>
+        <h6> {{join.write_dttm}} </h6>
         {% comment %} <form action="/write/update/{{make_moim.make_id}}/"><button value="수정" name="update">수정</button></form>
         <form action="/write/delete/{{make_moim.make_id}}/"><button value="삭제" name="delete">삭제</button></form> {% endcomment %}
         <form action="/write/join/" method="POST">
-            <input type="hidden" name="join_id" value={{comment.join_id}}>
+            <input type="hidden" name="join_id" value={{joins.join_id}}>
             <textarea name="comment_c" cols="30" rows="10"></textarea>
             {% comment %} {% csrf_token %} {% endcomment %}
             <button value="답글" >답글</button></form>
+            {% comment %} action 주소 바꾸기 {% endcomment %}
         <hr>
     {% endfor %}
 </div>

@@ -31,7 +31,7 @@
     <hr>
     <h6>모임에 가입한 회원 :
         {% for n in make_moim.groupinfo_set.all %}
-        {{n.info}} ,
+        {{n.info.info_id}} ,
         {% endfor %}
 
     </h6>

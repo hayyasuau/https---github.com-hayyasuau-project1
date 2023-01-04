@@ -69,9 +69,11 @@ def make_moim_signup(request):
                 g = GroupInfo()
                 g.info = id
                 g.make_moim = make_moim
-                g.y_n = 'Y'
-                g.apply_date = '20230104'
-                g.join_date = '????'
+                # g.y_n = 'Y'
+                # g.apply_date = '20230104'
+                # g.join_date = '????'
+                
+                # g += g
                 g.save()
                 # info = Info.objects.get(info_id='babo')
                 # info.info_id = info_id
@@ -81,11 +83,11 @@ def make_moim_signup(request):
                 context = {
                     'make_moim':make_moim
                 }
-                return render(request, 'board_moim/detail.html', context)
+                return redirect(f'/board_moim/{make_moim.make_id}/')
 
             else:
                 messages.warning(request, '인원이 가득찼습니다.')
-                return redirect(f'/board_moim/{make_moim}')
+                return redirect(f'/board_moim/{make_moim.make_id}/')
 
     except :
         return redirect('/login/')

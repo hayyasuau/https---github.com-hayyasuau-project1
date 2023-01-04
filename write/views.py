@@ -275,7 +275,7 @@ def join_detail(request):
     page_info = range(s_page, e_page+1)
     join_lists = join_lists[start:end]
 
-    join=Join.objects.all()
+    make_moim=Make_Moim.objects.all()
     
 
     # join = Join.objects.get(join_id)
@@ -286,7 +286,7 @@ def join_detail(request):
         'total_page' : total_page,
         'e_page' : e_page,
         'page':page,
-        # 'join_id':join_id
+        'make_moim':make_moim
         # 'comments':comments
     }
     
@@ -294,19 +294,23 @@ def join_detail(request):
     return render(request, 'write/join_detail.html',context)
 
 
-def join_comment(request):
+def join_comment(request, make_moim):
     if request.method == 'GET':
         comment = request.GET.get('comment')
-        join_id = request.GET.get('join_id')
-        # join은 아직 안받음??// 모임아이디
+        # join_id = request.GET.get('join_id')
+        # join은 아직 안받음??// 모임아이디 ->join을 찾아야 하기 때문에 join 이외에서 불러와야함
+        # 여기서는 make_moim에서 가져오자
+        make_moim=request.GET.get('make_moim')
         writer = request.GET.get('writer')
         title = request.GET.get('title')
         #아래에서 모임을 조회
-        a = Join.objects.get(title=title)
-        title += a.title
+        joins = Join.objects.get(make_moim=make_moim)
         # c = Good(content=comment, join=join_id)
         # c.save 댓글을 만들때 처리
         context = {
         'writer':writer,
+        'title':title,
+        'joins':joins,
+        'comment':comment,
         }
         return render(request, 'write/join_detail.html',context)
