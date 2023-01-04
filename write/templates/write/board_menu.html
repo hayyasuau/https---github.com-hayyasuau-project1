@@ -5,10 +5,12 @@
     <a href="{% url 'write:free' %}"><button>자유게시판</button></a>
     <a href="{% url 'write:join_detail' %}"><button>가입인사</button></a>
     <a href="{% url 'write:gallery' %}"><button>갤러리</button></a>
-    {% if login_session %}
-    <a href=""></a><button>로그아웃</button></a>
-    {% else %}
-    <a href="{% url 'login' %}"><button>로그인</button></a>
-    <a href="{% url 'signup' %}"><button>회원가입</button></a>
-    {% endif %}
+    <div class="text-end">
+        {% if request.session.info_id %}
+          <a href="/logout"><button type="button" class="btn btn-outline-light me-2">로그아웃</button></a>
+        {% else %}
+        <a href="/login"><button type="button" class="btn btn-outline-light me-2">로그인</button></a>
+        {% endif %}
+        <a href="/signup"><button type="button" class="btn btn-outline-warning me-2">회원가입</button></a>
+    </div>
 </div>

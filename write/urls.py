@@ -25,5 +25,7 @@ urlpatterns = [
     path('<int:free_pk>/comments/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
     path('<int:free_pk>/likes/', views.likes, name='likes'),
     path('freeboard_index/', views.freeboard_index, name='freeindex'),#자유게인덱스
-    path('viewtext/<int:pk>/', views.view_text, name='free01' )#view text, vt 게시물보기
+    path('viewtext/<int:pk>/', views.view_text, name='free01' ),#view text, vt 게시물보기
+    path('viewtext/<int:pk>/delete/', views.text_delete, name='delete' ),
+    path('viewtext/<int:pk>/modify/', views.text_modify, name='modify' ),
 ]
