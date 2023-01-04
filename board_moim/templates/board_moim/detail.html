@@ -52,7 +52,7 @@
         <h4> {{comment.content}} </h4>
         <h6> {{comment.info.name}} 
            ID : {{comment.info.info_id}}<-
-            <form action="/make_moim/signup/" method="get">{% csrf_token %}
+            <form action="/make_moim/signup/" method="get">
                 <button name="invite">초대하기</button>
                 <input type="hidden" name="make_id" value="{{make_moim.make_id}}">
                 <input type="hidden" name="comment_id" value="{{comment.info.info_id}}">

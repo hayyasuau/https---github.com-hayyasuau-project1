@@ -296,14 +296,16 @@ def join_detail(request):
 
 def join_comment(request):
     if request.method == 'GET':
-        comment = request.POST.get('comment')
-        join_id = request.POST.get('join_id')
-        writer = request.POST.get('writer')
-        # title = request.POST.get('title')
-
-        # join = Join.objects.get('join_id')
-        c = Good(content=comment, join=join_id)
-        c.save
+        comment = request.GET.get('comment')
+        join_id = request.GET.get('join_id')
+        # join은 아직 안받음??// 모임아이디
+        writer = request.GET.get('writer')
+        title = request.GET.get('title')
+        #아래에서 모임을 조회
+        a = Join.objects.get(title=title)
+        title += a.title
+        # c = Good(content=comment, join=join_id)
+        # c.save 댓글을 만들때 처리
         context = {
         'writer':writer,
         }

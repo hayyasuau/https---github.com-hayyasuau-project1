@@ -33,6 +33,7 @@ def make_moim(request):
 def make_moim_signup(request):
     # 로그인 회원
     info_id = request.session['info_id']
+    print(type(info_id))
     info = Info.objects.get(info_id=info_id)
     # 신청 회원
     comment_id=request.GET.get('comment_id', request.POST.get('comment_id'))
@@ -55,7 +56,6 @@ def make_moim_signup(request):
 
     try :
         selected = request.POST.get('selected')
-        
         if selected == 'Y':
             # Info 와 Make_Moim 연결해서 저장시키기
             # 연결 시킬 것 all_info 아이디랑 Groupinfo->set까지
@@ -63,20 +63,29 @@ def make_moim_signup(request):
             now_people = make_moim.now_people
             max_people = make_moim.max_people
 
-            now_people < max_people
-            make_moim.now_people+=1
-            make_moim.save()
-            info_id.save()
+            if now_people < max_people:
+                make_moim.now_people+=1
+                make_moim.save()
+                g = GroupInfo()
+                g.info = id
+                g.make_moim = make_moim
+                g.y_n = 'Y'
+                g.apply_date = '20230104'
+                g.join_date = '????'
+                g.save()
+                # info = Info.objects.get(info_id='babo')
+                # info.info_id = info_id
+                # info.save()
 
             
-            context = {
-                'make_moim':make_moim
-            }
-            return render(request, 'board_moim/detail.html', context)
+                context = {
+                    'make_moim':make_moim
+                }
+                return render(request, 'board_moim/detail.html', context)
 
-        else:
-            messages.warning(request, '인원이 가득찼습니다.')
-            return redirect(f'/board_moim/{make_moim}')
+            else:
+                messages.warning(request, '인원이 가득찼습니다.')
+                return redirect(f'/board_moim/{make_moim}')
 
     except :
         return redirect('/login/')

@@ -13,7 +13,8 @@
     <br>
     작성자 : <input type="text" name="writer" value='{{request.session.info_id}}' readonly>
     <textarea class="form-control" name="comment">내용</textarea>
-    <!-- <input type="text" name='join_id' value="{{join_id}}"> -->
+    <input type="hidden" name='join_id' value="{{join_id}}">
+    {% comment %} join_id->모임아이디 {% endcomment %}
     <button>등록</button>
     </form>
     <hr>
