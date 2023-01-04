@@ -58,16 +58,26 @@
                         <a class="nav-link text-white-50" href="/write/gallery/">갤러리</a>
                     </li>
                 </ul>
-                <form class="d-flex" action={% url 'search' %} role="search">
-                    <input class="form-control me-2" type="search" name='search' style="width: 150%;"
-                    placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <div>
+                    <form class="d-flex" action={% url 'search' %} role="search">
+                        <input class="form-control me-2" type="search" name='search' placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="text-end">
+                    {% if request.session.info_id %}
+                      <a href="/logout"><button type="button" class="btn btn-outline-light me-2">로그아웃</button></a>
+                    {% else %}
+                    <a href="/login"><button type="button" class="btn btn-outline-light me-2">로그인</button></a>
+                    {% endif %}
+                    <a href="/signup"><button type="button" class="btn btn-outline-warning me-2">회원가입</button></a>
+                </div>
             </div>
         </div>
     </nav>
-<div style="display: flex; flex-direction: row;text-align: center;  padding-top: 60px;">
+<div style="display: flex; flex-direction: row;text-align: center;  padding-top: 80px;">
     <div style="width:10%; background-color: brown;">
+        {% include 'write/board_menu.html' %}
         {% block left_menu %}
         {% endblock left_menu %}
     </div>
