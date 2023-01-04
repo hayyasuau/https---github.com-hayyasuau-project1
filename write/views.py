@@ -1,7 +1,5 @@
 from django.urls import reverse
 from django.shortcuts import  get_object_or_404,render, redirect
-
-from make_moim.models import Make_Moim
 from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good
 from all_info.models import Info
@@ -18,7 +16,7 @@ def text_delete(request,pk):#글삭
 
     if board.info.info_id == login_session:
         board.delete()
-        return redirect('/write/free/')
+        
     else:
         return redirect('/write/free/')
 
@@ -50,7 +48,7 @@ def view_text(request,pk): #게시물 보기
 def freeboard_index(request): #자유게인덱스
     all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
     print(all_boards)
-    return render(request, 'write/freeindex.html', {'board_list':all_boards})
+    return render(request, 'write/freeindex.html', {'title':'Board List', 'board_list':all_boards})
 
 def board_list(request):
     login_session = request.session.get('login_session','')
@@ -241,18 +239,16 @@ def get_absolute_url(self):
     return f'/write/gallery/{self.pk}/'
 
 #join
-def join_detail(request):
+def join_detail(request, pk):
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
     # page=int(page)
-    join_lists = Join.objects.all().order_by('-join_id')
+    join_lists = Join.objects.all().order_by('-make_id')
     end = page * 20
     start = end - 20
     s_page = (page-1)//10*10 + 1
     e_page = s_page +9
-    #페이지 구분
-    total_count = Join.objects.all().count()
-    total_page = total_count//20 +1   
+    
     # if page > total_page:
     #     page = total_page
     #     end = page * 5
@@ -266,18 +262,16 @@ def join_detail(request):
         
 
     
-    page_info = range(s_page, e_page+1)
-    join_lists = join_lists[start:end]
-
+    #페이지 구분
+    total_count = Join.objects.all().count()
+    total_page = total_count//20 +1
     
-    make_id=request.GET.get('make_id')
-    make_moim = Make_Moim.objects.get(pk=make_id)
-    join = Join.objects.filter(make_moim=make_moim)
-
-
+    page_info = range(s_page, e_page+1)
+    join_lists = join_lists[start:end]  
+    join = Join.objects.get(join_id=pk)
     comments = Good.objects.filter(good_id=join)   
     context = {
-        'join' : join,
+        'join_lists' : join_lists,
         'page_info' : page_info,
         'total_page' : total_page,
         'e_page' : e_page,
