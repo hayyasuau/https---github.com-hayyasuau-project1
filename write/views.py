@@ -18,7 +18,7 @@ def view_text(request,pk): #게시물 보기
 def freeboard_index(request): #자유게인덱스
     all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
     print(all_boards)
-    return render(request, 'write/freeindex.html', {'title':'Board List', 'board_list':all_boards})
+    return render(request, 'write/freeindex.html', {'board_list':all_boards})
 
 def board_list(request):
     login_session = request.session.get('login_session','')
