@@ -8,8 +8,13 @@ from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 # from django.view.decorators.http import require_http_methods
 
-def imgupload():
-    return
+# def test(request):
+#     board_list = Free.objects.all() #models.py Board 클래스의 모든 객체를 board_list에 담음
+#     # board_list 페이징 처리
+#     page = request.GET.get('page', '1') #GET 방식으로 정보를 받아오는 데이터
+#     paginator = Paginator(board_list, '5') #Paginator(분할될 객체, 페이지 당 담길 객체수)
+#     page_obj = paginator.page(page) #페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
+#     return render(request, 'template_name', {'page_obj':page_obj}) 
 
 
 def text_delete(request,pk):#글삭
