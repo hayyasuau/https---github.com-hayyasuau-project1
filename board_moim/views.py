@@ -91,7 +91,6 @@ def comment(request):
         c.save()
         return redirect('/board_moim/%s/' %  id)
 
-
     # return render(request, 'board_moim/detail.html',{'make_moim':make_moim})
 
 # def search(request, search):
