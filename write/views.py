@@ -1,5 +1,7 @@
 from django.urls import reverse
 from django.shortcuts import  get_object_or_404,render, redirect
+
+from make_moim.models import Make_Moim
 from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good
 from all_info.models import Info
@@ -239,16 +241,18 @@ def get_absolute_url(self):
     return f'/write/gallery/{self.pk}/'
 
 #join
-def join_detail(request, pk):
+def join_detail(request):
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
     # page=int(page)
-    join_lists = Join.objects.all().order_by('-make_id')
+    join_lists = Join.objects.all().order_by('-write_dttm')
     end = page * 20
     start = end - 20
     s_page = (page-1)//10*10 + 1
     e_page = s_page +9
-    
+    #페이지 구분
+    total_count = Join.objects.all().count()
+    total_page = total_count//20 +1
     # if page > total_page:
     #     page = total_page
     #     end = page * 5
@@ -260,23 +264,22 @@ def join_detail(request, pk):
     if e_page > total_page : 
         e_page = total_page
         
-
-    
-    #페이지 구분
-    total_count = Join.objects.all().count()
-    total_page = total_count//20 +1
-    
     page_info = range(s_page, e_page+1)
-    join_lists = join_lists[start:end]  
-    join = Join.objects.get(join_id=pk)
-    comments = Good.objects.filter(good_id=join)   
+    join_lists = join_lists[start:end]
+
+    join=Join.objects.all()
+    
+
+    # join = Join.objects.get(join_id)
+    # comments = Good.objects.filter(good_id=join)   
     context = {
         'join_lists' : join_lists,
         'page_info' : page_info,
         'total_page' : total_page,
         'e_page' : e_page,
         'page':page,
-        'comments':comments
+        # 'join_id':join_id
+        # 'comments':comments
     }
     
 
@@ -284,10 +287,16 @@ def join_detail(request, pk):
 
 
 def join_comment(request):
-    if request.method == 'POST':
-        comment = request.POST.get('comment_c')
+    if request.method == 'GET':
+        comment = request.POST.get('comment')
         join_id = request.POST.get('join_id')
-        join = Join.objects.get(join_id=join_id)
-        c = Good(content=comment, join=join)
+        writer = request.POST.get('writer')
+        # title = request.POST.get('title')
+
+        # join = Join.objects.get('join_id')
+        c = Good(content=comment, join=join_id)
         c.save
-        return redirect('join_detail')
+        context = {
+        'writer':writer,
+        }
+        return render(request, 'write/join_detail.html',context)

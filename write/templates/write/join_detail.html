@@ -8,12 +8,13 @@
 <tbody>
 <div>
 
-    <form action="/write/join/comment/" method="get">{% csrf_token %}
-    <h5>모임 : "{{request.session.info_id}}" 님의 가입인사입니다.</h5>
+    <form action="/write/join/comment/" method="get">
+    <h5>"{{request.session.info_id}}" 님의 가입인사입니다.</h5>
     제목 : <input type="text" name="title">
     <br>
-    작성자 : <input type="text" name="comment" value='{{request.session.info_id}}' readonly>
+    작성자 : <input type="text" name="writer" value='{{request.session.info_id}}' readonly>
     <textarea class="form-control" name="comment">내용</textarea>
+    <!-- <input type="text" name='join_id' value="{{join_id}}"> -->
     <button>등록</button>
     </form>
     <hr>
@@ -25,7 +26,7 @@
         △<br>
         <h1> {{comment.text}} </h1>
         <p> {{comment.content}} </p>
-        <h6> {{comment.info}} </h6>
+        <h6> {{writer}} </h6>
         <h6> {{comment.write_dttm}} </h6>
         {% comment %} <form action="/write/update/{{make_moim.make_id}}/"><button value="수정" name="update">수정</button></form>
         <form action="/write/delete/{{make_moim.make_id}}/"><button value="삭제" name="delete">삭제</button></form> {% endcomment %}
