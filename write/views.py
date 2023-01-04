@@ -290,6 +290,7 @@ def join_detail(request, pk):
 
     return render(request, 'write/join_detail.html',context)
 
+
 def join_comment(request):
     if request.method == 'POST':
         comment = request.POST.get('comment_c')

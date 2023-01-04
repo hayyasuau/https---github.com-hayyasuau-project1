@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from all_info.models import Info
 # from django.core.paginator import Paginator
 from make_moim.models import Make_Moim
 from write.models import Good
@@ -49,7 +50,10 @@ def list_moim(request):
 def board_detail(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
     comments = Good.objects.filter(make_moim=make_moim)
-    return render(request, 'board_moim/detail.html',{'make_moim':make_moim, 'comments':comments})
+    context ={
+        'make_moim':make_moim, 'comments':comments,
+    }
+    return render(request, 'board_moim/detail.html',context)
 
 def board_update(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
@@ -87,7 +91,9 @@ def comment(request):
         comment = request.POST.get('comment')
         id = request.POST.get('id')
         make_moim = Make_Moim.objects.get(make_id=id)
-        c = Good(content=comment, make_moim=make_moim)
+        info_id=request.session.get('info_id')
+        info=Info.objects.get(info_id=info_id)
+        c = Good(content=comment, make_moim=make_moim, info=info)
         c.save()
         return redirect('/board_moim/%s/' %  id)
 
