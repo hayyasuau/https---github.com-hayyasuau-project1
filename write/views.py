@@ -209,7 +209,7 @@ def get_absolute_url(self):
     return f'/write/gallery/{self.pk}/'
 
 #join
-def join_detail(request):
+def join_detail(request, pk):
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
     # page=int(page)
@@ -255,6 +255,7 @@ def join_detail(request):
     
 
     return render(request, 'write/join_detail.html',context)
+
 
 def join_comment(request):
     if request.method == 'POST':

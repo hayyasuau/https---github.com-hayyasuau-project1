@@ -8,10 +8,11 @@
 <tbody>
 <div>
 
-    <form action="join/comment/" method="get">{% csrf_token %}
+    <form action="/write/join/comment/" method="get">{% csrf_token %}
     <h5>모임 : "{{request.session.info_id}}" 님의 가입인사입니다.</h5>
-    <input type="text" name="title">
-    <input type="text" name="comment">
+    제목 : <input type="text" name="title">
+    <br>
+    작성자 : <input type="text" name="comment" value='{{request.session.info_id}}' readonly>
     <textarea class="form-control" name="comment">내용</textarea>
     <button>등록</button>
     </form>
@@ -31,7 +32,7 @@
         <form action="/write/join/" method="POST">
             <input type="hidden" name="join_id" value={{comment.join_id}}>
             <textarea name="comment_c" cols="30" rows="10"></textarea>
-            {% csrf_token %}
+            {% comment %} {% csrf_token %} {% endcomment %}
             <button value="답글" >답글</button></form>
         <hr>
     {% endfor %}
