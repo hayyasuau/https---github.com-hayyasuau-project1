@@ -75,7 +75,7 @@ def board_free_write(request):#작성
                 # comment=write_form.info
             )
             board.save()
-            return redirect('/free_write')
+            return redirect('write:free')
         
         else:
             context['forms'] = write_form
