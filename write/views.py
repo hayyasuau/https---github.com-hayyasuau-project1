@@ -8,6 +8,9 @@ from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
 # from django.view.decorators.http import require_http_methods
 
+def imgupload():
+    return
+
 
 def text_delete(request,pk):#글삭
     login_session = request.session.get('info_id','')
