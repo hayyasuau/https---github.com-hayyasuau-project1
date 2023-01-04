@@ -30,6 +30,13 @@
     <textarea class="form-control" readonly>{{make_moim.commend}}</textarea>
 
     <hr>
+    <h6>모임에 가입한 회원 :
+        {% for m in make_moim %} 
+        {{m.group_info_set.info.info_id}},
+        {% endfor %}
+    </h6>
+
+    <hr>
     <button type="button"><a href="/board_moim/list/"> 목록</a></button>
     <form action="/board_moim/update/{{make_moim.make_id}}/"><button value="수정" name="update">수정</button></form>
     <form action="/board_moim/delete/{{make_moim.make_id}}/"><button value="삭제" name="delete">삭제</button></form>
@@ -44,7 +51,7 @@
     {% for comment in comments %}
         <h4> {{comment.content}} </h4>
         <h6> {{comment.info}} <-
-            <form action="" method="post">{% csrf_token %}
+            <form action="/make_moim/signup/" method="get">{% csrf_token %}
                 <button name="invite">초대하기</button>
             </form>
         </h6>
