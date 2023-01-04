@@ -48,8 +48,8 @@ def list_moim(request):
 
 def board_detail(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
-    comment = Good.objects.filter(make_moim=make_moim)
-    return render(request, 'board_moim/detail.html',{'make_moim':make_moim, 'comment':comment})
+    comments = Good.objects.filter(make_moim=make_moim)
+    return render(request, 'board_moim/detail.html',{'make_moim':make_moim, 'comments':comments})
 
 def board_update(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
@@ -71,7 +71,7 @@ def board_update(request, pk):
             # make_moim.tags = tags
             make_moim.save()
             # return render(request, 'board_moim/detail.html')
-            return redirect('/board_moim/list/')
+            return redirect(f'/board_moim/{pk}/')
         except :
             return render(request, 'board_moim/update_fail.html',{'make_moim':make_moim})
 
@@ -88,7 +88,7 @@ def comment(request):
         id = request.POST.get('id')
         make_moim = Make_Moim.objects.get(make_id=id)
         c = Good(content=comment, make_moim=make_moim)
-        c.save
+        c.save()
         return redirect('/board_moim/%s/' %  id)
 
 
