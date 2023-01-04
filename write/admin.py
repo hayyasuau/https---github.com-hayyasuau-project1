@@ -10,7 +10,6 @@ class BoardAdmin(SummernoteModelAdmin):
         'title',
         'comment',
         'info',
-        'group',
         'text',
         'write_dttm',
         'update_dttm',
