@@ -29,7 +29,7 @@ urlpatterns = [
     path('profile/', include('all_info.urls')),
     path('login/', views.login,name='login'
     ),
-     path('logout/', views.logout,name='logout'
+    path('logout/', views.logout,name='logout'
     ),
     path('', views.home, name='home'
     ),

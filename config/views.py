@@ -5,7 +5,7 @@ from file.models import Search
 def update(request):
     # GET
     if request.method == 'GET':
-       
+    
         return render(
             request,
             'common/id_pw.html',
@@ -34,7 +34,7 @@ def update(request):
 def signup(request):
     # GET
     if request.method == 'GET':
-       
+    
         return render(
             request,
             'common/id_pw.html',
@@ -63,7 +63,7 @@ def signup(request):
 def login(request): #로그인
     # GET
     if request.method == 'GET':
-       
+    
         return render(
             request,
             'common/login.html', 
