@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView
+from all_info.models import GroupInfo, Info
 from make_moim.models import Make_Moim
 from select_moim.models import Select_Moim
 from write.models import Good
@@ -16,15 +17,53 @@ def make_good(request):
         return redirect('/select_moim/detail/%s/' % g.good_id)
 
 def select_moim(request):
-    if request.method == 'POST':
-        selects = Select_Moim.objects.all()
-        
-        return render(
-            request,
-            'select_moim/select_moim.html',{'select_moims':selects}
-        )
-    else :
-        return render(request, 'select_moim/select_moim.html',{})
+    #페이지
+    info_id=request.session['info_id']
+    id = Info.objects.get(info_id=info_id)
+    groupinfo=GroupInfo.objects.filter(info=id).order_by('info') 
+    #a유저-a모임.a유저-b모임,a유저-c모임 ...
+    # make_moims=GroupInfo.objects.get(make_moim=groupinfo)
+
+    
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    # moim_lists = Make_Moim.objects.all().order_by('-make_id')
+    end = page * 5
+    start = end - 5
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = GroupInfo.objects.filter(info=id).count()
+    total_page = total_count//5 +1
+    # if page > total_page:
+    #     page = total_page
+    #     end = page * 5
+    #     start = end -5
+    
+    # if total_count % 10 !=0:
+    #     total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page+1)
+    groupinfo = groupinfo[start:end]
+
+    context = {
+    'groupinfo' : groupinfo,
+    'page_info' : page_info,
+    'total_page' : total_page,
+    'e_page' : e_page,
+    'page':page
+    # 'posts' : posts
+    }   
+
+    return render(request, 'select_moim/select_moim.html',context)
+
+
+    
 
 # class Select_DetailView(DetailView):
 
@@ -56,6 +95,43 @@ def delete(request, id):
     except:
         return redirect('/select_moim')
 
+def list_moim(request):
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    moim_lists = Make_Moim.objects.all().order_by('-make_id')
+    end = page * 5
+    start = end - 5
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = Make_Moim.objects.all().count()
+    total_page = total_count//5 +1
+    print(total_page)
+    # if page > total_page:
+    #     page = total_page
+    #     end = page * 5
+    #     start = end -5
+    
+    # if total_count % 10 !=0:
+    #     total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page+1)
+    moim_lists = moim_lists[start:end]
+
+    context = {
+        'moim_lists' : moim_lists,
+        'page_info' : page_info,
+        'total_page' : total_page,
+        'e_page' : e_page,
+        'page':page
+        # 'posts' : posts
+    }
+    return render(request,'board_moim/board_list.html', context)
         
 def make_detail(request, id):
     try :
