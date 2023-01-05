@@ -6,7 +6,7 @@ from . import views
 app_name = 'write'
 
 urlpatterns = [
-    path('<int:free_id>/free/', views.free, name='free'),
+    path('free/<int:free_id>/', views.free, name='free'),
     # path('join/', views.join, name='join'),
     
     path('join/<str:make_id>/', views.join_detail, name='join_detail'),
@@ -27,7 +27,7 @@ urlpatterns = [
     path('comments/<int:free_id>/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
     # path('<int:free_pk>/likes/', views.likes, name='likes'),
     path('freeboard_index/<int:free_id>/', views.freeboard_index, name='freeindex'),#자유게인덱스
-    path('viewtext/<int:pk>/', views.view_text, name='free01' ),#view text, vt 게시물보기
-    path('viewtext/<int:pk>/delete/', views.text_delete, name='delete' ),
-    path('viewtext/<int:pk>/modify/', views.text_modify, name='modify' ),
+    path('viewtext/<int:free_id>/<int:pk>/', views.view_text, name='free01' ),#view text, vt 게시물보기
+    path('viewtext/<int:free_id>/<int:pk>/delete/', views.text_delete, name='delete' ),
+    path('viewtext/<int:free_id>/<int:pk>/modify/', views.text_modify, name='modify' ),
 ]

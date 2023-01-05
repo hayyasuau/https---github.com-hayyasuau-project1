@@ -33,6 +33,7 @@ class BoardWriteForm(forms.ModelForm): #자유게시판용 게시판 만들기
     field_order  = [
         'title',
         'text',
+        'imgfile',
         # 'info'
     ]
 
@@ -52,6 +53,7 @@ class BoardWriteForm(forms.ModelForm): #자유게시판용 게시판 만들기
 
         title = cleaned_data.get('title','')
         text = cleaned_data.get('text','')
+        imgfile = cleaned_data.get('imgfile','')
         # info = cleaned_data.get('info','Free')
 
         if title == '':
@@ -61,6 +63,7 @@ class BoardWriteForm(forms.ModelForm): #자유게시판용 게시판 만들기
         else:
             self.title = title
             self.text = text
+            self.imgfile = imgfile
             # self.info = info
             
 class GoodForm(forms.ModelForm): #댓글 작성시 필드 보이지 않게
