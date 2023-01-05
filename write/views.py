@@ -139,12 +139,13 @@ def new_face(request):
         'write/new_face.html',
         {'new_face': new_face_id}
     )
-def gallery(request):
-    gallery_list = Gallery.objects.all().order_by('-pk')
+def gallery(request, pk):
+    make_moim=Make_Moim.objects.get(make_id=pk)
+    gallery_list = Gallery.objects.all().order_by('-gallery_id')
     
     return render(
         request,
-        'write/gallery.html',
+        'write/gallery_list.html',
         {'gallery_list': gallery_list}
     )
 
