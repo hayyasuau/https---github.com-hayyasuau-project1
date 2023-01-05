@@ -267,6 +267,7 @@ def get_absolute_url(self):
 
 #join
 def join_detail(request, make_id):
+    #모임에서 모임 아이디가 모임 아이디인 것은 하나
     make_moim=Make_Moim.objects.get(make_id=make_id)
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
@@ -312,6 +313,35 @@ def join_detail(request, make_id):
 
 def join_comment(request, make_id):
     if request.method == 'GET':
+        page = int(request.GET.get('page',1))
+        # if not page : page = '1'
+        # page=int(page)
+        join_list = Join.objects.all().order_by('-write_dttm')
+        end = page * 5
+        start = end - 5
+        s_page = (page-1)//10*10 + 1
+        e_page = s_page +9
+
+        #페이지 구분
+        total_count = Join.objects.all().count()
+        total_page = total_count//5 +1
+        # if page > total_page:
+        #     page = total_page
+        #     end = page * 5
+        #     start = end -5
+        
+        # if total_count % 10 !=0:
+        #     total_page +=1
+
+        if e_page > total_page : 
+            e_page = total_page
+
+        page_info = range(s_page, e_page+1)
+        join_list = join_list[start:end]
+
+    
+        info=request.session['info_id']
+        info=Info.objects.get(info_id=info)
         comment = request.GET.get('comment')
         # join_id = request.GET.get('join_id')
         # join은 아직 안받음??// 모임아이디 ->join을 찾아야 하기 때문에 join 이외에서 불러와야함
@@ -320,13 +350,25 @@ def join_comment(request, make_id):
         writer = request.GET.get('writer')
         title = request.GET.get('title')
         #아래에서 모임을 조회
-        joins = Join.objects.get(make_moim=make_moim)
-        # c = Good(content=comment, join=join_id)
-        # c.save 댓글을 만들때 처리
+        make_moim = Make_Moim.objects.get(make_id=make_id)
+        # join = Join.objects.filter(make_moim=make_id)
+        # infos=Join.objects.filter(info=writer)
+
+        join=Join(title=title, comment=comment, info=info, make_moim=make_moim)
+        totals=Join.objects.all().order_by('-write_dttm')
+        join.save()
+        print(totals)
         context = {
         'writer':writer,
         'title':title,
-        'joins':joins,
+        'make_id':make_id,
+        'totals':totals,
         'comment':comment,
+        'make_moim':make_moim,
+        'join_list' : join_list,
+        'page_info' : page_info,
+        'total_page' : total_page,
+        'e_page' : e_page,
+        'page':page
         }
         return render(request, 'write/join_detail.html',context)

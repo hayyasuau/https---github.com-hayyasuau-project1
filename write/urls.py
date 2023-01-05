@@ -9,8 +9,8 @@ urlpatterns = [
     path('free/<int:free_id>/', views.free, name='free'),
     # path('join/', views.join, name='join'),
     
-    path('join/<str:make_id>/', views.join_detail, name='join_detail'),
-    path('join/<str:make_id>/comment/', views.join_comment, name='join_comment'),
+    path('join/<int:make_id>/', views.join_detail, name='join_detail'),
+    path('join/<int:make_id>/comment/', views.join_comment, name='join_comment'),
 
     # path('join/update/<int:pk>/', views.join_update, name='join_update'),
     # path('join/delete/<int:pk>/', views.join_delete, name='join_delete'),

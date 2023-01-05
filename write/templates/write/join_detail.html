@@ -7,54 +7,48 @@
 </div>
 <tbody>
 <div>
+    {% for total in totals %}
+        △<br>
+        <h6> {{total.title}} </h6>
+        <p> {{total.comment}} </p>
+        <h6> {{total.info}} </h6>
+        <h6> {{total.write_dttm}} </h6>
+        <form action=""><button value="수정" name="update">수정</button></form>
+        <form action=""><button value="삭제" name="delete">삭제</button></form>
+        <form action="" method="POST"><button value="답글" >답글</button></form>
+        <hr>
+    {% endfor %}
+</div>
+<div>
 
-    <form action="/write/join/comment/" method="get">
-    <h1>모임 : {{make_moim.make_id}}</h1>
-    <h5>"{{request.session.info_id}}" 님의 가입인사입니다.</h5>
+    <form action="/write/join/{{make_moim.make_id}}/comment/" method="get">
+    <h1>모임 : {{make_moim.name}}</h1>
+    <h5>"{{request.session.info_id}}" 님의 인사창입니다.</h5>
     제목 : <input type="text" name="title">
     <br>
-    작성자 : <input type="text" name="writer" value='{{request.session.info_id}}' readonly>
+    <input type="hidden" name="writer" value='{{request.session.info_id}}' readonly>
     <textarea class="form-control" name="comment">내용</textarea>
     <input type="hidden" name='make_moim' value="{{make_moim.make_id}}">
-    {% comment %} join_id->모임아이디 {% endcomment %}
     <button>등록</button>
     </form>
     <hr>
 
 </div>
-<div>
-    <!-- 댓글 되나 가서 확인할 것 -->
-    {% for join in joins %}
-        △<br>
-        <h1> {{title}} </h1>
-        <p> {{comment}} </p>
-        <h6> {{writer}} </h6>
-        <h6> {{join.write_dttm}} </h6>
-        {% comment %} <form action="/write/update/{{make_moim.make_id}}/"><button value="수정" name="update">수정</button></form>
-        <form action="/write/delete/{{make_moim.make_id}}/"><button value="삭제" name="delete">삭제</button></form> {% endcomment %}
-        <form action="/write/join/" method="POST">
-            <input type="hidden" name="join_id" value={{joins.join_id}}>
-            <textarea name="comment_c" cols="30" rows="10"></textarea>
-            {% comment %} {% csrf_token %} {% endcomment %}
-            <button value="답글" >답글</button></form>
-            {% comment %} action 주소 바꾸기 {% endcomment %}
-        <hr>
-    {% endfor %}
-</div>
+
 </tbody>
     <tbody>
         <ul>
         {% if page > 10 %}
-            <a href="/board_moim/list/?page={{page | add:'-10'}}">이전</a>
+            <a href="/join/{{make_moim.make_id}}/comment/?page={{page | add:'-10'}}">이전</a>
         {% endif %}
         {% for p in page_info %}
             {% comment %} <li {% if p == page %} active {% endif %}> {% endcomment %}
-            <a href="/board_moim/list/?page={{p}}">
+            <a href="/join/{{make_moim.make_id}}/comment/?page={{p}}">
             {{p}}
             </a></li>
         {% endfor %}
         {% if total_page > e_page %}
-            <a href="/board_moim/list/?page={{page | add:'10'}}">다음</a>
+            <a href="/join/{{make_moim.make_id}}/comment/?page={{page | add:'10'}}">다음</a>
         {% endif %}
         </ul>
     
