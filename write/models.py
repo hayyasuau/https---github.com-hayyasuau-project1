@@ -30,6 +30,7 @@ class Free(models.Model): #
     update_dttm = models.DateTimeField(auto_now=True, null=True)
     hits=models.PositiveIntegerField(default=0)
     imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
+    make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE,db_column='moim_id', null=True)
     # make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE,db_column='moim_id', null=True)
     # select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     def __str__(self):
@@ -46,6 +47,7 @@ class Gallery(models.Model): #FBV로 만듬
     imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
     make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE,db_column='moim_id', null=True)
     select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
+    
     def __str__(self):
         return f'[{self.pk}][{self.title}]'
 
