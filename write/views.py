@@ -249,7 +249,8 @@ def get_absolute_url(self):
     return f'/write/gallery/{self.pk}/'
 
 #join
-def join_detail(request):
+def join_detail(request, make_id):
+    make_moim=Make_Moim.objects.get(make_id=make_id)
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
     # page=int(page)
@@ -275,8 +276,6 @@ def join_detail(request):
     page_info = range(s_page, e_page+1)
     join_lists = join_lists[start:end]
 
-    make_moim=Make_Moim.objects.all()
-    
 
     # join = Join.objects.get(join_id)
     # comments = Good.objects.filter(good_id=join)   

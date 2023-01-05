@@ -1,28 +1,37 @@
-{% extends 'home.html' %}
+{% extends 'Home.html' %}
 {% block main_content %}
-    <h1>모임만들기</h1>
+
+<div>
+    <h1 id="board_title">모임만들기</h1>
+    <div id="center_main">
     <hr>
     {% comment %} 얘는 보내주는 주소->얘를 view한테 보내줘야함 {% endcomment %}
     <form action='/make_moim/' method="post" enctype="multipart/form-data">{% csrf_token %}
         <table>
             <tr>
-            <input type="file" name="imgfile">이미지파일
+            이미지파일: <input type="file" name="imgfile">
             <br>
-            <input type="text" name="name">이름
+            모임 이름: <input type="text" name="name">
             <br>
             <textarea name="commend" id="commend" cols="50" rows="20" aria-valuetext="설명"></textarea>
             <br>
-            <input type="text" name="location">지역
-            <td>
-                <select name="max_people" id="max_people">
+            지역: <input type="text" name="location"></tr>
+            <br>
+                인원수: <select name="max_people" id="max_people">
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
                     <option value="40">40</option>
                     <option value="50">50</option>
-            </td>
+            </br>
             </tr>
         </table>
         <input type="submit" value="만들기">
     </form>
+</div>
+</div>
+
+    
+
 {% endblock %}
+

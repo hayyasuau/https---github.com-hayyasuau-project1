@@ -1,5 +1,6 @@
 {% extends 'homecopy.html' %} 
 {% block left_menu %}
+{% include 'write/board_menu2.html' %}
 {% endblock left_menu %}
 {% block main_content %}
 <div>
@@ -8,6 +9,7 @@
 <div>
 
     <form action="/write/join/comment/" method="get">
+    <h1>모임 : {{make_moim.make_id}}</h1>
     <h5>"{{request.session.info_id}}" 님의 가입인사입니다.</h5>
     제목 : <input type="text" name="title">
     <br>
@@ -57,5 +59,4 @@
         </ul>
     
     </tbody>
-
 {% endblock  %}
