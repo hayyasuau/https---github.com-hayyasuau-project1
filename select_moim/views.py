@@ -22,7 +22,6 @@ def select_moim(request):
     id = Info.objects.get(info_id=info_id)
     groupinfo=GroupInfo.objects.filter(info=id).order_by('info') 
     #a유저-a모임.a유저-b모임,a유저-c모임 ...
-    # make_moims=GroupInfo.objects.get(make_moim=groupinfo)
 
     
     page = int(request.GET.get('page',1))
