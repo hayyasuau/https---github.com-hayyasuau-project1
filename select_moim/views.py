@@ -154,10 +154,11 @@ def select_moim_id(request, moim_id):
     try :
         id = request.session['info_id']
         GroupInfo.objects.get(info=id,make_moim=make_moim)
+
         context ={
             'make_moim':make_moim, 'comments':comments, 'groupinfo':groupinfo
         }
-
+        print(id)
         return render(request, 'select_moim/detail.html', context)
 
     except :

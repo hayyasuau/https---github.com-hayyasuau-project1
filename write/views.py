@@ -19,23 +19,27 @@ from django.core.paginator import Paginator
 #     return render(request, 'template_name', {'page_obj':page_obj}) 
 
 
-def text_delete(request,pk):#글삭
+def text_delete(request,free_id, pk):#글삭
     login_session = request.session.get('info_id','')
     
     board = get_object_or_404(Free, free_id=pk)
+    make_moim = Make_Moim.objects.get(make_id=free_id)
 
     if board.info.info_id == login_session:
         board.delete()
-        
+        return redirect('write:free', free_id)
     else:
-        return redirect('/write/free/')
+        return redirect('write:free', free_id)
 
-def text_modify(request,pk):#수정
+def text_modify(request,free_id, pk):#수정
     login_session = request.session.get('info_id','')
+    make_moim = Make_Moim.objects.get(make_id=free_id)
+
     context = {'login_session' : login_session}
 
     board = get_object_or_404(Free, free_id=pk)
     context['board'] = board
+    context['make_moim'] = make_moim
 
     if request.method == 'GET' :
         return render(request, 'write/modify.html', context)
@@ -48,12 +52,13 @@ def text_modify(request,pk):#수정
         board.text=text
 
         board.save()
-        return redirect('/write/free/')
+        return redirect('write:free', free_id)
 
 
-def view_text(request,pk): #게시물 보기
+def view_text(request,free_id,pk): #게시물 보기
     free=Free.objects.get(free_id=pk)
-    return render(request, 'write/vt_free.html',{'free':free})
+    make_moim = Make_Moim.objects.get(make_id=free_id)
+    return render(request, 'write/vt_free.html',{'free':free,'make_moim':make_moim })
 
 def freeboard_index(request, free_id): #자유게인덱스
     all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
@@ -77,6 +82,7 @@ def board_free_write(request, free_id):#작성
     if request.method == 'GET' :
         write_form = BoardWriteForm
         context['forms'] = write_form
+        context['make_moim']=make_moim
         return render(request, 'write/board_free_write.html', context)
     elif request.method =='POST':
         write_form = BoardWriteForm(request.POST)
@@ -90,10 +96,11 @@ def board_free_write(request, free_id):#작성
                 # comment=write_form.info
             )
             board.save()
-            return redirect('write:free')
+            return redirect('write:free',free_id=free_id)
         
         else:
             context['forms'] = write_form
+            context['make_moim']=make_moim
             if write_form.errors:
                 for value in write_form.errors.values():
                     context['error'] = value
@@ -101,13 +108,17 @@ def board_free_write(request, free_id):#작성
 
     return render(request, 'write/board_free_write.html', context)
 
-def free(request):
+def free(request, free_id):
+    make_moim=Make_Moim.objects.get(make_id=free_id)
     free_id = Free.objects.all().order_by('-pk')
-    all_boards = Free.objects.all().order_by("-write_dttm") 
+    all_boards = Free.objects.all().order_by("-write_dttm")
+    context = {
+        'free': free_id, 'board_list':all_boards, 'make_moim':make_moim
+    }
     return render(
         request,
         'write/free.html',
-        {'free': free_id, 'board_list':all_boards }
+        context
     )
 
 def join(request):
