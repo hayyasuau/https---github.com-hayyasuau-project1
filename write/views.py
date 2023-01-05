@@ -85,7 +85,7 @@ def board_free_write(request, free_id):#작성
         context['make_moim']=make_moim
         return render(request, 'write/board_free_write.html', context)
     elif request.method =='POST':
-        write_form = BoardWriteForm(request.POST)
+        write_form = BoardWriteForm(request.POST, request.FILES)
 
         if write_form.is_valid():
             writer = Info.objects.get(info_id=login_session)
@@ -93,6 +93,7 @@ def board_free_write(request, free_id):#작성
                 title=write_form.title,
                 text=write_form.text,
                 info=writer,
+                imgfile=write_form.imgfile
                 # comment=write_form.info
             )
             board.save()

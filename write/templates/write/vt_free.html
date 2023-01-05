@@ -5,7 +5,14 @@
         <li name="free_id" value=""> 게시글 : {{free.free_id}}</li></td>
         <td><li name="title">제목 : {{free.title}}</li></td>
         </tr><td><li name="text">내용 : {{free.text}}</li></td>
+        <td><li name="imgfile">이미지 : </li></td>
+        {% if free.imgfile %}
+        <img src="/media/{{free.imgfile}}/" width="400">
+        {% else %}
+        <img src='/static/default.jpg/' width='400'>
+        {% endif %}
         <td><li name="write_dttm">작성일 :  {{free.write_dttm}}</li></td>
+
         
         <td>
             <a href="/write/viewtext/{{make_moim.make_id}}/{{free.free_id}}/delete/"><button>삭제</button></a>
