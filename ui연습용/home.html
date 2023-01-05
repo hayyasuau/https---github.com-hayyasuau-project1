@@ -54,9 +54,9 @@
           </li>
           <li><a class="nav-link scrollto" href="/write/gallery/">갤러리</a></li>
           {% if request.session.info_id %}
-          <li><a class="nav-link scrollto" href="/login/">로그인</a></li>
-          {% else %}
           <li><a class="nav-link scrollto" href="/logout/">로그아웃</a></li>
+          {% else %}
+          <li><a class="nav-link scrollto" href="/login/">로그인</a></li>
           {% endif %}
           <li><a class="nav-link scrollto" href="/signup/">회원가입</a></li>
         </ul>
