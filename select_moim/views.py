@@ -145,3 +145,20 @@ def make_detail(request, id):
     except Make_Moim.DoesNotExist:
         raise Http404('해당 게시물을 찾을 수 없습니다.')
     return render(request, 'make_moim/make_detail.html', context)
+
+
+def select_moim_id(request, moim_id):
+    make_moim = Make_Moim.objects.get(make_id=moim_id)
+    groupinfo = GroupInfo.objects.filter(make_moim=make_moim)
+    comments = Good.objects.filter(make_moim=make_moim)
+    try :
+        id = request.session['info_id']
+        GroupInfo.objects.get(info=id,make_moim=make_moim)
+        context ={
+            'make_moim':make_moim, 'comments':comments, 'groupinfo':groupinfo
+        }
+
+        return render(request, 'select_moim/detail.html', context)
+
+    except :
+        return render(request, 'select_moim/no_signmoim.html', {'make_moim':make_moim})

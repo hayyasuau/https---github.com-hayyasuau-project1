@@ -2,8 +2,8 @@
 <div>
     <a href="/select_moim/"><button>모임선택</button></a>
     <a href="/write/"><button>모임설명</button></a>
-    <a href="{% url 'write:free' %}"><button>자유게시판</button></a>
-    <a href=""><button>가입인사</button></a>
+    <a href="/write/freeboard_index/{{make_moim.make_id}}/"><button>자유게시판</button></a>
+    <a href="/write/join/{{make_moim.make_id}}/"><button>가입인사</button></a>
     <a href="{% url 'write:gallery' %}"><button>갤러리</button></a>
     <div class="text-end">
         {% if request.session.info_id %}

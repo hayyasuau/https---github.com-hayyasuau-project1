@@ -1,5 +1,6 @@
 {% comment %} {% extends 'home/index.html'%} {% endcomment %}
 {% comment %} {% block contents %} {% endcomment %}
+<div>모임명 : {{}}</div>
 <div>게시판 글쓰기!</div>
 <form action="{% url 'write:free_write' %}" method="POST">
     {% csrf_token %}
