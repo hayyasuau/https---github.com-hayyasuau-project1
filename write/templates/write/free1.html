@@ -3,12 +3,10 @@
 {% endblock left_menu %}
 {% block main_content %}
 <body>
-<div><h1>{{make_moim}}</h1></div>
+
 <div>게시판</div>
 {% include 'write/freeindex.html' %}
-<div><a href="/write/free/{{make_moim.make_id}}/free_write/"><button>글쓰기</button></a></div>
+<div><a href="{% url 'write:free_write' %}"><button>글쓰기</button></a></div>
     
 </body>
 {% endblock  %}
-
-</html>
