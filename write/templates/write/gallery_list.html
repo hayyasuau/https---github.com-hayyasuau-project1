@@ -1,11 +1,21 @@
+{% extends 'homecopy.html' %} 
+{% block left_menu %}
+{% endblock left_menu %}
+{% block main_content %}
 {% if gallery_list %}
-{% for g in gallery_list %}
-    <tr onclick='location="/write/detail/{{g.id}}/"'>
-    <td><h2><a href="{{g.get_absolute_url}}">{{g.title}}</a></h2></td>
-    <td><img src="{{g.imgfile}}" alt=""></td>
-    <td>{{g.comment}}</td>
-    <td> {{g.info}}</td>
-    <td>작성시간</td>
-    </tr>
-{% endfor %}
+    {% for g in gallery_list %}
+        <tr onclick='location="/write/detail/{{g.id}}/"'>
+        <td><h2><a href="{{g.get_absolute_url}}">{{g.title}}</a></h2></td>
+        <td><img src="{{g.imgfile}}" alt=""></td>
+        <td>{{g.comment}}</td>
+        <td> {{g.info}}</td>
+        <td>작성시간</td>
+        </tr>
+    {% endfor %}
+{% else %}
+        <h1>작성된 글이 없습니다.</h1>
 {% endif %}
+<form action="/write/gallery/{{gallery_list.make_moim.make_id}}}/{{gallery_list.gallery_id}}/" method="get">
+    <button type="submit" name="img">사진올리기</button>
+</form>
+{% endblock  %}

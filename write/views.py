@@ -149,8 +149,35 @@ def gallery(request, pk):
         {'gallery_list': gallery_list}
     )
 
-def gallery_makeit(request):
-    return render(request, 'write/gallery_makeit.html')
+def gallery_makeit(request, pk):
+    make_moim=Make_Moim.objects.get(make_id=pk)
+    try:
+        info_id=request.session['info_id']
+        id=Info.objects.get(info_id=info_id)
+        if request.method == 'GET':
+            return render(request, 'write/gallery_makeit.html',{'id':id})
+        writer=request.POST.get('id')
+        Gallery.objects.filter(info=writer)
+        
+        
+        write_dttm=request.POST.get('write_dttm')
+        title = request.POST.get('title')
+        comment = request.POST.get('contents')
+        # imgfile = request.POST.get('imgfile')
+        imgfiles = request.FILES.getlist('imgfile')
+        
+        # for i in imgfiles:
+        #     Gallery.objects.
+        # 물어보기
+        
+        
+        #multiple도 get으로 받나?
+        #info-프라이머리키라서 어차피 1개->writer로 직접 저장 가능
+        gallery=Gallery(write_dttm=write_dttm, title=title, comment=comment, imgfiles=imgfiles, info=writer)
+        gallery.save()
+    except:
+        return redirect('/login/')
+    return redirect('write:gallery' ,pk)
 
 def gallery_make(request):
     gallery = Gallery.objects.all().order_by('-pk')
@@ -174,10 +201,11 @@ def gallery_make(request):
             return render(request, 'login_fail.html')
     return render(request, 'gallery_makeit.html')
 
-def gallery_single(request, pk, ga): #FBV로 싱글갤러리 만들기
-    gallery_singles = Gallery.objects.get(pk=pk)
+def gallery_single(request, pk, gg): #FBV로 싱글갤러리 만들기
+    gallery_singles = Gallery.objects.get(gallery_id=gg)
+    make_moim = Make_Moim.objects.get(make_id=pk)
 
-    return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles})
+    return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles, 'make_moim':make_moim})
 
 # def GalleryCreate(CreateView):
 #     model = Gallery

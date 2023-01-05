@@ -3,14 +3,22 @@
 {% endblock left_menu %}
 {% block main_content %}
 
-<form action="/write/gallery/?<pk>" method="post" enctype="multipart/form-data">
+<form action="/write/gallery/{{gallery_list.make_moim.make_id}}}/{{gallery_list.gallery_id}}/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table class="table table-striped">
 <body>
+    <input type="hidden" name="id" value="{{id}}">
+    <input type="hidden" name="write_dttm" value="{{write_dttm}}">
     <tr>
         <th>제목</th>
         <td>
             <input name="title" id="title" type="text" style="width:700px" maxlength="200">
+        </td>
+    </tr>
+    <tr>
+        <th>사진</th>
+        <td>
+            <input type="file" name="imgfiles" multiple>
         </td>
     </tr>
     <tr>

@@ -7,11 +7,22 @@
     <title>{{single_gallery.title}}</title>
 </head>
 <body>
+    <h1>{{make_moim.name}} 갤러리</h1>
 <nav>
-    <a href="/write/gallery/">갤러리로 이동</a>
+    <a href="/write/gallery/{{make_moim.make_id}}">갤러리로 이동</a>
 </nav>
-    <h4>{{single_gallery.write_dttm}}</h4>
-    <img src="{{single_gallery.imgfile}}" alt="">
+    <h1>제목 : {{single_gallery.title}}</h1>
+    <hr>
+    <h4>작성 일자 : {{single_gallery.write_dttm}}</h4>
+    <hr>
+    {% if single_gallery.imgfile %}
+        {% for s in single_gallery %}
+            <img src="/media/{{s.imgfiles}}/" alt="사진이 없어요">
+        {% endfor %}
+    {% else %}
+    <img src="/static/default.jpg/" alt="defult">
+    {% endif %}
+    <hr>
     <p>{{single_gallery.comment}}</p>
 </body>
 </html>
