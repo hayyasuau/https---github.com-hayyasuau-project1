@@ -9,12 +9,10 @@
         var result = confirm("{{id.info_id}}님(을/를) {{make_moim.name}}에 초대 하시겠습니까?")
 
        if(result){
-        alert("{{id.info_id}}님(을/를) 초대하셨습니다.")
-        location = "/board_moim/{{make_moim.make_id}}"
+        document.write("{{id.info_id}}님(을/를) 초대하셨습니다.")
        }
        else{
-        alert("초대가 취소되었습니다.")
-        location = "/board_moim/{{make_moim.make_id}}"
+        document.write("초대가 취소되었습니다.")
        } 
     </script>
 </head>
