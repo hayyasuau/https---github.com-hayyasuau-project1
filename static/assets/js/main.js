@@ -113,6 +113,19 @@
     window.addEventListener('load', toggleBacktotop)
     onscroll(document, toggleBacktotop)
   }
+  
+  let backtodown = select('.back-to-down')
+  if (backtodown) {
+    const toggleBacktodown = () => {
+      if (window.scrollY > 100) {
+        backtodown.classList.add('active')
+      } else {
+        backtodown.classList.remove('active')
+      }
+    }
+    window.addEventListener('load', toggleBacktodown)
+    onscroll(document, toggleBacktodown)
+  }
 
   /**
    * Mobile nav toggle
