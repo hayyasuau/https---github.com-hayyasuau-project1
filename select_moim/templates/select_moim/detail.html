@@ -1,13 +1,13 @@
 {% extends 'homecopy.html' %} 
 {% block left_menu %}
-{% include 'write/board_menu.html' %}
+{% include 'write/board_menu2.html' %}
 {% endblock left_menu %}
 {% block main_content %}
 <div>
 </div>
 
-    <h1 onclick="location='/write/join/{{make_moim.make_id}}'">{{make_moim.name}}<=선택</h1>
-    <h1 onclick="location='/write/join/{{make_moim.make_id}}'">가입인사</h1>
+    <h1 onclick="location='/write/join/{{make_moim.make_id}}'">{{make_moim.name}}</h1>
+    <h6 onclick="location='/write/join/{{make_moim.make_id}}'">가입인사</h6>
 
     
     <hr>
