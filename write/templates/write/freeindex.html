@@ -23,7 +23,7 @@
     {% for b in board_list %}
     <table><tr><td>
       <li class="list-group-item" name="free_id" value=""> {{b.free_id}}</li></td>
-      <td><li class="list-group-item" name="title"> <a href='/write/viewtext/{{b.free_id}}/' readonly>{{b.title}}</li></td>
+      <td><li class="list-group-item" name="title"> <a href='/write/viewtext/{{make_moim.make_id}}/{{b.free_id}}/' readonly>{{b.title}}</li></td>
       </tr><td><li class="list-group-item" name="text"> {{b.text}}</li></td>
       <td><li class="list-group-item" name="write_dttm"> {{b.write_dttm}}</li></td>
     </table>
