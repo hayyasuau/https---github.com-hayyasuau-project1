@@ -8,8 +8,9 @@ app_name = 'write'
 urlpatterns = [
     path('free/', views.free, name='free'),
     # path('join/', views.join, name='join'),
-    path('join/', views.join_detail, name='join_detail'),
-    path('join/<str:make_moim>/comment/', views.join_comment, name='join_comment'),
+    path('join/<str:make_id>/', views.join_detail, name='join_detail'),
+    path('join/<str:make_id>/comment/', views.join_comment, name='join_comment'),
+
     # path('join/update/<int:pk>/', views.join_update, name='join_update'),
     # path('join/delete/<int:pk>/', views.join_delete, name='join_delete'),
     path('join/join_write/', views.join, name='join_write'),

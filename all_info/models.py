@@ -23,7 +23,7 @@ class Region(models.Model):
 
 # 김- 등산, 낚시. 책// 이 - 등산, 바둑  ...
 class GroupInfo(models.Model):
-    make_moim_info_id = models.AutoField(default=0, primary_key=True)
+    make_moim_info_id = models.AutoField(primary_key=True)
     info = models.ForeignKey(Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE,db_column='make_id', null=True)
     y_n = models.CharField(max_length = 1)

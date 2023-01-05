@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from all_info.models import Info
+from all_info.models import GroupInfo, Info
 # from django.core.paginator import Paginator
 from make_moim.models import Make_Moim
 from write.models import Good
@@ -49,9 +49,10 @@ def list_moim(request):
 
 def board_detail(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
+    groupinfo = GroupInfo.objects.filter(make_moim=make_moim)
     comments = Good.objects.filter(make_moim=make_moim)
     context ={
-        'make_moim':make_moim, 'comments':comments,
+        'make_moim':make_moim, 'comments':comments, 'groupinfo':groupinfo
     }
     return render(request, 'board_moim/detail.html',context)
 
