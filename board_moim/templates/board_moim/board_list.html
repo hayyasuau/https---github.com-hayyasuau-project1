@@ -22,8 +22,8 @@
     <img src="/static/default.jpg" alt="{{m.name}} " style= 'width : 300px'>
     {% endif %}
 
-    <label for="location">지역/최대인원</label>
-    <input type="text" name='location' value="{{m.location}}/{{m.max_people}}" readonly>
+    <label for="location">지역/최대인원/현재인원</label>
+    <input type="text" name='location' value="{{m.location}}/{{m.max_people}}/{{m.groupinfo_set.count}}" readonly>
 
     <label for="commend">소개</label>
     <textarea class="form-control" readonly>{{m.commend}}</textarea>

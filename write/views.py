@@ -55,9 +55,11 @@ def view_text(request,pk): #게시물 보기
     free=Free.objects.get(free_id=pk)
     return render(request, 'write/vt_free.html',{'free':free})
 
-def freeboard_index(request): #자유게인덱스
+def freeboard_index(request, free_id): #자유게인덱스
     all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
-    print(all_boards)
+    make_moim=Make_Moim.objects.get(make_moim=free_id)
+    print(make_moim)
+    print(free_id)
     return render(request, 'write/freeindex.html', {'title':'Board List', 'board_list':all_boards})
 
 def board_list(request):
@@ -65,14 +67,17 @@ def board_list(request):
     context = {'login_session' : login_session}
     return render(request, 'base.html', context)
 
-def board_free_write(request):#작성 
+def board_free_write(request, free_id):#작성 
     login_session = request.session.get('info_id','')
     context = {'login_session' : login_session}
+
+    make_moim = Make_Moim.objects.get(make_id=free_id)
+    free=Free.objects.filter(make_moim=make_moim) #어떤 모임에서 써진 글들
+
     if request.method == 'GET' :
         write_form = BoardWriteForm
         context['forms'] = write_form
         return render(request, 'write/board_free_write.html', context)
-    
     elif request.method =='POST':
         write_form = BoardWriteForm(request.POST)
 
@@ -156,7 +161,7 @@ def gallery_make(request):
             return render(request, 'login_fail.html')
     return render(request, 'gallery_makeit.html')
 
-def gallery_single(request, pk): #FBV로 싱글갤러리 만들기
+def gallery_single(request, pk, ga): #FBV로 싱글갤러리 만들기
     gallery_singles = Gallery.objects.get(pk=pk)
 
     return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles})
@@ -211,7 +216,7 @@ def product_create(request):
     return render(request, 'sales/product_form.html', context)
 
 # @require_POST
-def comments_create(request, pk):
+def comments_create(request, pk, gg):
     if request.user.is_authenticated:
         free_text = get_object_or_404(Free, pk=pk)
         comment_form = GoodForm(request.POST)
@@ -293,7 +298,7 @@ def join_detail(request, make_id):
     return render(request, 'write/join_detail.html',context)
 
 
-def join_comment(request, make_moim):
+def join_comment(request, make_id):
     if request.method == 'GET':
         comment = request.GET.get('comment')
         # join_id = request.GET.get('join_id')
