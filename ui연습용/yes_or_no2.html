@@ -63,12 +63,12 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="/write/gallery/">갤러리</a></li>
-          <!-- <li><a class="nav-link scrollto" href="/write//">자유게시판</a></li> -->
+          <li><a class="nav-link scrollto" href="/write//">자유게시판</a></li>
           {% if request.session.info_id %}
-          <!-- <li><a class="nav-link scrollto" href="/logout/">로그아웃</a></li>
+          <li><a class="nav-link scrollto" href="/logout/">로그아웃</a></li>
           {% else %}
           <li><a class="nav-link scrollto" href="/login/">로그인</a></li>
-          {% endif %} -->
+          {% endif %}
           <li><a class="nav-link scrollto" href="/signup/">회원가입</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -85,21 +85,32 @@
       <div class="container">
         <section id="ctab" class="ctab">
           <div class="container">
-            <form method="post" class="post-form" action="{% url 'login' %}">
-              {% csrf_token %}
-              {% include "form_errors.html" %}
-              <div class="form-group">
-                <label for="username">사용자ID</label>
-                <input type="text class="form-control" name="info_id"
-                       value="{{form.username.value|default_if_none:'' }}">
-              </div>
-              <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input type="password" class="form-control" name="pw" id="password"
-                       value="{{ form.username.value|default_if_none:''}}">
-            </div>
-            <button type="submit" class="btn btn-primary">로그인</button>
-        </form>
+            {% block main_content %}
+            <form action="/make_moim/signup/" method="post">
+              <h1>{{id.info_id}}님(을/를) {{make_moim.name}}에 초대 하시겠습니까?</h1>
+              <button type='button' name="yes">{% csrf_token %}YES</button> 
+              <input type="hidden" name="make_id" value="{{make_moim.make_id}}">
+              <input type="hidden" name="comment_id" value="{{id.info_id}}">
+              <input type="hidden" name="selected">
+              <button type='button' name="no">{% csrf_token %}NO</button>
+          </form>
+          
+          <script>
+              form = document.querySelector('form')
+              yes = document.querySelector('[name=yes]')
+              no = document.querySelector('[name=no]')
+          
+              yes.addEventListener('click', (e) => {
+                  document.querySelector('[name=selected]').value = 'Y'
+                  form.submit()
+              })
+              no.addEventListener('click', (e) => {
+                  document.querySelector('[name=selected]').value = 'N'
+                  form.submit()
+              })
+          </script>  
+            {% endblock %}
+
           </div>
         </section><!-- End Ctab Section -->
       </div>
