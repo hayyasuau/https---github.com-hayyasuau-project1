@@ -161,5 +161,6 @@ def select_moim_id(request, moim_id):
         print(id)
         return render(request, 'select_moim/detail.html', context)
 
-    except :
+    except Exception as e :
+        print(e)
         return render(request, 'select_moim/no_signmoim.html', {'make_moim':make_moim})
