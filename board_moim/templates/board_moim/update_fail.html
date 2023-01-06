@@ -1,10 +1,3 @@
-{% comment %} {% extends 'homecopy.html' %}<!--자바 스크립트로-->
-{% block main_content %}
-<h1>수정에 실패했습니다.</h1>
-<a href="/board_moim/list/">모임 리스트로</a>
-{% endblock %} {% endcomment %}
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +9,7 @@
         window.opener.location.reload();  
         window.close();    
 
+        location = "update/{{make_moim.make_id}}/"
 
        
     </script>
