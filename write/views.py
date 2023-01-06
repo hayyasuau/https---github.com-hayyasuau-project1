@@ -1,13 +1,15 @@
+import time
 from django.urls import reverse
 from django.shortcuts import  get_object_or_404,render, redirect
 
 from make_moim.models import Make_Moim
 from .forms import BoardWriteForm, GoodForm
-from .models import Free, Gallery, Join ,Good
+from .models import Free, Gallery, Join ,Good, ManyImg
 from all_info.models import Info
 from django.views.generic import ListView, DetailView, CreateView
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
+from django.core.files.storage import FileSystemStorage
 # from django.view.decorators.http import require_http_methods
 
 # def test(request):
@@ -142,41 +144,66 @@ def new_face(request):
 def gallery(request, pk):
     make_moim=Make_Moim.objects.get(make_id=pk)
     gallery_list = Gallery.objects.all().order_by('-gallery_id')
-    
+
     return render(
         request,
         'write/gallery_list.html',
-        {'gallery_list': gallery_list}
+        {'gallery_list': gallery_list,'make_moim':make_moim}
     )
 
 def gallery_makeit(request, pk):
-    make_moim=Make_Moim.objects.get(make_id=pk)
-    try:
-        info_id=request.session['info_id']
-        id=Info.objects.get(info_id=info_id)
-        if request.method == 'GET':
-            return render(request, 'write/gallery_makeit.html',{'id':id})
-        writer=request.POST.get('id')
-        Gallery.objects.filter(info=writer)
+    make_moim=Make_Moim.objects.get(make_id=pk)        
+    if request.method == 'GET':
+            return render(request, 'write/gallery_makeit.html',{'make_moim':make_moim})
+    else :
+        try:
+            info_id=request.session['info_id']
+            id=Info.objects.get(info_id=info_id)
+
+            # writer=request.POST.get('id')
+            # Gallery.objects.filter(info=writer)
+
+            # comments = Good.objects.filter(gallery=make_moim)#댓글임
+            
+            
+            title = request.POST.get('title')
+            comment = request.POST.get('contents')
+            imgfiles = request.FILES.getlist('imgfiles')
+            make_moim = request.POST.get('make_moim')
+            # for i in imgfiles:
+            #     handle_uploaded_file(i)
+            
+            # last_gallery=last_gallery.gallery_id
+            # while True:
+            #     if Gallery.objects.get(gallery_id=(int(last_gallery)+1)):
+            #         last_gallery = int(last_gallery)+1
+            #         break
+
+            gallery=Gallery(title=title, comment=comment , info=id, make_moim=Make_Moim.objects.get(pk=make_moim), )
+            gallery.save()
+
+            for upload_file in imgfiles:
+                name = upload_file.name
+                name=name.replace('.',f'{int(time.time())}.')
         
+                # a.jpg -> (중복) a_unixtime.jpg
+                #                a_167375584983.jpg
+                with open('media/gallery/'+name, 'wb') as file:
+                    
+                    for chunk in upload_file.chunks():
+                        # manyimg=ManyImg.objects.filter(gallery=(int(last_gallery)+1))
+                        #게시글 최신->이미지1,이미지2,이미지3....
+            
+
+                        file.write(chunk)
+                manyimg=ManyImg.objects.create(imgfile=name, gallery=gallery)
+                manyimg.save()
+            #multiple도 get으로 받나?
+            #info-프라이머리키라서 어차피 1개->writer로 직접 저장 가능
         
-        write_dttm=request.POST.get('write_dttm')
-        title = request.POST.get('title')
-        comment = request.POST.get('contents')
-        # imgfile = request.POST.get('imgfile')
-        imgfiles = request.FILES.getlist('imgfile')
-        
-        # for i in imgfiles:
-        #     Gallery.objects.
-        # 물어보기
-        
-        
-        #multiple도 get으로 받나?
-        #info-프라이머리키라서 어차피 1개->writer로 직접 저장 가능
-        gallery=Gallery(write_dttm=write_dttm, title=title, comment=comment, imgfiles=imgfiles, info=writer)
-        gallery.save()
-    except:
-        return redirect('/login/')
+        except Exception as e:
+            print(e)
+            return redirect('/login/')
     return redirect('write:gallery' ,pk)
 
 def gallery_make(request):
@@ -187,6 +214,7 @@ def gallery_make(request):
         files = request.POST.get('files')
         text = request.POST.get('text')
         title = request.POST.get('title')
+        
         
         try:
             info = request.session['info']
@@ -204,8 +232,9 @@ def gallery_make(request):
 def gallery_single(request, pk, gg): #FBV로 싱글갤러리 만들기
     gallery_singles = Gallery.objects.get(gallery_id=gg)
     make_moim = Make_Moim.objects.get(make_id=pk)
+    manyimg=ManyImg.objects.filter(gallery=gallery_singles)
 
-    return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles, 'make_moim':make_moim})
+    return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles, 'make_moim':make_moim, 'manyimg':manyimg})
 
 # def GalleryCreate(CreateView):
 #     model = Gallery

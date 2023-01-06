@@ -13,11 +13,12 @@
 </nav>
     <h1>제목 : {{single_gallery.title}}</h1>
     <hr>
+    <h3>작성자 : {{single_gallery.info.info_id}}<h3>
     <h4>작성 일자 : {{single_gallery.write_dttm}}</h4>
     <hr>
     {% if single_gallery.imgfile %}
-        {% for s in single_gallery %}
-            <img src="/media/{{s.imgfiles}}/" alt="사진이 없어요">
+        {% for s in manyimg %}
+            <img src="/media/{{s.gallery_set.imgfiles}}/" alt="사진이 없어요">
         {% endfor %}
     {% else %}
     <img src="/static/default.jpg/" alt="defult">

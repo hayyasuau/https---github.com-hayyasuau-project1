@@ -44,7 +44,7 @@ class Gallery(models.Model): #FBV로 만듬
     write_dttm = models.DateTimeField(auto_now_add=True, null=True)
     update_dttm = models.DateTimeField(auto_now=True, null=True)
     info = models.ForeignKey(models2.Info, on_delete=models.CASCADE,db_column='info_id', null=True)
-    imgfile = models.ImageField(null=True, upload_to="", blank=True) # 이미지 컬럼 추가
+    imgfile = models.ImageField(null=True, upload_to="gallery/%Y%m%d", blank=True) # 이미지 컬럼 추가
     make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE,db_column='moim_id', null=True)
     select_moim = models.ForeignKey(Select_Moim, on_delete=models.CASCADE,db_column='select_id', null=True)
     
@@ -65,3 +65,10 @@ class Good(models.Model):#댓글 연결
     make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.content
+
+class ManyImg(models.Model): #이미지 여러개 업로드할려면?
+    manyimg_id = models.AutoField(primary_key=True)
+    gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE,db_column='gallery_id', null=True)
+    save_path = models.CharField(max_length=50, null=True)
+    save_name = models.CharField(max_length=50, null=True)
+    imgfile = models.ImageField(null=True, upload_to="gallery/%Y%m%d", blank=True) # 이미지 컬럼 추가
