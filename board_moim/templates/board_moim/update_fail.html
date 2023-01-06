@@ -12,14 +12,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>수정에 실패했습니다.</title>
     <script>
-        var result = confirm("{{id.info_id}}님(을/를) {{make_moim.name}}에 초대 하시겠습니까?")
+        var result = confirm("수정에 실패하셨습니다")
+        window.opener.location.reload();    //부모창 reload
+        window.close();    //현재 팝업창 Close
 
-       if(result){
-        document.write("{{id.info_id}}님(을/를) 초대하셨습니다.")
-       }
-       else{
-        document.write("초대가 취소되었습니다.")
-       } 
+
+       
     </script>
 </head>
 <body>
