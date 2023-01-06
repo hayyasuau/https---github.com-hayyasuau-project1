@@ -65,8 +65,6 @@ def view_text(request,free_id,pk): #게시물 보기
 def freeboard_index(request, free_id): #자유게인덱스
     all_boards = Free.objects.all().order_by("-write_dttm") # 모든 데이터 조회, 내림차순(-표시) 조회
     make_moim=Make_Moim.objects.get(make_moim=free_id)
-    print(make_moim)
-    print(free_id)
     return render(request, 'write/freeindex.html', {'title':'Board List', 'board_list':all_boards})
 
 def board_list(request):
@@ -129,7 +127,6 @@ def free(request, free_id):
     #페이지 구분
     total_count = Free.objects.all().count()
     total_page = total_count//10 +1
-    print(total_page)
     if page > total_page:
         page = total_page
         end = page * 10
@@ -194,7 +191,6 @@ def gallery(request, pk):
     #페이지 구분
     total_count = Gallery.objects.all().count()
     total_page = total_count//5 +1
-    print(total_page)
     if page > total_page:
         page = total_page
         end = page * 5
@@ -407,7 +403,6 @@ def join_detail(request, make_id):
     #페이지 구분
     total_count = Join.objects.all().count()
     total_page = total_count//5 +1
-    print(total_page)
     if page > total_page:
         page = total_page
         end = page * 5
@@ -449,7 +444,38 @@ def join_detail(request, make_id):
             return redirect('login')
     return redirect('write:join_detail', make_id)
 
+def join_delete(request,make_id):#글삭
+    make_moim = Make_Moim.objects.get(make_id=make_id)
+    login_session = request.session['info_id']
 
+    join_id=request.POST.get('join_id')
+    writer=request.POST.get('writer')
+    if login_session ==  writer:
+        join=Join.objects.get(make_moim=make_moim,join_id=join_id)
+        print(join)
+        join.delete()
+        return redirect('write:join_detail', make_id)
+    else:
+        return redirect('write:join_detail', make_id)
+
+def join_modify(request,make_id):#글삭
+    make_moim = Make_Moim.objects.get(make_id=make_id)
+    login_session = request.session['info_id']
+    writer=request.POST.get('writer')
+    join_id=request.POST.get('join_id')
+    join=Join.objects.get(make_moim=make_moim,join_id=join_id)
+    context = {
+        'join':join
+    }
+    if request.method == 'GET' :
+        return render(request, 'write/modify.html', context)
+    
+    else:
+        if login_session ==  writer:
+            join.save()
+        return redirect('write:join_detail', make_id)   
+
+    
     
 
 def join_comment(request, make_id):
@@ -465,3 +491,5 @@ def join_comment(request, make_id):
     except:
         return redirect('login')
     return redirect('write:join_detail', make_id)
+
+# join 하고 content가 저장 안됨 이거를 자바스크립트로 할려고 해봤는데 못하면 나중에 그냥 장고만으로 해결하기

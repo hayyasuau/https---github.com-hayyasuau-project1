@@ -15,8 +15,6 @@ urlpatterns = [
     path('join/<int:make_id>/', views.join_detail, name='join_detail'),
     path('join/<int:make_id>/comment/', views.join_comment, name='join_comment'),
 
-    # path('join/update/<int:pk>/', views.join_update, name='join_update'),
-    # path('join/delete/<int:pk>/', views.join_delete, name='join_delete'),
     path('join/join_write/', views.join, name='join_write'),
     path('gallery/<int:pk>/', views.gallery, name='gallery'),
     path('gallery/<int:pk>/<int:gg>/', views.gallery_single, name='gallery_single'),
@@ -26,6 +24,10 @@ urlpatterns = [
     # path('borad_left/', views.borad_left, name='borad_left'),
     path('free/<int:free_id>/free_write/', views.board_free_write, name='free_write'),
     path('<int:pk>/comments/', views.comments_create, name='comments_create'),
+
+    path('join/<int:make_id>/delete/', views.join_delete, name='join_delete' ),
+    path('join/<int:make_id>/modify/', views.join_modify, name='join_modify' ),
+
     # path('gallery/<int:pk>/', views.gallery_detail, name='gallery_detail'),
     path('comments/<int:free_id>/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
     # path('<int:free_pk>/likes/', views.likes, name='likes'),

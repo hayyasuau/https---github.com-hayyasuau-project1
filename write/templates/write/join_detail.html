@@ -32,9 +32,15 @@
         <p> {{t.comment}} </p>
         <h6> {{t.info.info_id}} </h6>
         <h6> {{t.write_dttm}} </h6>
-        <input type="hidden" name="join_id" value="{{t.join_id}}">
-        <form action=""><button value="수정" name="update">수정</button></form>
-        <form action=""><button value="삭제" name="delete">삭제</button></form>
+
+        <form action="/write/join/{{make_moim.make_id}}/update/" method="post"><button value="수정" name="update">수정</button>        
+        <input type="hidden" name="writer" value="{{t.info.info_id}}">
+        <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
+        </form>
+        <form action="/write/join/{{make_moim.make_id}}/delete/" method="post">{% csrf_token %}<button value="삭제" name="delete">삭제        
+        <input type="hidden" name="writer" value="{{t.info.info_id}}">
+        <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
+        </form>
         <button id='reply' onclick="reply()" >답글</button></form>
         <hr>
     </div>
@@ -76,6 +82,7 @@
         });
     }
     
+
 
 </script>
 {% endblock  %}
