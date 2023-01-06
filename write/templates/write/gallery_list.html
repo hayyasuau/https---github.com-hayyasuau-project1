@@ -2,20 +2,48 @@
 {% block left_menu %}
 {% endblock left_menu %}
 {% block main_content %}
+<tbody>
 {% if gallery_list %}
     {% for g in gallery_list %}
-        <tr onclick='location="/write/detail/{{g.id}}/"'>
-        <td><h2><a href="{{g.get_absolute_url}}">{{g.title}}</a></h2></td>
-        <td><img src="{{g.imgfile}}" alt=""></td>
-        <td>{{g.comment}}</td>
-        <td> {{g.info}}</td>
-        <td>작성시간</td>
+        <hr>
+        <td><h2 onclick='location="/write/gallery/{{make_moim.make_id}}/{{g.gallery_id}}/"'>제목 : {{g.title}}</h2></td>
+        <hr>
+        {% for imgfile in g.manyimg_set.all %}
+        <td><img src="/media/gallery/{{imgfile.imgfile}}/" alt="사진이 지워졌습니다." style = 'width: 80px';></td>            
+        {% endfor %}
+        <hr>
+        <td>내용 : {{g.comment}}</td>
+        <br>
+        <td>작성자 : {{g.info.info_id}}</td>
+        <td>작성일자 :{{g.write_dttm}}</td>
         </tr>
+        <hr>
+
     {% endfor %}
 {% else %}
+        <h1>{{make_moim.name}} 갤러리</h1>
         <h1>작성된 글이 없습니다.</h1>
 {% endif %}
-<form action="/write/gallery/{{gallery_list.make_moim.make_id}}}/{{gallery_list.gallery_id}}/" method="get">
-    <button type="submit" name="img">사진올리기</button>
-</form>
+<a href="/write/gallery/{{make_moim.make_id}}/gallery_makeit/">
+    <button type="submit" name="img" style="margin-bottom: 200px;">사진올리기</button></a>
+</a>
+</tbody>
+<tbody>
+    <ul>
+    {% if page > 10 %}
+        <a href="/write/gallery/{{make_moim.make_id}}/?page={{page | add:'-10'}}">이전</a>
+    {% endif %}
+    {% for p in page_info %}
+        {% comment %} <li {% if p == page %} active {% endif %}> {% endcomment %}
+        <a href="/write/gallery/{{make_moim.make_id}}/?page={{p}}">
+        {{p}}
+        </a></li>
+    {% endfor %}
+    {% if total_page > e_page %}
+        <a href="/write/gallery/{{make_moim.make_id}}/?page={{page | add:'10'}}">다음</a>
+    {% endif %}
+    </ul>
+
+</tbody>
+
 {% endblock  %}

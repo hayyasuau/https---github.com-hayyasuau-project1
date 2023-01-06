@@ -1,4 +1,7 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 from . import views
 
 
@@ -30,4 +33,5 @@ urlpatterns = [
     path('viewtext/<int:free_id>/<int:pk>/', views.view_text, name='free01' ),#view text, vt 게시물보기
     path('viewtext/<int:free_id>/<int:pk>/delete/', views.text_delete, name='delete' ),
     path('viewtext/<int:free_id>/<int:pk>/modify/', views.text_modify, name='modify' ),
-]
+] 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

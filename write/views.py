@@ -1,13 +1,15 @@
+import time
 from django.urls import reverse
 from django.shortcuts import  get_object_or_404,render, redirect
 
 from make_moim.models import Make_Moim
 from .forms import BoardWriteForm, GoodForm
-from .models import Free, Gallery, Join ,Good
+from .models import Free, Gallery, Join ,Good, ManyImg
 from all_info.models import Info
 from django.views.generic import ListView, DetailView, CreateView
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
+from django.core.files.storage import FileSystemStorage
 # from django.view.decorators.http import require_http_methods
 
 # def test(request):
@@ -110,12 +112,49 @@ def board_free_write(request, free_id):#작성
     return render(request, 'write/board_free_write.html', context)
 
 def free(request, free_id):
+    
     make_moim=Make_Moim.objects.get(make_id=free_id)
     free_id = Free.objects.all().order_by('-pk')
     all_boards = Free.objects.all().order_by("-write_dttm")
+
+    #페이징
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    end = page * 10
+    start = end - 10
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = Free.objects.all().count()
+    total_page = total_count//10 +1
+    print(total_page)
+    if page > total_page:
+        page = total_page
+        end = page * 10
+        start = end -10
+    
+    if total_count % 10 !=0:
+        total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page)
+    all_boards = all_boards[start:end]
+
     context = {
-        'free': free_id, 'board_list':all_boards, 'make_moim':make_moim
+        'all_boards' : all_boards,
+        'page_info' : page_info,
+        'total_page' : total_page,
+        'e_page' : e_page,
+        'page':page,
+        'make_moim':make_moim,
+        'free': free_id, 'board_list':all_boards,
+        # 'posts' : posts
     }
+
     return render(
         request,
         'write/free.html',
@@ -142,44 +181,99 @@ def new_face(request):
 def gallery(request, pk):
     make_moim=Make_Moim.objects.get(make_id=pk)
     gallery_list = Gallery.objects.all().order_by('-gallery_id')
+
+    #페이징
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    end = page * 5
+    start = end - 5
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = Gallery.objects.all().count()
+    total_page = total_count//5 +1
+    print(total_page)
+    if page > total_page:
+        page = total_page
+        end = page * 5
+        start = end -5
     
+    if total_count % 5 !=0:
+        total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page)
+    gallery_list = gallery_list[start:end]
+
+    context = {
+        'gallery_list' : gallery_list,
+        'page_info' : page_info,
+        'total_page' : total_page,
+        'e_page' : e_page,
+        'page':page,
+        'make_moim':make_moim,
+        # 'posts' : posts
+    }
+
     return render(
         request,
         'write/gallery_list.html',
-        {'gallery_list': gallery_list}
+        context
     )
 
 def gallery_makeit(request, pk):
-    make_moim=Make_Moim.objects.get(make_id=pk)
-    try:
-        info_id=request.session['info_id']
-        id=Info.objects.get(info_id=info_id)
-        if request.method == 'GET':
-            return render(request, 'write/gallery_makeit.html',{'id':id})
-        writer=request.POST.get('id')
-        Gallery.objects.filter(info=writer)
+    make_moim=Make_Moim.objects.get(make_id=pk)        
+    if request.method == 'GET':
+            return render(request, 'write/gallery_makeit.html',{'make_moim':make_moim})
+    else :
+        try:
+            info_id=request.session['info_id']
+            id=Info.objects.get(info_id=info_id)
+
+            # writer=request.POST.get('id')
+            # Gallery.objects.filter(info=writer)
+
+            # comments = Good.objects.filter(gallery=make_moim)#댓글임
+            
+            
+            title = request.POST.get('title')
+            comment = request.POST.get('contents')
+            imgfiles = request.FILES.getlist('imgfiles')
+            make_moim = request.POST.get('make_moim')
+
+
+            gallery=Gallery(title=title, comment=comment , info=id, make_moim=Make_Moim.objects.get(pk=make_moim), )
+            gallery.save()
+
+            for upload_file in imgfiles:
+                name = upload_file.name
+                name=name.replace('.',f'{int(time.time())}.')
         
+                # a.jpg -> (중복) a_unixtime.jpg
+                #                a_167375584983.jpg
+                with open('media/gallery/'+name, 'wb') as file:
+                    
+                    for chunk in upload_file.chunks():
+                        # manyimg=ManyImg.objects.filter(gallery=(int(last_gallery)+1))
+                        #게시글 최신->이미지1,이미지2,이미지3....
+            
+
+                        file.write(chunk)
+                manyimg=ManyImg.objects.create(imgfile=name, gallery=gallery)
+                manyimg.save()
+            #multiple도 get으로 받나?
+            #info-프라이머리키라서 어차피 1개->writer로 직접 저장 가능
         
-        write_dttm=request.POST.get('write_dttm')
-        title = request.POST.get('title')
-        comment = request.POST.get('contents')
-        # imgfile = request.POST.get('imgfile')
-        imgfiles = request.FILES.getlist('imgfile')
-        
-        # for i in imgfiles:
-        #     Gallery.objects.
-        # 물어보기
-        
-        
-        #multiple도 get으로 받나?
-        #info-프라이머리키라서 어차피 1개->writer로 직접 저장 가능
-        gallery=Gallery(write_dttm=write_dttm, title=title, comment=comment, imgfiles=imgfiles, info=writer)
-        gallery.save()
-    except:
-        return redirect('/login/')
+        except Exception as e:
+            print(e)
+            return redirect('/login/')
     return redirect('write:gallery' ,pk)
 
-def gallery_make(request):
+def gallery_make(request): #이게머지???/
     gallery = Gallery.objects.all().order_by('-pk')
 
     if request.method == 'POST':
@@ -187,6 +281,7 @@ def gallery_make(request):
         files = request.POST.get('files')
         text = request.POST.get('text')
         title = request.POST.get('title')
+        
         
         try:
             info = request.session['info']
@@ -204,8 +299,9 @@ def gallery_make(request):
 def gallery_single(request, pk, gg): #FBV로 싱글갤러리 만들기
     gallery_singles = Gallery.objects.get(gallery_id=gg)
     make_moim = Make_Moim.objects.get(make_id=pk)
+    manyimg=ManyImg.objects.filter(gallery=gallery_singles)
 
-    return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles, 'make_moim':make_moim})
+    return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles, 'make_moim':make_moim, 'manyimg':manyimg})
 
 # def GalleryCreate(CreateView):
 #     model = Gallery
@@ -296,108 +392,76 @@ def get_absolute_url(self):
 
 #join
 def join_detail(request, make_id):
-    #모임에서 모임 아이디가 모임 아이디인 것은 하나
     make_moim=Make_Moim.objects.get(make_id=make_id)
+    join_list = Join.objects.all().order_by('-join_id')
+
+#페이징
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
     # page=int(page)
-    join_lists = Join.objects.all().order_by('-write_dttm')
-    end = page * 20
-    start = end - 20
+    end = page * 5
+    start = end - 5
     s_page = (page-1)//10*10 + 1
     e_page = s_page +9
+
     #페이지 구분
     total_count = Join.objects.all().count()
-    total_page = total_count//20 +1
-    # if page > total_page:
-    #     page = total_page
-    #     end = page * 5
-    #     start = end -5
+    total_page = total_count//5 +1
+    print(total_page)
+    if page > total_page:
+        page = total_page
+        end = page * 5
+        start = end -5
     
-    # if total_count % 10 !=0:
-    #     total_page +=1
+    if total_count % 5 !=0:
+        total_page +=1
 
     if e_page > total_page : 
         e_page = total_page
-        
-    page_info = range(s_page, e_page+1)
-    join_lists = join_lists[start:end]
+
+    page_info = range(s_page, e_page)
+    join_list = join_list[start:end]
 
 
-    # join = Join.objects.get(join_id)
-    # comments = Good.objects.filter(good_id=join)   
-    context = {
-        'join_lists' : join_lists,
-        'page_info' : page_info,
-        'total_page' : total_page,
-        'e_page' : e_page,
-        'page':page,
-        'make_moim':make_moim
-        # 'comments':comments
-    }
+    if request.method == 'GET':
+        context = {
+            'join_list' : join_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+
+        return render(request, 'write/join_detail.html',context)
+    else:
+        try:
+            info_id=request.session['info_id']
+            info=Info.objects.get(info_id=info_id)
+
+            comment=request.POST.get('comment')
+            title=request.POST.get('title')
+
+            join = Join(title=title, comment=comment,info=info, make_moim=make_moim)
+            join.save()
+        except:
+            return redirect('login')
+    return redirect('write:join_detail', make_id)
+
+
     
-
-    return render(request, 'write/join_detail.html',context)
-
 
 def join_comment(request, make_id):
-    if request.method == 'GET':
-        page = int(request.GET.get('page',1))
-        # if not page : page = '1'
-        # page=int(page)
-        join_list = Join.objects.all().order_by('-write_dttm')
-        end = page * 5
-        start = end - 5
-        s_page = (page-1)//10*10 + 1
-        e_page = s_page +9
-
-        #페이지 구분
-        total_count = Join.objects.all().count()
-        total_page = total_count//5 +1
-        # if page > total_page:
-        #     page = total_page
-        #     end = page * 5
-        #     start = end -5
+    make_moim=Make_Moim.objects.get(make_id=make_id)
+    join = request.POST.get('join_id')
+    content=request.POST.get('reply_comment')
+    try :
+        info_id=request.session['info_id']
+        info=Info.objects.get(info_id=info_id)
         
-        # if total_count % 10 !=0:
-        #     total_page +=1
-
-        if e_page > total_page : 
-            e_page = total_page
-
-        page_info = range(s_page, e_page+1)
-        join_list = join_list[start:end]
-
-    
-        info=request.session['info_id']
-        info=Info.objects.get(info_id=info)
-        comment = request.GET.get('comment')
-        # join_id = request.GET.get('join_id')
-        # join은 아직 안받음??// 모임아이디 ->join을 찾아야 하기 때문에 join 이외에서 불러와야함
-        # 여기서는 make_moim에서 가져오자
-        make_moim=request.GET.get('make_moim')
-        writer = request.GET.get('writer')
-        title = request.GET.get('title')
-        #아래에서 모임을 조회
-        make_moim = Make_Moim.objects.get(make_id=make_id)
-        # join = Join.objects.filter(make_moim=make_id)
-        # infos=Join.objects.filter(info=writer)
-
-        join=Join(title=title, comment=comment, info=info, make_moim=make_moim)
-        totals=Join.objects.all().order_by('-write_dttm')
-        join.save()
-        print(totals)
-        context = {
-        'writer':writer,
-        'title':title,
-        'make_id':make_id,
-        'totals':totals,
-        'comment':comment,
-        'make_moim':make_moim,
-        'join_list' : join_list,
-        'page_info' : page_info,
-        'total_page' : total_page,
-        'e_page' : e_page,
-        'page':page
-        }
-        return render(request, 'write/join_detail.html',context)
+        good = Good(content=content, info=info, make_moim=make_moim, join=join)
+        good.save()
+    except:
+        return redirect('login')
+    return redirect('write:join_detail', make_id)
