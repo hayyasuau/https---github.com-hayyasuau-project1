@@ -4,18 +4,20 @@
 {% block main_content %}
 {% if gallery_list %}
     {% for g in gallery_list %}
-        <tr onclick='location="/write/detail/{{g.id}}/"'>
-        <td><h2><a href="{{g.get_absolute_url}}">{{g.title}}</a></h2></td>
+        <td><h2><a href="/write/gallery/{{make_moim.make_id}}/{{g.gallery_id}}/">{{g.title}}</a></h2></td>
+        {% for imgfile in gallery_list.imgfile.all %}
         <td><img src="{{g.imgfile}}" alt=""></td>
+        {% endfor %}
         <td>{{g.comment}}</td>
-        <td> {{g.info}}</td>
-        <td>작성시간</td>
+        <td> {{g.info.info_id}}</td>
+        <td>{{g.write_dttm}}</td>
         </tr>
     {% endfor %}
 {% else %}
+        <h1>{{make_moim.name}} 갤러리</h1>
         <h1>작성된 글이 없습니다.</h1>
 {% endif %}
-<form action="/write/gallery/{{gallery_list.make_moim.make_id}}}/{{gallery_list.gallery_id}}/" method="get">
-    <button type="submit" name="img">사진올리기</button>
-</form>
+<a href="/write/gallery/{{make_moim.make_id}}/gallery_makeit/">
+    <button type="submit" name="img">사진올리기</button></a>
+</a>
 {% endblock  %}
