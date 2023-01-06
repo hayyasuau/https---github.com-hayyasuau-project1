@@ -134,7 +134,7 @@ def list_moim(request):
         
 def make_detail(request, id):
     try :
-        make_moim= Make_Moim.objects.get(id=id)
+        make_moim= Make_Moim.objects.get(make_id=id)
         goods=Good.objects.filter(make_moim=make_moim)
 
         context = {
@@ -154,7 +154,7 @@ def select_moim_id(request, moim_id):
     try :
         id = request.session['info_id']
         GroupInfo.objects.get(info=id,make_moim=make_moim)
-
+        print(make_moim,comments,groupinfo)
         context ={
             'make_moim':make_moim, 'comments':comments, 'groupinfo':groupinfo
         }
