@@ -86,25 +86,7 @@
         <section id="ctab" class="ctab">
           <div class="container">
             {% block main_content %}
-            {% block main_content %}
-    {% if search %}
-    <h1> {{search}} 검색 결과</h1>
-    <br>
-    <hr>
-    {% for s in searchs %}
-        {{s.title}}<br>
-        {{s.text}}<br>
-        {{s.write_dttm}}
-        {{s.update_dttm}}
-        {{s.group}}
-        {{s.free_id}}
-        {{s.info}}
-        {{s.comment}}
-        {{s.gallery_id}}
-    {% endfor %}
-    {% else %}
-    <h1>검색 결과가 없습니다. 새로 검색해주세요</h1>
-    {% endif %}
+            
             {% endblock %}
 
           </div>

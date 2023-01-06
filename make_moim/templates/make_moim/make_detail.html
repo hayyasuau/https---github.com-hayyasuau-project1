@@ -1,18 +1,4 @@
-{% extends 'homecopy.html' %} 
-{% block left_menu %}
-{% include 'write/board_menu.html' %}
-{% endblock left_menu %}
-{% block main_content %}
-<div style="width: 500px; height: 500px; background-color: azure;">
-</div>
 
-    <label for="title">제목</label>
-    <input type="text" id='title' value="{{make_moim.title}}" readonly>
-
-    <label for="imgfile">이미지</label>
-    <input type="file" id='imgfile' value="{{make_moim.imgfile}}" readonly>
-
-    <label for="location">지역/최대인원</label>
     <!DOCTYPE html>
     <html lang="ko">
     
@@ -93,8 +79,7 @@
       </header><!-- End Header -->
     
       <main id="main">
-    
-    
+
         <!-- ======= Ctab Section ======= -->
         <section class="inner-page">
           <div class="container">
@@ -116,7 +101,7 @@
                     <label for="commend">소개</label>
                     <textarea class="form-control" readonly>{{make_moim.commend}}</textarea>
                 
-                    <hr>
+                    <!--<hr>
                     <a href="" id="list">목록</a>
                     <a href="" id="update">수정</a>
                     <a href="" id="delete">삭제</a>
@@ -126,14 +111,14 @@
                         <input type="text" name="id" id="id" value=""> !가입희망자
                         <button>입력</button>
                         {% csrf_token %}
-                    </form>
+                    </form> {% endcomment %}
                     {% for good in goods %}
                         <h4> {{good.good}} </h3>
                     {% endfor %}
-                {% endblock %}
+                {% endblock %}-->
     
               </div>
-            </section><!-- End Ctab Section -->
+            </section> <!-- End Ctab Section -->
           </div>
         </section>
     
