@@ -9,39 +9,45 @@
 <tbody>
     <ul>
     {% if page > 10 %}
-        <a href="/join/{{make_moim.make_id}}/comment/?page={{page | add:'-10'}}">이전</a>
+        <a href="/write/join/{{make_moim.make_id}}/?page={{page | add:'-10'}}">이전</a>
     {% endif %}
     {% for p in page_info %}
         {% comment %} <li {% if p == page %} active {% endif %}> {% endcomment %}
-        <a href="/join/{{make_moim.make_id}}/comment/?page={{p}}">
+        <a href="/write/join/{{make_moim.make_id}}/?page={{p}}">
         {{p}}
         </a></li>
     {% endfor %}
     {% if total_page > e_page %}
-        <a href="/join/{{make_moim.make_id}}/comment/?page={{page | add:'10'}}">다음</a>
+        <a href="/write/join/{{make_moim.make_id}}/?page={{page | add:'10'}}">다음</a>
     {% endif %}
     </ul>
 
 </tbody>
 <tbody>
 <div>
-    {% for total in totals %}
+    {% for t in make_moim.join_set.all %}
     <div>
         △<br>
-        <h6> {{total.title}} </h6>
-        <p> {{total.comment}} </p>
-        <h6> {{total.info}} </h6>
-        <h6> {{total.write_dttm}} </h6>
+        <h6> {{t.title}} </h6>
+        <p> {{t.comment}} </p>
+        <h6> {{t.info.info_id}} </h6>
+        <h6> {{t.write_dttm}} </h6>
+        <input type="hidden" name="join_id" value="{{t.join_id}}">
         <form action=""><button value="수정" name="update">수정</button></form>
         <form action=""><button value="삭제" name="delete">삭제</button></form>
-        <form action="" method="POST"><button value="답글" >답글</button></form>
+        <button id='reply' onclick="reply()" >답글</button></form>
         <hr>
     </div>
+        <div name="a"></div>
+        <div name="b" style="display: none;">
+        <form action="/write/join/{{make_moim.make_id}}/comment"><input type="text" name="reply_comment"><button name="reply">답글</button></form>
+        </div>
     {% endfor %}
 </div>
 <div>
 
-    <form action="/write/join/{{make_moim.make_id}}/comment/" method="get">
+    <form action="/write/join/{{make_moim.make_id}}/" method="post">
+        {% csrf_token %}
     <h1>모임 : {{make_moim.name}}</h1>
     <h5>"{{request.session.info_id}}" 님의 인사창입니다.</h5>
     제목 : <input type="text" name="title">
@@ -56,4 +62,20 @@
 </div>
 
 
+<script>
+    let a = document.querySelectorAll('[name=a]');
+    let b = document.querySelectorAll('[name=b]');
+    const reply = document.querySelectorAll('[name=reply]');
+    console.log(reply[3])
+    console.log(a[3])
+    console.log(b[3])
+    for (var i=0; i<6;i++){
+        reply[i].addEventListener('click', () =>{
+        a[i].style.display = 'none';
+        b[i].style.display = 'block';
+        });
+    }
+    
+
+</script>
 {% endblock  %}

@@ -112,12 +112,49 @@ def board_free_write(request, free_id):#작성
     return render(request, 'write/board_free_write.html', context)
 
 def free(request, free_id):
+    
     make_moim=Make_Moim.objects.get(make_id=free_id)
     free_id = Free.objects.all().order_by('-pk')
     all_boards = Free.objects.all().order_by("-write_dttm")
+
+    #페이징
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    end = page * 10
+    start = end - 10
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = Free.objects.all().count()
+    total_page = total_count//10 +1
+    print(total_page)
+    if page > total_page:
+        page = total_page
+        end = page * 10
+        start = end -10
+    
+    if total_count % 10 !=0:
+        total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page)
+    all_boards = all_boards[start:end]
+
     context = {
-        'free': free_id, 'board_list':all_boards, 'make_moim':make_moim
+        'all_boards' : all_boards,
+        'page_info' : page_info,
+        'total_page' : total_page,
+        'e_page' : e_page,
+        'page':page,
+        'make_moim':make_moim,
+        'free': free_id, 'board_list':all_boards,
+        # 'posts' : posts
     }
+
     return render(
         request,
         'write/free.html',
@@ -158,18 +195,18 @@ def gallery(request, pk):
     total_count = Gallery.objects.all().count()
     total_page = total_count//5 +1
     print(total_page)
-    # if page > total_page:
-    #     page = total_page
-    #     end = page * 5
-    #     start = end -5
+    if page > total_page:
+        page = total_page
+        end = page * 5
+        start = end -5
     
-    # if total_count % 10 !=0:
-    #     total_page +=1
+    if total_count % 5 !=0:
+        total_page +=1
 
     if e_page > total_page : 
         e_page = total_page
 
-    page_info = range(s_page, e_page+1)
+    page_info = range(s_page, e_page)
     gallery_list = gallery_list[start:end]
 
     context = {
@@ -355,108 +392,76 @@ def get_absolute_url(self):
 
 #join
 def join_detail(request, make_id):
-    #모임에서 모임 아이디가 모임 아이디인 것은 하나
     make_moim=Make_Moim.objects.get(make_id=make_id)
+    join_list = Join.objects.all().order_by('-join_id')
+
+#페이징
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
     # page=int(page)
-    join_lists = Join.objects.all().order_by('-write_dttm')
-    end = page * 20
-    start = end - 20
+    end = page * 5
+    start = end - 5
     s_page = (page-1)//10*10 + 1
     e_page = s_page +9
+
     #페이지 구분
     total_count = Join.objects.all().count()
-    total_page = total_count//20 +1
-    # if page > total_page:
-    #     page = total_page
-    #     end = page * 5
-    #     start = end -5
+    total_page = total_count//5 +1
+    print(total_page)
+    if page > total_page:
+        page = total_page
+        end = page * 5
+        start = end -5
     
-    # if total_count % 10 !=0:
-    #     total_page +=1
+    if total_count % 5 !=0:
+        total_page +=1
 
     if e_page > total_page : 
         e_page = total_page
-        
-    page_info = range(s_page, e_page+1)
-    join_lists = join_lists[start:end]
+
+    page_info = range(s_page, e_page)
+    join_list = join_list[start:end]
 
 
-    # join = Join.objects.get(join_id)
-    # comments = Good.objects.filter(good_id=join)   
-    context = {
-        'join_lists' : join_lists,
-        'page_info' : page_info,
-        'total_page' : total_page,
-        'e_page' : e_page,
-        'page':page,
-        'make_moim':make_moim
-        # 'comments':comments
-    }
+    if request.method == 'GET':
+        context = {
+            'join_list' : join_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+
+        return render(request, 'write/join_detail.html',context)
+    else:
+        try:
+            info_id=request.session['info_id']
+            info=Info.objects.get(info_id=info_id)
+
+            comment=request.POST.get('comment')
+            title=request.POST.get('title')
+
+            join = Join(title=title, comment=comment,info=info, make_moim=make_moim)
+            join.save()
+        except:
+            return redirect('login')
+    return redirect('write:join_detail', make_id)
+
+
     
-
-    return render(request, 'write/join_detail.html',context)
-
 
 def join_comment(request, make_id):
-    if request.method == 'GET':
-        page = int(request.GET.get('page',1))
-        # if not page : page = '1'
-        # page=int(page)
-        join_list = Join.objects.all().order_by('-write_dttm')
-        end = page * 5
-        start = end - 5
-        s_page = (page-1)//10*10 + 1
-        e_page = s_page +9
-
-        #페이지 구분
-        total_count = Join.objects.all().count()
-        total_page = total_count//5 +1
-        # if page > total_page:
-        #     page = total_page
-        #     end = page * 5
-        #     start = end -5
+    make_moim=Make_Moim.objects.get(make_id=make_id)
+    join = request.POST.get('join_id')
+    content=request.POST.get('reply_comment')
+    try :
+        info_id=request.session['info_id']
+        info=Info.objects.get(info_id=info_id)
         
-        # if total_count % 10 !=0:
-        #     total_page +=1
-
-        if e_page > total_page : 
-            e_page = total_page
-
-        page_info = range(s_page, e_page+1)
-        join_list = join_list[start:end]
-
-    
-        info=request.session['info_id']
-        info=Info.objects.get(info_id=info)
-        comment = request.GET.get('comment')
-        # join_id = request.GET.get('join_id')
-        # join은 아직 안받음??// 모임아이디 ->join을 찾아야 하기 때문에 join 이외에서 불러와야함
-        # 여기서는 make_moim에서 가져오자
-        make_moim=request.GET.get('make_moim')
-        writer = request.GET.get('writer')
-        title = request.GET.get('title')
-        #아래에서 모임을 조회
-        make_moim = Make_Moim.objects.get(make_id=make_id)
-        # join = Join.objects.filter(make_moim=make_id)
-        # infos=Join.objects.filter(info=writer)
-
-        join=Join(title=title, comment=comment, info=info, make_moim=make_moim)
-        totals=Join.objects.all().order_by('-write_dttm')
-        join.save()
-        print(totals)
-        context = {
-        'writer':writer,
-        'title':title,
-        'make_id':make_id,
-        'totals':totals,
-        'comment':comment,
-        'make_moim':make_moim,
-        'join_list' : join_list,
-        'page_info' : page_info,
-        'total_page' : total_page,
-        'e_page' : e_page,
-        'page':page
-        }
-        return render(request, 'write/join_detail.html',context)
+        good = Good(content=content, info=info, make_moim=make_moim, join=join)
+        good.save()
+    except:
+        return redirect('login')
+    return redirect('write:join_detail', make_id)
