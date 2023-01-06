@@ -37,7 +37,7 @@ def signup(request):
     
         return render(
             request,
-            'common/id_pw.html',
+            'common/pages-register.html',
         )
     # POST
     info_id = request.POST.get('info_id')
@@ -66,7 +66,7 @@ def login(request): #로그인
     
         return render(
             request,
-            'common/login.html', 
+            'common/pages-login.html', 
         )
     # POST
     info_id = request.POST.get('info_id')
