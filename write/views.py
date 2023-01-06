@@ -145,10 +145,47 @@ def gallery(request, pk):
     make_moim=Make_Moim.objects.get(make_id=pk)
     gallery_list = Gallery.objects.all().order_by('-gallery_id')
 
+    #페이징
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    end = page * 5
+    start = end - 5
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = Gallery.objects.all().count()
+    total_page = total_count//5 +1
+    print(total_page)
+    # if page > total_page:
+    #     page = total_page
+    #     end = page * 5
+    #     start = end -5
+    
+    # if total_count % 10 !=0:
+    #     total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page+1)
+    gallery_list = gallery_list[start:end]
+
+    context = {
+        'gallery_list' : gallery_list,
+        'page_info' : page_info,
+        'total_page' : total_page,
+        'e_page' : e_page,
+        'page':page,
+        'make_moim':make_moim,
+        # 'posts' : posts
+    }
+
     return render(
         request,
         'write/gallery_list.html',
-        {'gallery_list': gallery_list,'make_moim':make_moim}
+        context
     )
 
 def gallery_makeit(request, pk):
@@ -170,14 +207,7 @@ def gallery_makeit(request, pk):
             comment = request.POST.get('contents')
             imgfiles = request.FILES.getlist('imgfiles')
             make_moim = request.POST.get('make_moim')
-            # for i in imgfiles:
-            #     handle_uploaded_file(i)
-            
-            # last_gallery=last_gallery.gallery_id
-            # while True:
-            #     if Gallery.objects.get(gallery_id=(int(last_gallery)+1)):
-            #         last_gallery = int(last_gallery)+1
-            #         break
+
 
             gallery=Gallery(title=title, comment=comment , info=id, make_moim=Make_Moim.objects.get(pk=make_moim), )
             gallery.save()
@@ -206,7 +236,7 @@ def gallery_makeit(request, pk):
             return redirect('/login/')
     return redirect('write:gallery' ,pk)
 
-def gallery_make(request):
+def gallery_make(request): #이게머지???/
     gallery = Gallery.objects.all().order_by('-pk')
 
     if request.method == 'POST':

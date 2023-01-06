@@ -16,9 +16,10 @@
     <h3>작성자 : {{single_gallery.info.info_id}}<h3>
     <h4>작성 일자 : {{single_gallery.write_dttm}}</h4>
     <hr>
-    {% if single_gallery.imgfile %}
-        {% for s in manyimg %}
-            <img src="/media/{{s.gallery_set.imgfiles}}/" alt="사진이 없어요">
+    {% if single_gallery.manyimg_set.all %}
+        {% for imgfile in single_gallery.manyimg_set.all %}
+            <td><img src="/media/gallery/{{imgfile.imgfile}}/" alt="사진이 지워졌습니다." style = 'width: 400px';></td>
+            <hr>
         {% endfor %}
     {% else %}
     <img src="/static/default.jpg/" alt="defult">
