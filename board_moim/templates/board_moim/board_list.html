@@ -96,7 +96,14 @@
 
           <label for="category">카테고리</label>
           <input type="text" name='category' value="{{m.category}}" readonly>
-              
+
+          <hr>
+          <b>태그 : 
+            {% for t in m.tagmoim_set.all %}
+               {{t.tag.name}}
+              <input type="hidden" name='tag' value="{{t.tag.name}}">
+            {% endfor %}</b>
+          <hr>
           <label for="name">제목</label>
           <input type="text" name='name' value="{{m.name}}" readonly>
       

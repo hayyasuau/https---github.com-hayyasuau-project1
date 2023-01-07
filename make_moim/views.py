@@ -5,7 +5,7 @@ from django.contrib import messages
 # from django.contrib.auth.mixins import LoginRequiredMixin
 from all_info.models import GroupInfo, Info
 from make_moim.models import Make_Moim
-from tag.models import Tag
+from tag.models import Tag, TagMoim
 
 
 # Create your views here.
@@ -24,10 +24,30 @@ def make_moim(request):
         max_people = request.POST.get('max_people')
         category = request.POST.get('category')
         # make_moims = Make_Moim.objects.all()
+        alltag=request.POST.get('tag')
+        tags = alltag.split(',')
         try:
-            make_moim = Make_Moim(name=name, commend=commend, location=location, imgfile=imgfile, max_people=max_people, category=category )
+            make_moim = Make_Moim(name=name, commend=commend, location=location, imgfile=imgfile, max_people=max_people, category=category)
             make_moim.save()
-        except:
+            make_moim_last=Make_Moim.objects.all().order_by('-make_id')[0]
+            for i in tags:
+                newtag = Tag(name=i)
+                newtag.save()
+
+                tag_id=Tag.objects.all().order_by('-pk')[0]
+                print(tag_id,make_moim)
+                t = TagMoim()
+                t.tag = tag_id
+                t.make_moim = make_moim_last
+                t.save()
+                
+            #이럴꺼면 일대 다해도 됐는데
+            #slug 이용하면 하나만 나올 방법이 있음 +
+            #좀더 연구하면 같은 이름의 태그에 할 수 있는 방법이 있을 것 같은데 아직 실력이 부족하네
+            #나중에 봐서 고쳐야지
+            
+        except  Exception as e :
+            print(e)
             return HttpResponse('<h1>저장에 실패하였습니다.</h1><br><a herf="make_moim:make_moim">뒤로가기</a>')
     else :
         return redirect('/login/')

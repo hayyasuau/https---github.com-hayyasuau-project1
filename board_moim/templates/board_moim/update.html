@@ -117,6 +117,11 @@
     <h5>카테고리 : <select name="category" id="category">
       {% include 'category.html' %}
     </select>
+    태그 : {% include 'tag.html' %}
+    <p style="font-size: xx-small;">      
+      {% for t in make_moim.tagmoim_set.all %}
+        {{t.tag.name}}
+      {% endfor %}◀현재태그</p>
     <hr>
     <h5>모임 : "{{make_moim.name}}" 의 소개입니다.</h5>
     <textarea class="form-control" name="commend" >{{make_moim.commend}}</textarea>

@@ -120,6 +120,12 @@
         {% endfor %}
 
     </h6>
+    <hr>
+    <b>태그 : 
+      {% for t in make_moim.tagmoim_set.all %}
+         {{t.tag.name}}
+        <input type="hidden" name='tag' value="{{t.tag.name}}">
+      {% endfor %}</b>
 
     <hr>
     <button type="button"><a href="/board_moim/list/"> 목록</a></button>

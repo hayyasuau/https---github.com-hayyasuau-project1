@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from all_info.models import GroupInfo, Info
 # from django.core.paginator import Paginator
 from make_moim.models import Make_Moim
+from tag.models import Tag, TagMoim
 from write.models import Good
 # from django.contrib import messages
 
@@ -66,20 +67,35 @@ def board_update(request, pk):
         location = request.POST.get('location')
         max_people = request.POST.get('max_people')
         category = request.POST.get('category')
-        # tags = request.POST.get('tags')
+        alltag=request.POST.get('tag')
+        tags = alltag.split(',')
+        
         try :
-            make_moim.make_id = make_id
-            make_moim.name = name
-            make_moim.commend = commend
-            make_moim.imgfile = imgfile
-            make_moim.location = location
-            make_moim.max_people = max_people
-            make_moim.category = category
+            TagMoim.objects.filter(make_moim=make_moim).delete()
+            for i in tags:
+                newtag = Tag(name=i)
+                newtag.save()
+                tag_id=Tag.objects.all().order_by('-pk')[0]
+                t = TagMoim()
+                         
+                make_moim.make_id = make_id
+                make_moim.name = name
+                make_moim.commend = commend
+                make_moim.imgfile = imgfile
+                make_moim.location = location
+                make_moim.max_people = max_people
+                make_moim.category = category
             # make_moim.tags = tags
-            make_moim.save()
+                make_moim.save()
+                
+                t.tag = tag_id   
+                t.make_moim = make_moim
+                t.save()
+
             # return render(request, 'board_moim/detail.html')
             return redirect(f'/board_moim/{pk}/')
-        except :
+        except Exception as e:
+            print(e)
             return render(request, 'board_moim/update_fail.html',{'make_moim':make_moim})
 
     return render(request, 'board_moim/update.html',{'make_moim':make_moim})
