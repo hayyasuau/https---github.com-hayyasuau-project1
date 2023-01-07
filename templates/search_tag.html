@@ -1,0 +1,10 @@
+<hr>
+<hr>
+<h4> 태그 검색 결과 입니다.</h4>
+<table>
+{% for i in tag.all %}
+    {{i.name}}
+    {{i.tagmoim_set.make_moim.name}}
+    <hr>
+{% endfor %}
+</table>

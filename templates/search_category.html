@@ -1,0 +1,15 @@
+
+<hr>
+<hr>
+<h4> '{{category.name}}' 카테고리 검색 결과 입니다.</h4>
+<table>
+{% for i in category %}
+    <b onclick='location="/board_moim/{{i.make_id}}/"'> 모임명 : {{i.name}} </b>
+    <br>
+    모임설명 : {{i.commend}}
+    <br>
+    지역 : {{i.location}}
+    <hr>
+    <hr>
+{% endfor %}
+</table>

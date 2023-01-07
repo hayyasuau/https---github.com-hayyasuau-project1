@@ -1,6 +1,8 @@
 from django.shortcuts import redirect, render
 from all_info.models import Info
 from file.models import Search
+from make_moim.models import Make_Moim
+from tag.models import Tag, TagMoim
 
 def update(request):
     # GET
@@ -89,7 +91,14 @@ def home(request):
     return render(request, 'home.html')
 
 from write.models import Free
+
 def search(request):
-    search = request.GET.get('search')
-    searchs = Free.objects.filter(title__contains=search)
-    return render(request, 'search.html', {'search':search,'searchs':searchs})
+    search = request.POST.get('search')
+    tag = Tag.objects.filter(name__contains=search)
+    make_moim = Make_Moim.objects.filter(name__contains=search)
+    category = Make_Moim.objects.filter(category__contains=search)
+    context ={
+        'search':search, 'make_moim':make_moim, 'tag':tag,
+        'category':category
+    }
+    return render(request, 'search.html', context)
