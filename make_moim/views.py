@@ -1,31 +1,35 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.contrib import messages
 # from django.contrib.auth.mixins import LoginRequiredMixin
 from all_info.models import GroupInfo, Info
 from make_moim.models import Make_Moim
-from write.models import Good
+from tag.models import Tag
 
 
 # Create your views here.
 def make_moim(request):
+    info_id = request.session['info_id']
+    moim_chief = request.POST.get('moim_chief')
     if request.method == 'GET':
         return render(request, 'make_moim/make_moim_form.html')
-    name = request.POST.get('name')
-    commend = request.POST.get('commend')
-    location = request.POST.get('location')
-    # imgfile = request.POST.get('imgfile')
-    imgfile = request.FILES.get('imgfile')
-    max_people = request.POST.get('max_people')
-    # make_moims = Make_Moim.objects.all()
-    try:
-        info_id = request.session['info_id']
-        info_id = Info.objects.get(info_id=info_id)
-        make_moim = Make_Moim(name=name, commend=commend,
-                              location=location, imgfile=imgfile, max_people=max_people)
-        make_moim.save()
-    except:
+    
+    if info_id == moim_chief:
+        name = request.POST.get('name')
+        commend = request.POST.get('commend')
+        location = request.POST.get('location')
+        # imgfile = request.POST.get('imgfile')
+        imgfile = request.FILES.get('imgfile')
+        max_people = request.POST.get('max_people')
+        category = request.POST.get('category')
+        # make_moims = Make_Moim.objects.all()
+        try:
+            make_moim = Make_Moim(name=name, commend=commend, location=location, imgfile=imgfile, max_people=max_people, category=category )
+            make_moim.save()
+        except:
+            return HttpResponse('<h1>저장에 실패하였습니다.</h1><br><a herf="make_moim:make_moim">뒤로가기</a>')
+    else :
         return redirect('/login/')
     # 얘는 다 실행하고 보내는 주소
     return redirect('/board_moim/list')
@@ -103,3 +107,5 @@ def make_moim_signup(request):
 
 
     # return redirect(f'/board_moim/{make_moim}')
+    
+

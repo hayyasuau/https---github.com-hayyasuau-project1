@@ -1,6 +1,6 @@
 from django.db import models
 
-from tag.models import Tag
+
 
 
 class Make_Moim(models.Model):#댓글 연결
@@ -11,7 +11,12 @@ class Make_Moim(models.Model):#댓글 연결
     location = models.CharField(max_length=200, null=True)
     max_people = models.IntegerField(default=0)
     now_people = models.IntegerField(default=0)
-    tags= models.ManyToManyField(Tag, blank=True)
+    category = models.CharField(max_length=10, null=True)
     
     def __str__(self):
         return self.name
+
+
+
+
+    

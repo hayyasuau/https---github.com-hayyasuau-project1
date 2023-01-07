@@ -393,7 +393,7 @@ def download(request):
     filepath = str(settings.BASE_DIR) + (f'/media/gallery/{uploadFile.imgfile}')
     filename = os.path.basename(filepath)
     with open(filepath, 'rb') as f:
-        response = HttpResponse(f, content_type='application/octet-stream') #안되면 이거 import 잘못한것!
+        response = HttpResponse(f, content_type='application/octet-stream')
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
 

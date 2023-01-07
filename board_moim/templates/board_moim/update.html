@@ -85,8 +85,7 @@
       <div class="container">
         <section id="ctab" class="ctab">
           <div class="container">
-            {% block main_content %}
-            {% extends 'homecopy.html' %} 
+           
 {% block left_menu %}
 {% endblock left_menu %}
 {% block main_content %}
@@ -103,22 +102,21 @@
     {% if imgfile %}
     <img style="height: 500px;" src="/media/{{make_moim.imgfile}}/" alt="토끼" name="imgfile">
     {% else %}
-    <img style="height: 500px;" src="/media/default.jpg" alt="토끼기본" name="imgfile">    
+    <img style="height: 500px;" src="/static/default.jpg" alt="토끼기본" name="imgfile">    
     {% endif %}
     <hr>
 
     <h4>지역 : <input type="text" name="location" id="location" value="{{make_moim.location}}"></h4>
     <hr>
     <h5>최대인원 : <select name="max_people" id="max_people">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="40">40</option>
-        <option value="50">50</option>
+      {% include 'max_people.html' %}
     </select>(현재 최대 인원 : {{make_moim.max_people}})</h5>
     <br>
     <h5>현재인원 : {{make_moim.now_people}}</h5>
 
+    <h5>카테고리 : <select name="category" id="category">
+      {% include 'category.html' %}
+    </select>
     <hr>
     <h5>모임 : "{{make_moim.name}}" 의 소개입니다.</h5>
     <textarea class="form-control" name="commend" >{{make_moim.commend}}</textarea>
@@ -144,7 +142,7 @@
 
 
 {% endblock  %}
-            {% endblock %}
+ 
 
           </div>
         </section><!-- End Ctab Section -->

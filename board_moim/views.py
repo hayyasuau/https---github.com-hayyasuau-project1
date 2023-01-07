@@ -65,6 +65,7 @@ def board_update(request, pk):
         imgfile = request.POST.get('imgfile')
         location = request.POST.get('location')
         max_people = request.POST.get('max_people')
+        category = request.POST.get('category')
         # tags = request.POST.get('tags')
         try :
             make_moim.make_id = make_id
@@ -73,6 +74,7 @@ def board_update(request, pk):
             make_moim.imgfile = imgfile
             make_moim.location = location
             make_moim.max_people = max_people
+            make_moim.category = category
             # make_moim.tags = tags
             make_moim.save()
             # return render(request, 'board_moim/detail.html')

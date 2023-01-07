@@ -90,25 +90,26 @@
               <h1 id="board_title">모임만들기</h1>
               <div id="center_main">
               <hr>
-              {% comment %} 얘는 보내주는 주소->얘를 view한테 보내줘야함 {% endcomment %}
               <form action='/make_moim/' method="post" enctype="multipart/form-data">{% csrf_token %}
                   <table>
+                      <input type="hidden" name="moim_chief" value="{{request.session.info_id}}">
                       <tr>
-                      이미지파일: <input type="file" name="imgfile">
+                      대표사진 : <input type="file" name="imgfile">
                       <br>
-                      모임 이름: <input type="text" name="name">
+                      모임 이름 : <input type="text" name="name">
                       <br>
                       <textarea name="commend" id="commend" cols="50" rows="20" aria-valuetext="설명"></textarea>
                       <br>
-                      지역: <input type="text" name="location"></tr>
+                      지역 : <input type="text" name="location"></tr>
                       <br>
-                          인원수: <select name="max_people" id="max_people">
-                              <option value="10">10</option>
-                              <option value="20">20</option>
-                              <option value="30">30</option>
-                              <option value="40">40</option>
-                              <option value="50">50</option>
-                      </br>
+                          최대 인원수 : <select name="max_people" id="max_people">
+                            {% include 'max_people.html' %}
+                            </select>
+                      <br>
+                      카테고리 : <select name="category" id="category">
+                        {% include 'category.html' %}
+                      </select>
+                      태그 :
                       </tr>
                   </table>
                   <input type="submit" value="만들기">
