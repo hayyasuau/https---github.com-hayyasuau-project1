@@ -24,6 +24,7 @@ urlpatterns = [
     path('gallery/<int:pk>/<int:gg>/modify2/', views.gallery_modify2, name='gallery_modify2'),
     path('gallery/<int:pk>/<int:gg>/modify2/delete/', views.gallery_img_delete, name='gallery_img_delete' ),
     path('gallery/<int:pk>/<int:gg>/modify3/', views.gallery_modify3, name='gallery_modify3' ),
+    path('download/', views.download, name='download' ),
 
     path('new_face/', views.new_face, name='new_face'),
     path('gallery/<int:pk>/gallery_makeit/', views.gallery_makeit, name='gallery_makeit'),

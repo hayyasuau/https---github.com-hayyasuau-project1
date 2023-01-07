@@ -1,15 +1,16 @@
-import time
-from django.urls import reverse
+import time, os
+from django.urls import reverse #이거 쓰나?
 from django.shortcuts import  get_object_or_404,render, redirect
 
+from config import settings
 from make_moim.models import Make_Moim
 from .forms import BoardWriteForm, GoodForm
 from .models import Free, Gallery, Join ,Good, ManyImg
 from all_info.models import Info
-from django.views.generic import ListView, DetailView, CreateView
-from django.http import HttpResponseRedirect
-from django.core.paginator import Paginator
-from django.core.files.storage import FileSystemStorage
+from django.views.generic import ListView, DetailView, CreateView #이것도 쓰나?
+from django.http import HttpResponseRedirect , HttpResponse
+from django.core.paginator import Paginator #얘 쓰나?
+from django.core.files.storage import FileSystemStorage #얘도 쓰나?
 # from django.view.decorators.http import require_http_methods
 
 # def test(request):
@@ -385,6 +386,16 @@ def gallery_modify3(request,pk,gg):
 # def GalleryCreate(CreateView):
 #     model = Gallery
 #     field = ['title', 'comment','imgfile','info']
+
+def download(request):
+    manyimg_id = request.POST.get('manyimg_id')
+    uploadFile = ManyImg.objects.get(manyimg_id=manyimg_id)
+    filepath = str(settings.BASE_DIR) + (f'/media/gallery/{uploadFile.imgfile}')
+    filename = os.path.basename(filepath)
+    with open(filepath, 'rb') as f:
+        response = HttpResponse(f, content_type='application/octet-stream') #안되면 이거 import 잘못한것!
+        response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    return response
 
 def gallery_free_write(request):
     login_session = request.session.get('login_session','')
