@@ -18,6 +18,13 @@ urlpatterns = [
     path('join/join_write/', views.join, name='join_write'),
     path('gallery/<int:pk>/', views.gallery, name='gallery'),
     path('gallery/<int:pk>/<int:gg>/', views.gallery_single, name='gallery_single'),
+    
+    path('gallery/<int:pk>/<int:gg>/delete/', views.gallery_delete, name='gallery_delete'),
+    path('gallery/<int:pk>/<int:gg>/modify/', views.gallery_modify, name='gallery_modify'),
+    path('gallery/<int:pk>/<int:gg>/modify2/', views.gallery_modify2, name='gallery_modify2'),
+    path('gallery/<int:pk>/<int:gg>/modify2/delete/', views.gallery_img_delete, name='gallery_img_delete' ),
+    path('gallery/<int:pk>/<int:gg>/modify3/', views.gallery_modify3, name='gallery_modify3' ),
+
     path('new_face/', views.new_face, name='new_face'),
     path('gallery/<int:pk>/gallery_makeit/', views.gallery_makeit, name='gallery_makeit'),
     path('', views.board_list, name='board_list'),
@@ -27,7 +34,8 @@ urlpatterns = [
 
     path('join/<int:make_id>/delete/', views.join_delete, name='join_delete' ),
     path('join/<int:make_id>/modify/', views.join_modify, name='join_modify' ),
-    path('join/<int:make_id>/modify2/', views.join_modify2, name='join_modify' ),
+    path('join/<int:make_id>/modify2/', views.join_modify2, name='join_modify2' ),
+
 
     # path('gallery/<int:pk>/', views.gallery_detail, name='gallery_detail'),
     path('comments/<int:free_id>/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),

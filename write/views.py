@@ -299,6 +299,89 @@ def gallery_single(request, pk, gg): #FBV로 싱글갤러리 만들기
 
     return render(request, 'write/single_gallery.html', {'single_gallery':gallery_singles, 'make_moim':make_moim, 'manyimg':manyimg})
 
+def gallery_delete(request, pk, gg): #FBV로 싱글갤러리 만들기
+    gallery_singles = Gallery.objects.get(gallery_id=gg)
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    writer=request.POST.get('writer')
+    id=request.session['info_id']
+    if id==writer:
+        gallery=Gallery.objects.get(gallery_id=gallery_singles.gallery_id, make_moim=make_moim)
+        gallery.delete()
+        return redirect('write:gallery', pk)
+    else : 
+        return render(request, 'write/not_authority_gallery.html',{'make_moim':make_moim})
+    
+def gallery_modify(request, pk, gg): #FBV로 싱글갤러리 만들기
+    gallery_singles = Gallery.objects.get(gallery_id=gg)
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    writer=request.POST.get('writer')
+    id=request.session['info_id']
+    print(id, writer)
+    if id==writer:     
+        context={
+            'make_moim':make_moim,'single_gallery':gallery_singles
+        }
+        return render(request,'write/gallery_modify.html', context)
+    else : 
+        return render(request, 'write/not_authority_gallery.html',{'make_moim':make_moim})
+
+def gallery_modify2(request, pk, gg): #FBV로 싱글갤러리 만들기
+    gallery_singles = Gallery.objects.get(gallery_id=gg)
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    writer=request.POST.get('writer')
+    title = request.POST.get('title')
+    comment = request.POST.get('comment')
+    id=request.session['info_id']
+    imgfiles = request.FILES.getlist('imgfiles')
+    print(imgfiles)
+    if id==writer:
+        gallery=Gallery.objects.get(gallery_id=gallery_singles.gallery_id,)
+        gallery.comment = comment
+        gallery.title = title
+        gallery.save()
+        # manyimgs=ManyImg.objects.filter(gallery=gallery_singles.gallery_id)
+        # manyimgs.delete()
+        for upload_file in imgfiles:
+            name = upload_file.name
+            name=name.replace('.',f'{int(time.time())}.')
+    
+            # a.jpg -> (중복) a_unixtime.jpg
+            #                a_167375584983.jpg
+            with open('media/gallery/'+name, 'wb') as file:
+                
+                for chunk in upload_file.chunks():
+                    # manyimg=ManyImg.objects.filter(gallery=(int(last_gallery)+1))
+                    #게시글 최신->이미지1,이미지2,이미지3....
+        
+
+                    file.write(chunk)
+            manyimg=ManyImg.objects.create(imgfile=name, gallery=gallery)
+            manyimg.save()
+        
+        return redirect('write:gallery',pk)
+    else : 
+        return render(request, 'write/not_authority_gallery.html',{'make_moim':make_moim})
+
+def gallery_img_delete(request, pk, gg): #이미지 수정에서 이미지 삭제할때
+    gallery_singles = Gallery.objects.get(gallery_id=gg)
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    manyimg_id = request.POST.get('manyimg_id')
+    print(manyimg_id)
+    manyimgs=ManyImg.objects.get(manyimg_id=manyimg_id)
+    manyimgs.delete()
+    context={
+            'make_moim':make_moim,'single_gallery':gallery_singles
+        }
+    return render(request,'write/gallery_modify.html', context)
+
+def gallery_modify3(request,pk,gg):
+    gallery_singles = Gallery.objects.get(gallery_id=gg)
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    context = {
+        'make_moim':make_moim,'single_gallery':gallery_singles
+    }
+    return render(request, 'write/gallery_modify_img.html', context)
+
 # def GalleryCreate(CreateView):
 #     model = Gallery
 #     field = ['title', 'comment','imgfile','info']
