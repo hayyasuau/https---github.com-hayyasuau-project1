@@ -33,7 +33,7 @@
         <h6> {{t.info.info_id}} </h6>
         <h6> {{t.write_dttm}} </h6>
 
-        <form action="/write/join/{{make_moim.make_id}}/update/" method="post"><button value="수정" name="update">수정</button>        
+        <form action="/write/join/{{make_moim.make_id}}/modify/" method="post">{% csrf_token %}<button value="수정" name="update">수정</button>        
         <input type="hidden" name="writer" value="{{t.info.info_id}}">
         <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
         </form>

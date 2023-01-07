@@ -458,24 +458,38 @@ def join_delete(request,make_id):#글삭
     else:
         return redirect('write:join_detail', make_id)
 
-def join_modify(request,make_id):#글삭
+def join_modify(request,make_id):#수정
     make_moim = Make_Moim.objects.get(make_id=make_id)
     writer=request.POST.get('writer')
     join_id=request.POST.get('join_id')
-    
+    join=Join.objects.get(make_moim=make_moim,join_id=join_id)
     try: 
-        login_session = request.session['info_id']
-        
-        join=Join.objects.get(make_moim=make_moim,join_id=join_id)
-        context = {
-            'join':join
-        }
-        return render(request, 'write/modify.html', context)
+        id = request.session['info_id']
+        if writer==id:
+            context = {
+                'join':join,
+                'make_moim':make_moim,
+                'writer':writer
+            }
+            return render(request, 'write/join_modify.html', context)
     except:
-        return redirect('login') 
-        
-    join.save()
-    return redirect('write:join_detail', make_id) 
+        return render(request, 'write/not_authority.html',{'make_moim':make_moim})
+
+def join_modify2(request,make_id):#수정저장
+    make_moim = Make_Moim.objects.get(make_id=make_id)
+    writer=request.POST.get('writer')
+    join_id=request.POST.get('join_id')
+    title=request.POST.get('title')
+    comment=request.POST.get('comment')
+    id = request.session['info_id']
+    if writer==id:
+        make_moim = Make_Moim.objects.get(make_id=make_id)
+        join=Join.objects.get(make_moim=make_moim,join_id=join_id)
+        join.title=title
+        join.comment=comment
+        join.save()
+        return redirect('write:join_detail', make_id) 
+    return render(request, 'write/not_authority.html',{'make_moim':make_moim})
 
     
     

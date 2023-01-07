@@ -27,6 +27,7 @@ urlpatterns = [
 
     path('join/<int:make_id>/delete/', views.join_delete, name='join_delete' ),
     path('join/<int:make_id>/modify/', views.join_modify, name='join_modify' ),
+    path('join/<int:make_id>/modify2/', views.join_modify2, name='join_modify' ),
 
     # path('gallery/<int:pk>/', views.gallery_detail, name='gallery_detail'),
     path('comments/<int:free_id>/<int:comment_pk>/delete/', views.comments_delete, name='comments_delete'),
