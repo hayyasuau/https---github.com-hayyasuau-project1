@@ -1,5 +1,5 @@
 <div class="search-bar">
-    <form class="search-form d-flex align-items-center" method="POST" action="/search/">
+    <form class="search-form d-flex align-items-center" method="POST" action="/board_moim/list/search/">
         {% csrf_token %}
         <select style="border: none" name="search_b" id="search_b" onchange="changeValue(value)">
           <option value="all">전체검색</option>

@@ -603,3 +603,160 @@ def join_comment(request, make_id):
     return redirect('write:join_detail', make_id)
 
 # join 하고 content가 저장 안됨 이거를 자바스크립트로 할려고 해봤는데 못하면 나중에 그냥 장고만으로 해결하기
+
+def gallery_search(request,pk):
+    csb=request.POST.get('change_search_bar')
+    search = request.POST.get('search')
+    make_moim=Make_Moim.objects.get(make_id=pk)
+    gallery_list = Gallery.objects.all().order_by('-gallery_id')
+    make_moim_id = request.POST.get('make_moim')
+
+    #페이징
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    end = page * 5
+    start = end - 5
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = Gallery.objects.all().count()
+    total_page = total_count//5 +1
+    if page > total_page:
+        page = total_page
+        end = page * 5
+        start = end -5
+    
+    if total_count % 5 !=0:
+        total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page)
+    
+    if csb == 'all':
+        gallery_list = Gallery.objects.filter(title__contains=search) | Gallery.objects.filter(comment__contains=search)       
+        gallery_list = gallery_list.order_by('-gallery_id')
+        gallery_list = gallery_list[start:end]
+        context ={
+            'search':search, 'make_moim':make_moim,
+            'gallery_list' : gallery_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+        return render(request, 'write/gallery_list.html', context)
+    elif csb == 'search_title':
+        gallery_list = Gallery.objects.filter(title__contains=search)
+        gallery_list = gallery_list[start:end]
+        context ={
+            'search':search, 'make_moim':make_moim,
+            'gallery_list' : gallery_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+        return render(request, 'write/gallery_list.html', context)       
+    else :
+        gallery_list =Gallery.objects.filter(comment__contains=search)
+        gallery_list = gallery_list[start:end]
+
+        context ={
+            'search':search, 'make_moim':make_moim,
+            'gallery_list' : gallery_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+        return render(request, 'write/gallery_list.html', context)
+    
+def free_search(request,pk):
+    csb=request.POST.get('change_search_bar')
+    search = request.POST.get('search')
+    make_moim=Make_Moim.objects.get(make_id=pk)
+    free_list = Free.objects.all().order_by('-free_id')
+
+    page = int(request.GET.get('page',1))
+    # if not page : page = '1'
+    # page=int(page)
+    end = page * 10
+    start = end - 10
+    s_page = (page-1)//10*10 + 1
+    e_page = s_page +9
+
+    #페이지 구분
+    total_count = Free.objects.all().count()
+    total_page = total_count//10 +1
+    if page > total_page:
+        page = total_page
+        end = page * 10
+        start = end -10
+    
+    if total_count % 10 !=0:
+        total_page +=1
+
+    if e_page > total_page : 
+        e_page = total_page
+
+    page_info = range(s_page, e_page)
+    
+
+
+    
+    if csb == 'all':
+        free_list = Free.objects.filter(title__contains=search) | Free.objects.filter(text__contains=search)       
+        free_list = free_list.order_by('-free_id')
+        free_list = free_list[start:end]
+        context ={
+            'search':search, 'make_moim':make_moim,
+            'board_list' : free_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+        return render(request, 'write/free.html', context)
+    elif csb == 'search_title':
+        free_list = Free.objects.filter(title__contains=search)
+        free_list = free_list.order_by('-free_id')
+        free_list = free_list[start:end]
+        context ={
+            'search':search, 'make_moim':make_moim,
+            'board_list' : free_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+        return render(request, 'write/free.html', context)       
+    else :
+        free_list =Free.objects.filter(text__contains=search)
+        free_list = free_list.order_by('-free_id')
+        free_list = free_list[start:end]
+
+        context ={
+            'search':search, 'make_moim':make_moim,
+            'board_list' : free_list,
+            'page_info' : page_info,
+            'total_page' : total_page,
+            'e_page' : e_page,
+            'page':page,
+            'make_moim':make_moim,
+            # 'posts' : posts
+        }
+        return render(request, 'write/free.html', context)

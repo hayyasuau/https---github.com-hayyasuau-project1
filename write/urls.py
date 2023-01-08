@@ -45,5 +45,8 @@ urlpatterns = [
     path('viewtext/<int:free_id>/<int:pk>/', views.view_text, name='free01' ),#view text, vt 게시물보기
     path('viewtext/<int:free_id>/<int:pk>/delete/', views.text_delete, name='delete' ),
     path('viewtext/<int:free_id>/<int:pk>/modify/', views.text_modify, name='modify' ),
+
+    path('free/<int:pk>/search/', views.free_search, name='free_search'),#검색
+    path('gallery/<int:pk>/search/', views.gallery_search, name='gallery_search'),#검색
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

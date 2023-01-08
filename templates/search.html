@@ -86,13 +86,38 @@
         <section id="ctab" class="ctab">
           <div class="container">
             {% block main_content %}
-    {% if search %}
     <h1> {{search}} 검색 결과</h1>
+    {% if make_moim and category and tag %}
     <br>
-    <hr>
+    <hr>    
     {% include 'search_make_moim.html' %}
+    {% include 'total_page_pagging.html' %}
     {% include 'search_tag.html' %}
+    {% include 'tag_pagging.html' %}
     {% include 'search_category.html' %}
+    {% include 'category_pagging.html' %}
+
+
+    {% elif make_moim %}
+
+
+    <br>
+    <hr>    
+    {% include 'search_make_moim.html' %}
+    {% include 'total_page_pagging.html' %}
+    {% elif tag %}
+
+
+    <br>
+    <hr>   
+    {% include 'search_tag.html' %}
+    {% include 'total_page_pagging.html' %}
+    
+    {% elif category %}
+    <br>
+    <hr>    
+    {% include 'search_category.html' %}
+    {% include 'total_page_pagging.html' %}
     {% else %}
     <h1>검색 결과가 없습니다. 새로 검색해주세요</h1>
     {% endif %}

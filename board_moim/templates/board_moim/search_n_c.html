@@ -1,30 +1,4 @@
-{% include 'head.html' %}
-<body>
-
-  <!-- ======= Top Bar ======= -->
-  <section id="topbar" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-center justify-content-md-between">
-      <div class="contact-info d-flex align-items-center">
-      
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= Header ======= -->
-{% include 'header_main.html' %}
-
-  <main id="main">
-
-
-    <!-- ======= Ctab Section ======= -->
-    <section class="inner-page">
-      <div class="container">
-        <section id="ctab" class="ctab">
-          <div class="container">
-            {% block main_content %}
-            <div>
-              <tbody>
-          {% for m in moim_lists%}
+{% for m in total_list%}
           <div>
           <a href="/board_moim/{{m.make_id}}/">자세히보기</a>
           <label for="id">번호</label>
@@ -67,50 +41,17 @@
       <tbody>
           <ul>
           {% if page > 10 %}
-              <a href="/board_moim/list/?page={{page | add:'-10'}}">이전</a>
+              <a href="/board_moim/list/search/?page={{page | add:'-10'}}">이전</a>
           {% endif %}
           {% for p in page_info %}
               {% comment %} <li {% if p == page %} active {% endif %}> {% endcomment %}
-              <a href="/board_moim/list/?page={{p}}">
+              <a href="/board_moim/list/search/?page={{p}}">
               {{p}}
               </a></li>
           {% endfor %}
           {% if total_page > e_page %}
-              <a href="/board_moim/list/?page={{page | add:'10'}}">다음</a>
+              <a href="/board_moim/list/search/?page={{page | add:'10'}}">다음</a>
           {% endif %}
           </ul>
       
       </tbody>
-          {% csrf_token %}
-            {% endblock %}
-
-          </div>
-        </section><!-- End Ctab Section -->
-      </div>
-    </section>
-
-
-  <!-- 검색기능 -->
-  <div>
-    {% include 'board_moim/search_bar.html' %}
-  </div>  
-  
-  </main><!-- End #main -->
-
-
-  <!-- ======= Footer ======= -->
-{% include 'footer_main.html' %}
-
-  <!-- Vendor JS Files -->
-  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="/static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="/static/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="/static/assets/js/main.js"></script>
-
-</body>
-
-</html>
