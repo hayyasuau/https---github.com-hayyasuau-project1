@@ -590,13 +590,15 @@ def join_modify2(request,make_id):#수정저장
 
 def join_comment(request, make_id):
     make_moim=Make_Moim.objects.get(make_id=make_id)
-    join = request.POST.get('join_id')
+    join_id = request.POST.get('join_id')
     content=request.POST.get('reply_comment')
+    
+    join=Join.objects.get(join_id=join_id)
     try :
         info_id=request.session['info_id']
         info=Info.objects.get(info_id=info_id)
         
-        good = Good(content=content, info=info, make_moim=make_moim, join=join)
+        good = Good(content=content, info=info, make_moim=make_moim,join=join)
         good.save()
     except:
         return redirect('login')

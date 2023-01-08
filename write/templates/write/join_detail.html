@@ -41,13 +41,17 @@
         <input type="hidden" name="writer" value="{{t.info.info_id}}">
         <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
         </form>
-        <button id='reply' onclick="reply()" >답글</button></form>
+        <button id='reply' name='reply'>답글</button>
         <hr>
-    </div>
-        <div name="a"></div>
-        <div name="b" style="display: none;">
-        <form action="/write/join/{{make_moim.make_id}}/comment"><input type="text" name="reply_comment"><button name="reply">답글</button></form>
+    
+        <div name="a" id='a' style="display: block;"></div>
+        <div name="b" id='b' style="display: none;">
+        <form action="/write/join/{{make_moim.make_id}}/comment/" method="post"><input type="text" name="reply_comment">
+            <input type="text" name="join_id" value="{{t.join_id}}">
+            {% csrf_token %}
+            <input type="submit" name="reply">답글</form>
         </div>
+    </div>
     {% endfor %}
 </div>
 <div>
@@ -66,23 +70,33 @@
     <hr>
 
 </div>
-
-
 <script>
-    let a = document.querySelectorAll('[name=a]');
-    let b = document.querySelectorAll('[name=b]');
-    const reply = document.querySelectorAll('[name=reply]');
-    console.log(reply[3])
-    console.log(a[3])
-    console.log(b[3])
-    for (var i=0; i<6;i++){
-        reply[i].addEventListener('click', () =>{
-        a[i].style.display = 'none';
-        b[i].style.display = 'block';
-        });
+
+    const reply = document.getElementById('reply')
+    const allbtn = document.querySelectorAll(`#reply`)
+    const aa = document.querySelectorAll(`#a`)
+    const bb = document.querySelectorAll(`#b`)
+    console.log(bb[0].style.display)
+    console.log(bb[2])
+    console.log(aa[0].style.display)
+    console.log(aa[1])
+
+
+    /* 여기부분 어떻게 인접 선택자?? */
+    for (var i =0; i < allbtn.length; i++){
+        allbtn[i].addEventListener('click', (e) =>{ 
+
+            /*const a = document.getElementById(`a`)
+            const b = document.getElementById(`b`)*/
+            if (bb[i].style.display == 'none'){
+                aa[i].style.display = 'none';
+                bb[i].style.display = 'block';
+            }else{
+                aa[i].style.display = 'block';
+                bb[i].style.display = 'none';
+            }
+        })
     }
-    
-
-
 </script>
 {% endblock  %}
+
