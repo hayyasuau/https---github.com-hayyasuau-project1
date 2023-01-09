@@ -484,7 +484,7 @@ def get_absolute_url(self):
 def join_detail(request, make_id):
     make_moim=Make_Moim.objects.get(make_id=make_id)
     join_list = Join.objects.all().order_by('-join_id')
-
+    
 #페이징
     page = int(request.GET.get('page',1))
     # if not page : page = '1'
@@ -513,6 +513,7 @@ def join_detail(request, make_id):
 
 
     if request.method == 'GET':
+        print('작동')
         context = {
             'join_list' : join_list,
             'page_info' : page_info,
@@ -592,19 +593,69 @@ def join_comment(request, make_id):
     make_moim=Make_Moim.objects.get(make_id=make_id)
     join_id = request.POST.get('join_id')
     content=request.POST.get('reply_comment')
-    
     join=Join.objects.get(join_id=join_id)
+    # last_comment=request.POST.get('last_comment')
+    # last_join=Join.objects.all().order_by('-join_id')[0]
+    # print(last_comment,last_join.comment)
+    # if last_join.comment != last_comment:
+    if content is None:        
+        info_id=request.session['info_id']
+        info=Info.objects.get(info_id=info_id)
+        
+        good = Good(content=content, info=info, make_moim=make_moim,join=join)
+        # good.save()
+        goods = Good.objects.filter(join=join)
+        # newgood=Good.objects.all().order_by('-good_id')[0]
+        # newgood.delete()
+        context = {
+            'goods':goods,
+            'make_moim':make_moim
+        }
+        return render(request,'write/join_comment.html',context)
+
     try :
         info_id=request.session['info_id']
         info=Info.objects.get(info_id=info_id)
         
         good = Good(content=content, info=info, make_moim=make_moim,join=join)
         good.save()
+        goods = Good.objects.filter(join=join)
+        context = {
+            'goods':goods,
+            'make_moim':make_moim
+        }
+        return render(request,'write/join_comment.html',context)
     except:
         return redirect('login')
-    return redirect('write:join_detail', make_id)
+    # return redirect('write:join_detail', make_id)
 
-# join 하고 content가 저장 안됨 이거를 자바스크립트로 할려고 해봤는데 못하면 나중에 그냥 장고만으로 해결하기
+def join_comment_u(request, make_id):
+    make_moim=Make_Moim.objects.get(make_id=make_id)
+    good_id = request.POST.get('good_id')
+    content = request.POST.get('content')
+    writer = request.POST.get('writer')
+    info_id=request.session['info_id']
+    info=Info.objects.get(info_id=info_id)
+    print(info, content, writer, good_id)
+    if info.info_id == writer:
+        good = Good.objects.get(good_id=good_id)
+        good.content=content
+        good.save()
+        return redirect('write:join_detail', make_id)
+    return redirect('login')
+
+def join_comment_d(request, make_id):
+    make_moim=Make_Moim.objects.get(make_id=make_id)
+    good_id = request.POST.get('good_id')
+    writer = request.POST.get('writer')
+    info_id=request.session['info_id']
+    if info_id == writer:
+        good = Good.objects.get(good_id=good_id)
+        print()
+        good.delete()
+        return redirect('write:join_detail', make_id)
+    return redirect('login')
+
 
 def gallery_search(request,pk):
     csb=request.POST.get('change_search_bar')
