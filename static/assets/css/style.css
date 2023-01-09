@@ -1181,6 +1181,7 @@ section {
 --------------------------------------------------------------*/
 .ctab {
   background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
   padding: 80px 0;
 }
 
@@ -1848,6 +1849,7 @@ section {
   #main,
   #footer {
     margin-left: 200px;
+    margin-right: 200px;
   }
 }
 
