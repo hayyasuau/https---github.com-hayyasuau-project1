@@ -13,10 +13,7 @@
               <li><a href="/board_moim/list/">모임 찾기</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="/select_moim/{{make_moim.make_id}}">현재모임정보</a></li>
-          <li><a class="nav-link scrollto" href="/write/gallery/{{make_moim.make_id}}/">갤러리</a></li>
-          <li><a class="nav-link scrollto" href="/write/free/{{make_moim.make_id}}/">자유게시판</a></li>
-          <li><a class="nav-link scrollto" href="/write/join/{{make_moim.make_id}}/">가입인사</a></li>
+
           {% if request.session.info_id %}
           <li><a class="nav-link scrollto" href="/logout/">로그아웃</a></li>
           {% else %}
