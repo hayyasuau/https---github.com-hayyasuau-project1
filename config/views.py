@@ -115,7 +115,6 @@ def search(request):
     tag_page = tag_count//5 +1
     name_page = name_count//5 +1
     category_page = category_count//5 +1
-       
 
     page_info = range(s_page, e_page)
 
@@ -157,7 +156,7 @@ def search(request):
             'page':page,
         }
         return render(request, 'search.html', context)
-    elif csb == 'category_title':
+    elif csb == 'category_title':# 고쳐야할 부분
         if page > category_page: #카테고리
             page = category_page
             end = page * 5
