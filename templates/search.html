@@ -33,12 +33,9 @@
     {% if make_moim and category and tag %}
     <br>
     <hr>    
-    {% include 'search_make_moim.html' %}
-    {% include 'total_page_pagging.html' %}
+    {% include 'search_all.html' %}
     {% include 'search_tag.html' %}
-    {% include 'tag_pagging.html' %}
-    {% include 'search_category.html' %}
-    {% include 'category_pagging.html' %}
+    {% include 'total_page_pagging.html' %}
 
 
     {% elif make_moim %}
