@@ -18,10 +18,10 @@
     {% for b in board_list %}
     <div class="portfolio-info">
       <dl>
-        <td><li class="list-group-item" name="free_id" value=""> {{b.free_id}}</li></td>
-        <td><li class="list-group-item" name="title"> <a href='/write/viewtext/{{make_moim.make_id}}/{{b.free_id}}/' readonly>{{b.title}}</a></li></td>
-        <td><li class="list-group-item" name="text"> {{b.text}}</li></td>
-        <td><li class="list-group-item" name="write_dttm"> {{b.write_dttm}}</li></td>
+        <!-- <td><li class="list-group-item" name="free_id" value=""> {{b.free_id}}</li></td> -->
+        <td><li class="list-group-item" name="title">제목:  <a href='/write/viewtext/{{make_moim.make_id}}/{{b.free_id}}/' readonly>{{b.title}}</a></li></td>
+        <td><li class="list-group-item" name="text">내용: {{b.text}}</li></td>
+        <td><li class="list-group-item" name="write_dttm">작성날짜: {{b.write_dttm}}</li></td>
       </dl>
     </div>
     {% endfor %}
