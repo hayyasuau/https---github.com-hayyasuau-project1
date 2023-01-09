@@ -234,7 +234,7 @@ def search(request):
             'page':page,
         }
         return render(request, 'search.html', context)
-    elif csb == 'category_title':
+    elif csb == 'category_title':# 고쳐야할 부분
         if page > category_page: #카테고리
             page = category_page
             end = page * 5
