@@ -1,102 +1,197 @@
-{% extends 'homecopy.html' %} 
-{% block left_menu %}
-{% include 'write/board_menu2.html' %}
-{% endblock left_menu %}
-{% block main_content %}
-<div>
-</div>
-</tbody>
-<tbody>
-    <ul>
-    {% if page > 10 %}
-        <a href="/write/join/{{make_moim.make_id}}/?page={{page | add:'-10'}}">이전</a>
-    {% endif %}
-    {% for p in page_info %}
-        {% comment %} <li {% if p == page %} active {% endif %}> {% endcomment %}
-        <a href="/write/join/{{make_moim.make_id}}/?page={{p}}">
-        {{p}}
-        </a></li>
-    {% endfor %}
-    {% if total_page > e_page %}
-        <a href="/write/join/{{make_moim.make_id}}/?page={{page | add:'10'}}">다음</a>
-    {% endif %}
-    </ul>
+<!DOCTYPE html>
+<html lang="ko">
 
-</tbody>
-<tbody>
-<div>
-    {% for t in make_moim.join_set.all %}
-    <div>
-        △<br>
-        <h6> {{t.title}} </h6>
-        <p> {{t.comment}} </p>
-        <h6> {{t.info.info_id}} </h6>
-        <h6> {{t.write_dttm}} </h6>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <form action="/write/join/{{make_moim.make_id}}/modify/" method="post">{% csrf_token %}<button value="수정" name="update">수정</button>        
-        <input type="hidden" name="writer" value="{{t.info.info_id}}">
-        <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
-        </form>
-        <form action="/write/join/{{make_moim.make_id}}/delete/" method="post">{% csrf_token %}<button value="삭제" name="delete">삭제        
-        <input type="hidden" name="writer" value="{{t.info.info_id}}">
-        <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
-        </form>
-        <button id='reply' name='reply'>답글</button>
-        <hr>
-    
-        <div name="a" id='a' style="display: block;"></div>
-        <div name="b" id='b' style="display: none;">
-        <form action="/write/join/{{make_moim.make_id}}/comment/" method="post"><input type="text" name="reply_comment">
-            <input type="text" name="join_id" value="{{t.join_id}}">
-            {% csrf_token %}
-            <input type="submit" name="reply">답글</form>
-        </div>
+  <title>Inner Page - Green Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/static/assets/img/favicon.png" rel="icon">
+  <link href="/static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/static/assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Green - v4.10.0
+  * Template URL: https://bootstrapmade.com/green-free-one-page-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  {% include 'header.html' %}
+  <!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  {% include 'leftbar.html' %}
+  <!-- End Sidebar-->
+  
+  <main id="main">
+
+
+    <!-- ======= Ctab Section ======= -->
+    <section class="inner-page">
+      <div class="container">
+        <section id="ctab" class="ctab">
+          <div class="container">
+            {% block main_content %}
+            
+            <tbody>
+                <ul>
+                {% if page > 10 %}
+                    <a href="/write/join/{{make_moim.make_id}}/?page={{page | add:'-10'}}">이전</a>
+                {% endif %}
+                {% for p in page_info %}
+                    {% comment %} <li {% if p == page %} active {% endif %}> {% endcomment %}
+                    <a href="/write/join/{{make_moim.make_id}}/?page={{p}}">
+                    {{p}}
+                    </a></li>
+                {% endfor %}
+                {% if total_page > e_page %}
+                    <a href="/write/join/{{make_moim.make_id}}/?page={{page | add:'10'}}">다음</a>
+                {% endif %}
+                </ul>
+
+            </tbody>
+            <tbody>
+            <div>
+                {% for t in make_moim.join_set.all %}
+                <div>
+                    △<br>
+                    <h6> {{t.title}} </h6>
+                    <p> {{t.comment}} </p>
+                    <h6> {{t.info.info_id}} </h6>
+                    <h6> {{t.write_dttm}} </h6>
+
+                    <form action="/write/join/{{make_moim.make_id}}/modify/" method="post">{% csrf_token %}<button value="수정" name="update">수정</button>        
+                    <input type="hidden" name="writer" value="{{t.info.info_id}}">
+                    <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
+                    </form>
+                    <form action="/write/join/{{make_moim.make_id}}/delete/" method="post">{% csrf_token %}<button value="삭제" name="delete">삭제        
+                    <input type="hidden" name="writer" value="{{t.info.info_id}}">
+                    <input type="hidden" name="join_id" value="{{t.join_id}}"></button>
+                    </form>
+                    <button id='reply' name='reply'>답글</button>
+                    <hr>
+                
+                    <div name="a" id='a' style="display: block;"></div>
+                    <div name="b" id='b' style="display: none;">
+                    <form action="/write/join/{{make_moim.make_id}}/comment/" method="post"><input type="text" name="reply_comment">
+                        <input type="text" name="join_id" value="{{t.join_id}}">
+                        {% csrf_token %}
+                        <input type="submit" name="reply">답글</form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div>
+
+                <form action="/write/join/{{make_moim.make_id}}/" method="post">
+                    {% csrf_token %}
+                <h1>모임 : {{make_moim.name}}</h1>
+                <h5>"{{request.session.info_id}}" 님의 인사창입니다.</h5>
+                제목 : <input type="text" name="title">
+                <br>
+                <input type="hidden" name="writer" value='{{request.session.info_id}}' readonly>
+                <textarea class="form-control" name="comment">내용</textarea>
+                <input type="hidden" name='make_moim' value="{{make_moim.make_id}}">
+                <button>등록</button>
+                </form>
+                <hr>
+
+            </div>
+            <script>
+
+                const reply = document.getElementById('reply')
+                const allbtn = document.querySelectorAll(`#reply`)
+                const aa = document.querySelectorAll(`#a`)
+                const bb = document.querySelectorAll(`#b`)
+                console.log(bb[0].style.display)
+                console.log(bb[2])
+                console.log(aa[0].style.display)
+                console.log(aa[1])
+
+
+                /* 여기부분 어떻게 인접 선택자?? */
+                for (var i =0; i < allbtn.length; i++){
+                    allbtn[i].addEventListener('click', (e) =>{ 
+
+                        /*const a = document.getElementById(`a`)
+                        const b = document.getElementById(`b`)*/
+                        if (bb[i].style.display == 'none'){
+                            aa[i].style.display = 'none';
+                            bb[i].style.display = 'block';
+                        }else{
+                            aa[i].style.display = 'block';
+                            bb[i].style.display = 'none';
+                        }
+                    })
+                }
+            </script>
+            {% endblock %}
+          </div>
+        </section><!-- End Ctab Section -->
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <h3>Green</h3>
+      <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
+      <div class="social-links">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong><span>Green</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/green-free-one-page-bootstrap-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
     </div>
-    {% endfor %}
-</div>
-<div>
+  </footer><!-- End Footer -->
 
-    <form action="/write/join/{{make_moim.make_id}}/" method="post">
-        {% csrf_token %}
-    <h1>모임 : {{make_moim.name}}</h1>
-    <h5>"{{request.session.info_id}}" 님의 인사창입니다.</h5>
-    제목 : <input type="text" name="title">
-    <br>
-    <input type="hidden" name="writer" value='{{request.session.info_id}}' readonly>
-    <textarea class="form-control" name="comment">내용</textarea>
-    <input type="hidden" name='make_moim' value="{{make_moim.make_id}}">
-    <button>등록</button>
-    </form>
-    <hr>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-down d-flex align-items-center justify-content-center"><i class="bi bi-arrow-down-short"></i></a>
 
-</div>
-<script>
+  <!-- Vendor JS Files -->
+  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/assets/vendor/php-email-form/validate.js"></script>
 
-    const reply = document.getElementById('reply')
-    const allbtn = document.querySelectorAll(`#reply`)
-    const aa = document.querySelectorAll(`#a`)
-    const bb = document.querySelectorAll(`#b`)
-    console.log(bb[0].style.display)
-    console.log(bb[2])
-    console.log(aa[0].style.display)
-    console.log(aa[1])
+  <!-- Template Main JS File -->
+  <script src="/static/assets/js/main.js"></script>
 
+</body>
 
-    /* 여기부분 어떻게 인접 선택자?? */
-    for (var i =0; i < allbtn.length; i++){
-        allbtn[i].addEventListener('click', (e) =>{ 
-
-            /*const a = document.getElementById(`a`)
-            const b = document.getElementById(`b`)*/
-            if (bb[i].style.display == 'none'){
-                aa[i].style.display = 'none';
-                bb[i].style.display = 'block';
-            }else{
-                aa[i].style.display = 'block';
-                bb[i].style.display = 'none';
-            }
-        })
-    }
-</script>
-{% endblock  %}
-
+</html>
