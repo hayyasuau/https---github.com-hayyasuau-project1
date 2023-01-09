@@ -15,9 +15,6 @@ urlpatterns = [
     path('join/<int:make_id>/', views.join_detail, name='join_detail'),
     path('join/<int:make_id>/comment/', views.join_comment, name='join_comment'),
 
-    path('join/<int:make_id>/comment/update/', views.join_comment_u, name='join_comment_u'),
-    path('join/<int:make_id>/comment/delete/', views.join_comment_d, name='join_comment_d'),
-
     path('join/join_write/', views.join, name='join_write'),
     path('gallery/<int:pk>/', views.gallery, name='gallery'),
     path('gallery/<int:pk>/<int:gg>/', views.gallery_single, name='gallery_single'),
