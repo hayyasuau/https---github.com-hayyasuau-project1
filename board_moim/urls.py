@@ -14,4 +14,5 @@ urlpatterns = [
     path('delete/<int:pk>/', views.board_delete, name='board_detele'),
     path('comment/', views.comment, name='board_comment'),
     path('list/search/', views.search, name='search'),
+    path('<int:pk>/kick/', views.kick, name='kick'),
 ]

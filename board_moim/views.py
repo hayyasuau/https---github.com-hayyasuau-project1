@@ -48,6 +48,16 @@ def list_moim(request):
         # 'posts' : posts
     }
     return render(request,'board_moim/board_list.html', context)
+def kick(request,pk):
+    make_moim = Make_Moim.objects.get(make_id=pk)
+    admin = GroupInfo.objects.filter(admin='1')[0]
+    info_id = request.session['info_id']
+    info_kick = request.POST.get('info_kick')
+    print(info_kick)
+    if admin.info_id == info_id:
+        g=GroupInfo.objects.get(make_moim=make_moim, info=info_kick)
+        g.delete()
+        return redirect('board_moim:board_detail',pk)
 
 def board_detail(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
