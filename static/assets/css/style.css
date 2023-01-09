@@ -35,11 +35,11 @@ body {
 
 a {
   text-decoration: none;
-  color: #5cb874;
+  color: #000000;
 }
 
 a:hover {
-  color: #80c792;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -485,7 +485,7 @@ h6 {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover>a {
-  color: #5cb874;
+  color: #000000;
 }
 
 .navbar .getstarted,
@@ -536,7 +536,7 @@ h6 {
 .navbar .dropdown ul a:hover,
 .navbar .dropdown ul .active:hover,
 .navbar .dropdown ul li:hover>a {
-  color: #5cb874;
+  color: #000000;
 }
 
 .navbar .dropdown:hover>ul {
