@@ -33,10 +33,12 @@
             <li><a class="nav-link " href="/write/free/">자유게시판</a></li> -->
             {% if request.session.info_id %}
             <li><a class="nav-link " href="/logout/">로그아웃</a></li>
+            <li><a class="nav-link " href="/profile/{{request.session.info_id}}/">프로필변경</a></li>
             {% else %}
             <li><a class="nav-link " href="/login/">로그인</a></li>
-            {% endif %}
             <li><a class="nav-link " href="/signup/">회원가입</a></li>
+            {% endif %}
+            
               
         <!-- End Profile Nav -->
         </li>
