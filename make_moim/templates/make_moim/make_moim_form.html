@@ -87,8 +87,7 @@
           <div class="container">
             {% block main_content %}
             <div>
-              <h1 id="board_title">모임만들기</h1>
-              <div id="center_main">
+              <h1>모임만들기</h1>
               <hr>
               <form action='/make_moim/' method="post" enctype="multipart/form-data">{% csrf_token %}
                   <table>
@@ -115,6 +114,7 @@
                   </table>
                   <input type="submit" value="만들기">
               </form>
+            </div>
           </div>
             {% endblock %}
 
