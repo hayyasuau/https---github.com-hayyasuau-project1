@@ -50,11 +50,12 @@ def text_modify(request,free_id, pk):#수정
     elif request.method =='POST':
         title = request.POST.get('title')
         text = request.POST.get('text')
-
         board.title=title
         board.text=text
 
         board.save()
+
+        
         return redirect('write:free', free_id)
 
 
@@ -94,7 +95,8 @@ def board_free_write(request, free_id):#작성
                 title=write_form.title,
                 text=write_form.text,
                 info=writer,
-                imgfile=write_form.imgfile
+                imgfile=write_form.imgfile,
+                make_moim=make_moim
                 # comment=write_form.info
             )
             board.save()
