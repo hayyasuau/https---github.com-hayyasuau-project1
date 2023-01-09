@@ -35,11 +35,11 @@ body {
 
 a {
   text-decoration: none;
-  color: #5cb874;
+  color: #000000;
 }
 
 a:hover {
-  color: #80c792;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -192,7 +192,7 @@ h6 {
 }
 
 .scrolled-offset {
-  margin-top: 70px;
+  margin-top: -40px;
 }
 
 .logo {
@@ -485,7 +485,7 @@ h6 {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover>a {
-  color: #5cb874;
+  color: #000000;
 }
 
 .navbar .getstarted,
@@ -536,7 +536,7 @@ h6 {
 .navbar .dropdown ul a:hover,
 .navbar .dropdown ul .active:hover,
 .navbar .dropdown ul li:hover>a {
-  color: #5cb874;
+  color: #000000;
 }
 
 .navbar .dropdown:hover>ul {
@@ -1813,7 +1813,7 @@ section {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 0px;
+  top: 115px;
   left: 0;
   bottom: 0;
   width: 200px;
@@ -1824,7 +1824,7 @@ section {
   scrollbar-width: thin;
   scrollbar-color: #aab7cf transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-  background-color: #00ffbf81;
+  background-color: #ffffff;
 }
 
 @media (max-width: 1199px) {
