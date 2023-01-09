@@ -156,9 +156,6 @@ def search(request):
             'page':page,
         }
         return render(request, 'search.html', context)
-<<<<<<< HEAD
-    elif csb == 'category_title':
-=======
     elif csb == 'category_title':# 고쳐야할 부분
         if page > category_page: #카테고리
             page = category_page
@@ -171,7 +168,6 @@ def search(request):
         if e_page > category_page : 
             e_page = category_page
 
->>>>>>> 2980af34491f20c5a3ba6b65cf9219382b55aa2c
         page_info = range(s_page, e_page)
         category_list = category[start:end]
         context = {
