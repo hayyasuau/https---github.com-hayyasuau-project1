@@ -1,4 +1,7 @@
+<head>
 {% include 'head.html' %}
+</head>
+
 <body>
 
   <!-- ======= Top Bar ======= -->
@@ -11,7 +14,10 @@
   </section>
 
   <!-- ======= Header ======= -->
-{% include 'header_main.html' %}
+  {% include 'header_main.html' %}
+
+  <!-- ======= Sidebar ======= -->
+  {% include 'leftbar-make.html' %}
 
   <main id="main">
 
@@ -24,7 +30,7 @@
             {% block main_content %}
             <div>
               <tbody>
-          {% for m in moim_lists%}
+          {% for m in 'moim_lists' %}
           <div>
           <a href="/board_moim/{{m.make_id}}/">자세히보기</a>
           <label for="id">번호</label>
