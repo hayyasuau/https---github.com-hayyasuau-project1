@@ -115,7 +115,7 @@ def search(request):
     tag_page = tag_count//5 +1
     name_page = name_count//5 +1
     category_page = category_count//5 +1
-       
+
     if csb == 'all':
         page_tag = int(request.GET.get('page_tag',1)) #태그
         # if not page : page = '1'
