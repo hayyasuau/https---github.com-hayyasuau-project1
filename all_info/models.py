@@ -27,5 +27,6 @@ class GroupInfo(models.Model):
     info = models.ForeignKey(Info, on_delete=models.CASCADE,db_column='info_id', null=True)
     make_moim = models.ForeignKey(Make_Moim, on_delete=models.CASCADE,db_column='make_id', null=True)
     y_n = models.CharField(max_length = 1)
+    admin = models.IntegerField(default=0)
     apply_date = models.CharField(max_length = 20)
     join_date = models.CharField(max_length = 20)

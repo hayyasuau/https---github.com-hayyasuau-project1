@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from all_info.models import GroupInfo, Info
 # from django.core.paginator import Paginator
@@ -59,51 +60,61 @@ def board_detail(request, pk):
 
 def board_update(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
-    if request.method == 'POST':
-        make_id = request.POST.get('make_id')
-        name = request.POST.get('name')
-        commend = request.POST.get('commend')
-        imgfile = request.POST.get('imgfile')
-        location = request.POST.get('location')
-        max_people = request.POST.get('max_people')
-        category = request.POST.get('category')
-        alltag=request.POST.get('tag')
-        tags = alltag.split(',')
+    admin = GroupInfo.objects.filter(admin='1')[0]
+    info_id = request.session['info_id']
+    if admin.info_id == info_id:
+        if request.method == 'POST':
+            make_id = request.POST.get('make_id')
+            name = request.POST.get('name')
+            commend = request.POST.get('commend')
+            imgfile = request.POST.get('imgfile')
+            location = request.POST.get('location')
+            max_people = request.POST.get('max_people')
+            category = request.POST.get('category')
+            alltag=request.POST.get('tag')
+            tags = alltag.split(',')
         
-        try :
-            TagMoim.objects.filter(make_moim=make_moim).delete()
-            for i in tags:
-                newtag = Tag(name=i)
-                newtag.save()
-                tag_id=Tag.objects.all().order_by('-pk')[0]
-                t = TagMoim()
-                         
-                make_moim.make_id = make_id
-                make_moim.name = name
-                make_moim.commend = commend
-                make_moim.imgfile = imgfile
-                make_moim.location = location
-                make_moim.max_people = max_people
-                make_moim.category = category
-            # make_moim.tags = tags
-                make_moim.save()
-                
-                t.tag = tag_id   
-                t.make_moim = make_moim
-                t.save()
+            try :
+                TagMoim.objects.filter(make_moim=make_moim).delete()
+                for i in tags:
+                    newtag = Tag(name=i)
+                    newtag.save()
+                    tag_id=Tag.objects.all().order_by('-pk')[0]
+                    t = TagMoim()
 
-            # return render(request, 'board_moim/detail.html')
-            return redirect(f'/board_moim/{pk}/')
-        except Exception as e:
-            print(e)
-            return render(request, 'board_moim/update_fail.html',{'make_moim':make_moim})
+                    make_moim.make_id = make_id
+                    make_moim.name = name
+                    make_moim.commend = commend
+                    make_moim.imgfile = imgfile
+                    make_moim.location = location
+                    make_moim.max_people = max_people
+                    make_moim.category = category
+                # make_moim.tags = tags
+                    make_moim.save()
+                    
+                    t.tag = tag_id   
+                    t.make_moim = make_moim
+                    t.save()
+
+                # return render(request, 'board_moim/detail.html')
+                return redirect(f'/board_moim/{pk}/')
+            except Exception as e:
+                print(e)
+                return render(request, 'board_moim/update_fail.html',{'make_moim':make_moim})
+    else : 
+        return HttpResponse(f'<h1>수정/삭제 권한이 없습니다.</h1><br><a href="/board_moim/{make_moim.make_id}">뒤로가기</a>')
 
     return render(request, 'board_moim/update.html',{'make_moim':make_moim})
 
 def board_delete(request, pk):
     make_moim = Make_Moim.objects.get(make_id=pk)
-    make_moim.delete()
-    return redirect('/board_moim/list/')
+    admin = GroupInfo.objects.filter(admin='1')[0]
+    info_id = request.session['info_id']
+    if admin.info_id == info_id:
+        make_moim.delete()
+        return redirect('/board_moim/list/')
+    else : 
+            return HttpResponse(f'<h1>수정/삭제 권한이 없습니다.</h1><br><a href="/board_moim/{make_moim.make_id}">뒤로가기</a>')
 
 def comment(request):
     if request.method == 'POST':
