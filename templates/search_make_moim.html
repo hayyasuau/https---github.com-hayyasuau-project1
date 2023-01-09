@@ -2,7 +2,7 @@
 <hr>
 <h4> 모임 검색 결과 입니다.</h4>
 <table>
-{% for i in make_moim %}
+{% for i in moim_list %}
     <b onclick='location="/board_moim/{{i.make_id}}/"'> 모임명 : {{i.name}} </b>
     <br>
     모임설명 : {{i.commend}}
