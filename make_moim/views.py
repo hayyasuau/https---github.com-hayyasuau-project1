@@ -39,8 +39,6 @@ def make_moim(request):
                 newtag = Tag(name=tags[i])
                 newtag.save()
                 tag_id=Tag.objects.all().order_by('-pk')[0]
-                newtag = Tag(name=i)
-                newtag.save()
                 t = TagMoim()
                 t.tag = tag_id
                 t.make_moim = make_moim_last
