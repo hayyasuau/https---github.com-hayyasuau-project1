@@ -35,7 +35,7 @@
     <hr>    
     {% include 'search_all.html' %}
     {% include 'search_tag.html' %}
-    {% include 'total_page_pagging.html' %}
+    {% comment %} {% include 'total_page_pagging.html' %} {% endcomment %}
 
 
     {% elif make_moim %}
@@ -44,20 +44,20 @@
     <br>
     <hr>    
     {% include 'search_make_moim.html' %}
-    {% include 'total_page_pagging.html' %}
+    {% comment %} {% include 'total_page_pagging.html' %} {% endcomment %}
     {% elif tag %}
 
 
     <br>
     <hr>   
     {% include 'search_tag.html' %}
-    {% include 'total_page_pagging.html' %}
+    {% comment %} {% include 'total_page_pagging.html' %} {% endcomment %}
     
     {% elif category %}
     <br>
     <hr>    
     {% include 'search_category.html' %}
-    {% include 'total_page_pagging.html' %}
+    {% comment %} {% include 'total_page_pagging.html' %} {% endcomment %}
     {% else %}
     <h1>검색 결과가 없습니다. 새로 검색해주세요</h1>
     {% endif %}

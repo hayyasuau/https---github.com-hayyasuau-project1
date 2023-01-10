@@ -12,7 +12,6 @@ from tag.models import Tag, TagMoim
 def make_moim(request):
     info_id = request.session['info_id']
     moim_chief = request.POST.get('moim_chief')
-    print(moim_chief, info_id)
     if request.method == 'GET':
         return render(request, 'make_moim/make_moim_form.html')
     
@@ -35,22 +34,24 @@ def make_moim(request):
             make_moim = Make_Moim(name=name, commend=commend, location=location, imgfile=imgfile, max_people=max_people, category=category)
             make_moim.save()
             make_moim_last=Make_Moim.objects.all().order_by('-make_id')[0]
-            for i in tags:
+            print(tags[0])
+            for i in range(0,len(tags)):
+                newtag = Tag(name=tags[i])
+                newtag.save()
+                tag_id=Tag.objects.all().order_by('-pk')[0]
                 newtag = Tag(name=i)
                 newtag.save()
-
-                tag_id=Tag.objects.all().order_by('-pk')[0]
                 t = TagMoim()
                 t.tag = tag_id
                 t.make_moim = make_moim_last
                 t.save()
-                info = Info.objects.get(info_id=info_id)
-                print(info)
-                g = GroupInfo()
-                g.info = info
-                g.admin = '1'
-                g.make_moim = make_moim_last
-                g.save()
+            info = Info.objects.get(info_id=info_id)
+            g = GroupInfo()
+            g.info = info
+            g.admin = '1'
+            g.make_moim = make_moim_last
+            g.save()
+
 
 
             #이럴꺼면 일대 다해도 됐는데
