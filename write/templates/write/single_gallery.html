@@ -20,7 +20,7 @@
         {% for imgfile in single_gallery.manyimg_set.all %}
             <td><img src="/media/gallery/{{imgfile.imgfile}}/" alt="사진이 지워졌습니다." style = 'width: 400px';></td>
             <form action="/write/download/" method="post" enctype="multipart/form-data">
-            <input type="text" name="manyimg_id" value="{{imgfile.manyimg_id}}">
+            <input type="hidden" name="manyimg_id" value="{{imgfile.manyimg_id}}">
                 {% csrf_token %}
             <button name='download_gallery_bt'>다운로드</button>
             <hr>

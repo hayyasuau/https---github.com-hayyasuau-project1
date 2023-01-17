@@ -29,37 +29,40 @@
               <tbody>
           {% for m in moim_lists%}
           <div>
-          <a href="/board_moim/{{m.make_id}}/">자세히보기</a>
-          <label for="id">번호</label>
-          <input type="text" name='id' value="{{m.make_id}}" readonly>
+          <a href="/board_moim/{{m.make_id}}/" style='color: blue;'>자세히보기</a>
+          <label for="id"></label>
+          <input type="hidden" name='id' value="{{m.make_id}}" readonly>
 
-          <label for="category">카테고리</label>
-          <input type="text" name='category' value="{{m.category}}" readonly>
+          <label for="category">카테고리 : </label>
+          <input type="text" name='category' value="{{m.category}}" readonly style="border: 0;">
 
           <hr>
-          <b>태그 : 
+          <b style="font-size: xx-small;">태그 : 
             {% for t in m.tagmoim_set.all %}
                {{t.tag.name}}
               <input type="hidden" name='tag' value="{{t.tag.name}}">
             {% endfor %}</b>
           <hr>
-          <label for="name">제목</label>
-          <input type="text" name='name' value="{{m.name}}" readonly>
-      
+          <label for="name"></label>
+          <input type="text" name='name' value="{{m.name}}" readonly style="border: 0; font-size: larger;" >
+          <label for="commend"></label>
+          <textarea class="form-control" row='4' cols='50' style=''>모임소개 : {{m.commend}}</textarea>
+          <br>
+          <br>
           <br>
           {% if m.imgfile %}
-          <label for="imgfile">이미지</label>
+          <label for="imgfile"></label>
           <img src="/media/{{m.imgfile}}" alt="{{m.name}} " style= 'width : 300px'>
           {% else %}
           <label for="imgfile">이미지</label>
           <img src="/static/default.jpg" alt="{{m.name}} " style= 'width : 300px'>
           {% endif %}
+      <br>
+          <label for="location" style="border: 0; font-size: larger;">지역/최대인원/현재인원</label>
+          <br>
+          <input type="text" name='location' value="{{m.location}}/       {{m.max_people}}        /       {{m.groupinfo_set.count}}" readonly style="border: 0;">
       
-          <label for="location">지역/최대인원/현재인원</label>
-          <input type="text" name='location' value="{{m.location}}/{{m.max_people}}/{{m.groupinfo_set.count}}" readonly>
-      
-          <label for="commend">소개</label>
-          <textarea class="form-control" readonly>{{m.commend}}</textarea>
+
           <hr>
           </div>
       

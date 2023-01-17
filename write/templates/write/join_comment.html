@@ -22,7 +22,7 @@
     <form action="/write/join/{{make_moim.make_id}}/comment/delete/" method="post">
         <input type="hidden" name="writer" value="{{g.info.info_id}}">
         <input type="hidden" name="good_id" value="{{g.good_id}}">
-        <input type="text" name="content" value="{{g.content}}">
+        <input type="hidden" name="content" value="{{g.content}}">
         <button name="new_update" style="border: 0; background-color: white;">
         {% csrf_token %} 삭제, 
     </button></form>

@@ -24,14 +24,13 @@ def list_moim(request):
     #페이지 구분
     total_count = Make_Moim.objects.all().count()
     total_page = total_count//5 +1
-    print(total_page)
     if page > total_page:
         page = total_page
         end = page * 5
         start = end -5
     
-    if total_count % 10 !=0:
-        total_page +=1
+    # if total_count % 10 !=0:
+    #     total_page +=1
 
     if e_page > total_page : 
         e_page = total_page

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
@@ -14,19 +14,16 @@
 <body>
 
 <div class="container mt-3">
-  <h2>목록</h2>
-  <p></p>
-</div>
-  
-<div class="container mt-3">
   <ul class="list-group list-group-flush">
     {% for b in board_list %}
-    <table><tr><td>
-      <li class="list-group-item" name="free_id" value=""> {{b.free_id}}</li></td>
-      <td><li class="list-group-item" name="title"> <a href='/write/viewtext/{{make_moim.make_id}}/{{b.free_id}}/' readonly>{{b.title}}</li></td>
-      </tr><td><li class="list-group-item" name="text"> {{b.text}}</li></td>
-      <td><li class="list-group-item" name="write_dttm"> {{b.write_dttm}}</li></td>
-    </table>
+    <div class="portfolio-info">
+      <dl>
+        <!-- <td><li class="list-group-item" name="free_id" value=""> {{b.free_id}}</li></td> -->
+        <td><li class="list-group-item" name="title">제목:  <a href='/write/viewtext/{{make_moim.make_id}}/{{b.free_id}}/' readonly>{{b.title}}</a></li></td>
+        <td><li class="list-group-item" name="text">내용: {{b.text}}</li></td>
+        <td><li class="list-group-item" name="write_dttm">작성날짜: {{b.write_dttm}}</li></td>
+      </dl>
+    </div>
     {% endfor %}
 
 

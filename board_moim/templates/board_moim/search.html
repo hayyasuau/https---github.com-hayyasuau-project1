@@ -39,8 +39,9 @@
                                 {% for m in category_list%}
                                 <div>
                                     <a href="/board_moim/{{m.make_id}}/">자세히보기</a>
-                                    <label for="id">번호</label>
-                                    <input type="text" name='id' value="{{m.make_id}}" readonly>
+                                    <label for="id"></label>
+                                    <input type="hidden" name='id' value="{{m.make_id}}" readonly>
+                                    <hr>
 
                                     <label for="category">카테고리</label>
                                     <input type="text" name='category' value="{{m.category}}" readonly>

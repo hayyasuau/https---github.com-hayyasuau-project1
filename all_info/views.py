@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
-from all_info.models import Info
+from all_info.models import Info, GroupInfo
+from make_moim.models import Make_Moim
 
 # Create your views here.
 def profile_view(request):
@@ -44,6 +45,12 @@ def update(request, id):
 def delete(request, id):
     user = Info.objects.get(info_id=id)
     if user.info_id == request.session['info_id']:
+        groupinfo=GroupInfo.objects.filter(info=user)
+        for j in groupinfo:
+            print(j.admin)
+            if j.admin == 1:
+                print(j.make_moim)
+                j.make_moim.delete()
         user.delete()
         return redirect('login')
     return redirect('profile_view')
